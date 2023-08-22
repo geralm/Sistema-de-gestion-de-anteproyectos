@@ -1,2 +1,3 @@
 # Sistema-de-gestion-de-anteproyectos
-Sistema de gestión de anteproyectos para la profesora Erika Marín Schumann
+
+Este proyecto está desarrollado por estudiantes del Instituto Tecnológico de Costa Rica. 

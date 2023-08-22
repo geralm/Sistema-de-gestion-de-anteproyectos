@@ -1,0 +1,12 @@
+{
+  "name": "sistema-de-gestion-de-anteproyectos",
+  "version": "1.0.0",
+  "description": "Este proyecto está desarrollado por estudiantes del Instituto Tecnológico de Costa Rica.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
