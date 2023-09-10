@@ -1,5 +1,5 @@
 const renderAdmin =  (req,res)=>{
-    res.send("Admin page")
+    res.render('admin/adminWelcome')
 }
 
 
