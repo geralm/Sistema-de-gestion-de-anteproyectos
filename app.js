@@ -18,7 +18,6 @@ app.engine('hbs', hbs.create({
     partialsDir:path.join(app.get('views'),'partials'),
     extname:'.hbs'
 }).engine);
-hbs.registerPartial('boilerplate', '{{prefix}}');
 
 //Register partials
 
