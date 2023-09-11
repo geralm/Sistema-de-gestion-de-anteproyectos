@@ -11,9 +11,16 @@ const EventSchema = new Schema({
         type:String,
         maxlength:300
     },
-    // startDate: {
-    //     type : Date, 
-    //     min: 
-    // }
-
+    startDate: {
+        type : Date, 
+        required: true,
+        
+    },
+    finishDate: {
+        type: Date, 
+        require: true
+    }
 })
+module.exports = mongoose.model('Event', EventSchema);
+
+// module.exports = mongoose.model('Campground', CampgroundSchema);
