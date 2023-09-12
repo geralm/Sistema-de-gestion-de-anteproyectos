@@ -15,7 +15,7 @@ db.once("open", () => {
 const sample = array => array[Math.floor(Math.random() * array.length)]; //choose a random data from the array in parameter
 const seedEvents = async()=>{
     await Event.deleteMany({});
-    for(let i = 0; i<10; i++){  
+    for(let i = 0; i<5; i++){  
         const newEvent = new Event({
             title: `${sample(eventsNames)}`,
             description: `${sample(eventsDescriptions)}`,
@@ -25,6 +25,10 @@ const seedEvents = async()=>{
         await newEvent.save()
     }
     console.log("Seeds added");
+}
+const deleteEvents = async() =>{
+    await Event.deleteMany({});
+    console.log("Eventos eliminados"); 
 }
 seedEvents().then(() => {
     mongoose.connection.close();

@@ -1,6 +1,7 @@
 
 <div class="container">
     <h1 class="text-center">Calendario</h1>      
+        {{#if events}}
              {{!--Here we need to give more beautiful format --}}
         <table class="table">
             <thead class="table-info"> 
@@ -15,6 +16,7 @@
                 {{#each events}}
                     <tr>
                         <th scope="row">{{title}}</th>
+                        {{!-- Here we can made a if for expired dates --}}
                         <td>{{startDate}}</td>
                         <td>{{finishDate}}</td>
                         <td>{{description}}</td>
@@ -22,6 +24,9 @@
                 {{/each}}
             </tbody>
         </table>
+        {{else}}
+            <p class="text-center">No hay eventos aún</p>
+        {{/if}}
 </div>
 
 

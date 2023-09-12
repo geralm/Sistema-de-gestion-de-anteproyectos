@@ -1,6 +1,8 @@
 const Event = require('../models/events');
 module.exports.renderIndex = async(req, res) =>{
-    const events = await Event.find({});
+    const events = await Event.find({
+        // finishDate:{ $gt : new Date().getDate()-10} 
+    });
     const eventsData = events.map(event => ({
         title: event.title,
         startDate: event.startDate.toDateString() ,
