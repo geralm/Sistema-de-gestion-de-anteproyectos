@@ -1,5 +1,14 @@
 body{
     background: #43C6AC;  
-    background: -webkit-linear-gradient(to right, #191654, #43C6AC);  
-    background: linear-gradient(to right, #191654, #43C6AC); 
+    background: -webkit-linear-gradient(to bottom, aliceblue , lightblue);  
+    background: linear-gradient(to bottom, aliceblue, lightblue); 
+}
+
+.title-color{
+    color:navy;
+    font-weight: bold;
+}
+.input-group-append {
+    cursor: pointer;
+
 }
