@@ -1,0 +1,28 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            {{!--Here we need to give more beautiful format --}}
+            <h1>Nombre del evento</h1>  
+            <h4>Fecha de inicio</h4>
+                <span>55/545/34 00:11:11</span>
+            <h4>Fecha de cierre</h4>
+                <span>55/545/34 00:11:11</span>
+            <h4>Descripción</h4>
+            <p>Descripción</p>
+
+        </div>
+        <div class="col-6">
+            <h1>Fecha</h1>
+            <section class="container">
+                <form class="row">
+                    <input id="startDate" class="form-control" type="date"/>   
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+<script>$(function(){
+  $('#datepicker').datepicker();
+});</script>
+

@@ -7,7 +7,7 @@ const EventSchema = new Schema({
         required: true,
         maxlength: 30
     },
-    descrption: {
+    description: {
         type:String,
         maxlength:300
     },
@@ -21,6 +21,7 @@ const EventSchema = new Schema({
         require: true
     }
 })
+
 module.exports = mongoose.model('Event', EventSchema);
 
 // module.exports = mongoose.model('Campground', CampgroundSchema);
