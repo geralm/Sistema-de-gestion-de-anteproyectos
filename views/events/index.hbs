@@ -1,26 +1,27 @@
 
 <div class="container">
-    <div class="row">
-        <div class="col-6">
+    <h1 class="text-center">Calendario</h1>      
              {{!--Here we need to give more beautiful format --}}
-            <h1>Nombre del evento</h1>  
-            <h4>Fecha de inicio</h4>
-                <span>55/545/34 00:11:11</span>
-            <h4>Fecha de cierre</h4>
-                <span>55/545/34 00:11:11</span>
-            <h4>Descripción</h4>
-            <p>Descripción</p>
-
-        </div>
-        <div class="col-6">
-            <h1>Fecha</h1>
-            <section class="container">
-                <form class="row">
-                    <input id="startDate" class="form-control" type="date"/>   
-                </form>
-            </section>
-        </div>
-    </div>
+        <table class="table">
+            <thead class="table-info"> 
+                <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha de inicio</th>
+                <th scope="col">Fecha de cierre</th>
+                <th scope="col">Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each events}}
+                    <tr>
+                        <th scope="row">{{title}}</th>
+                        <td>{{startDate}}</td>
+                        <td>{{finishDate}}</td>
+                        <td>{{description}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
 </div>
 
 

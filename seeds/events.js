@@ -22,6 +22,7 @@ const seedEvents = async()=>{
             startDate: getRandomDate(),
             finishDate: getRandomDate()
         })
+        await newEvent.save()
     }
     console.log("Seeds added");
 }

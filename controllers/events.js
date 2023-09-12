@@ -1,6 +1,13 @@
 const Event = require('../models/events');
-module.exports.renderIndex = (req, res) =>{
-    res.render('events/index');
+module.exports.renderIndex = async(req, res) =>{
+    const events = await Event.find({});
+    const eventsData = events.map(event => ({
+        title: event.title,
+        startDate: event.startDate.toDateString() ,
+        finishDate: event.finishDate.toDateString(),
+        description: event.description || 'Sin descripción'
+      }));
+    res.render('events/index', {events: eventsData});
 }
 module.exports.renderNewEvent = (req, res)=>{
     res.render('events/new')

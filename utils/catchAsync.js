@@ -3,3 +3,4 @@ module.exports = func => {
         func(req, res, next).catch(next);
     }
 }
+//Handle async errors

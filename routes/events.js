@@ -5,7 +5,7 @@ const {validateEvent} = require('../middleware/middlewares');
 const catchAsync = require('../utils/catchAsync');
 
 router.route('/')
-    .get(events.renderIndex) //We need to add middleware here
+    .get(catchAsync(events.renderIndex)) 
     .post(validateEvent ,catchAsync(events.createEvent));
 router.get('/new',events.renderNewEvent);
 module.exports = router;

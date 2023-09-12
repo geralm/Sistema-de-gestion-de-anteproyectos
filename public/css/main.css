@@ -1,7 +1,7 @@
 body{
-    background: aliceblue;  
-    background: -webkit-linear-gradient(to bottom, aliceblue , lightblue);  
-    background: linear-gradient(to bottom, aliceblue, lightblue); 
+    background: #B7D6EB;   
+    background: -webkit-linear-gradient(to bottom, #B7D6EB , #3B95D1);   
+    /* background: linear-gradient(to bottom, #B7D6EB, #3B95D1);  */
 }
 
 .title-color{
