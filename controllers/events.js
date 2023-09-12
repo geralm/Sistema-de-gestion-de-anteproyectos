@@ -15,9 +15,11 @@ module.exports.renderNewEvent = (req, res)=>{
     res.render('events/new')
 }
 module.exports.createEvent = async (req,res, next) =>{
-    const {title ,description, startdate, finishdate} = req.body.event;
-    console.log(title, description, startdate, finishdate);
-    
+    const newEvent  = req.body.event; 
+    newEvent.startDate = new Date(newEvent.startDate);
+    newEvent.finishDate = new Date(newEvent.finishDate);
+    const event  = new Event(newEvent);
+    await event.save();
     // const newEvent = new Event(req.body.event);
     // await newEvent.save();
     res.redirect('/events');

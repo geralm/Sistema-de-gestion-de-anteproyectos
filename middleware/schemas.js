@@ -6,7 +6,8 @@ module.exports.eventSchema = Joi.object({
     event: Joi.object({
         title: Joi.string().required(),
         description: Joi.string().required(),
-        startdate: Joi.date().min('now').required(), 
-        finishdate: Joi.date().greater(Joi.ref('startdate')).required()
+        startDate: Joi.date().required(), 
+        finishDate: Joi.date().min('now').greater(Joi.ref('startDate')).required()
+        //have not sense to add a new event already expired
     }).required()
 }); //Create a schema for validate users
