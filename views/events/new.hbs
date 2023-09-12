@@ -1,0 +1,38 @@
+<div class="row">
+    <h1 class="text-center">Agregar evento</h1>
+    <div class="col-6 offset-3">
+        <form action="/events" method="POST" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" id="title" name="event[title]" required>
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" type="text" id="description" name="event[description]"></textarea>
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="startdate">Empieza</label>
+                <input id="startdate" class="form-control" type="datetime-local" name="event[startdate]"required/>   
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="finishdate">Termina</label>
+                <input id="finishdate" class="form-control" type="datetime-local" name="event[finishdate]"required/>   
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Create Event</button>
+            </div>
+        </form>
+    </div>
+</div>

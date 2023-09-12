@@ -1,10 +1,16 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('express-handlebars')
+const methodOverride = require('method-override'); //Allows to use delete and update verbs
+const mongoose = require('mongoose');
 //Init
 const app = express()
 //Routers
 const eventsRouter = require('./routes/events');
+mongoose.connect('mongodb://127.0.0.1:27017/gestion-de-anteproyectos', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 //Settings
 app.use(express.static(path.join(__dirname, 'public')))
@@ -22,11 +28,13 @@ app.engine('hbs', hbs.create({
 //Register partials
 
 app.set('view engine','.hbs')
-app.use(express.urlencoded({extended:false}))
-
+//http Request
+app.use(express.urlencoded({extended:true})) //
+app.use(methodOverride('_method')); //allows to make update and deletes methods
 //Routes
 app.use(require('./routes/admin'))
 app.use('/events', eventsRouter);
+
 app.get('/',(req,res)=>{
     res.send("Landing Page")
 })

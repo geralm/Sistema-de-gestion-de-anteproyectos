@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Event = require('../models/events');
+const methodOverride = require('method-override');
 const {eventsNames, eventsDescriptions, getRandomDate} = require('./seedHelpers')
 mongoose.connect('mongodb://127.0.0.1:27017/gestion-de-anteproyectos', {
     useNewUrlParser: true,
