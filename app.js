@@ -6,11 +6,14 @@ const mongoose = require('mongoose');
 //Init
 const app = express()
 //Routers
+const landingRouter = require('./routes/landing')
 const eventsRouter = require('./routes/events');
 mongoose.connect('mongodb://127.0.0.1:27017/gestion-de-anteproyectos', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
+const adminRouter = require('./routes/admin')
+
 
 //Settings
 app.use(express.static(path.join(__dirname, 'public')))
@@ -32,12 +35,9 @@ app.set('view engine','.hbs')
 app.use(express.urlencoded({extended:true})) //
 app.use(methodOverride('_method')); //allows to make update and deletes methods
 //Routes
-app.use(require('./routes/admin'))
+app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
-
-app.get('/',(req,res)=>{
-    res.send("Landing Page")
-})
+app.use('/',landingRouter)
 
 
 //Boot server
