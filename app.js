@@ -3,16 +3,22 @@ const path = require('path')
 const hbs = require('express-handlebars')
 const methodOverride = require('method-override'); //Allows to use delete and update verbs
 const mongoose = require('mongoose');
+
 //Init
 const app = express()
+
 //Routers
 const landingRouter = require('./routes/landing')
 const eventsRouter = require('./routes/events');
+const adminRouter = require('./routes/admin')
+const studentRouter = require('./routes/student')
+
+//Database
 mongoose.connect('mongodb://127.0.0.1:27017/gestion-de-anteproyectos', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-const adminRouter = require('./routes/admin')
+
 
 
 //Settings
@@ -38,6 +44,7 @@ app.use(methodOverride('_method')); //allows to make update and deletes methods
 app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
 app.use('/',landingRouter)
+app.use('/student',studentRouter)
 
 
 //Boot server
