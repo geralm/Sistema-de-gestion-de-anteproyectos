@@ -8,4 +8,6 @@ router.route('/')
     .get(catchAsync(events.renderIndex)) 
     .post(validateEvent ,catchAsync(events.createEvent));
 router.get('/new',events.renderNewEvent);
+router.route('/:id')
+    .get(catchAsync(events.showEvent));
 module.exports = router;

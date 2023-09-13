@@ -11,6 +11,7 @@
                 <th scope="col">Inicio</th>
                 <th scope="col">Cierre</th>
                 <th scope="col">Descripción</th>
+                <th scope="col">Ver más</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +22,7 @@
                         <td>{{startDate}}</td>
                         <td>{{finishDate}}</td>
                         <td>{{description}}</td>
+                        <td><a href="/events/{{id}}">Ver evento</a></td>
                     </tr>
                 {{/each}}
             </tbody>
