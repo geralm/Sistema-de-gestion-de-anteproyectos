@@ -56,6 +56,11 @@ const ProyectSchema = new Schema({
         type: Number,
         required: true,
         maxlength: 8
+    },
+    estado: {
+        type: String,
+        required: true,
+        maxlength:20
     }
 })
 
