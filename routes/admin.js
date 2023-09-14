@@ -4,5 +4,6 @@ const events =require('../controllers/admin')
 
 
 router.route('/').get(events.renderAdmin)
+router.route('/anteproyectos').get(events.renderAnteproyectos)
 
 module.exports = router
