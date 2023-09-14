@@ -9,5 +9,9 @@ router.route('/')
     .post(validateEvent ,catchAsync(events.createEvent));
 router.get('/new',events.renderNewEvent);
 router.route('/:id')
-    .get(catchAsync(events.showEvent));
+    .get(catchAsync(events.showEvent))
+    .put(validateEvent, catchAsync(events.updateEvent))
+    .delete(catchAsync(events.deleteEvent));
+
+router.get('/:id/edit', catchAsync(events.renderEditForm)); //VALIDATE IF IS ADMIN
 module.exports = router;

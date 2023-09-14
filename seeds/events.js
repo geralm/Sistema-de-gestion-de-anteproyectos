@@ -11,7 +11,6 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
-
 const sample = array => array[Math.floor(Math.random() * array.length)]; //choose a random data from the array in parameter
 const seedEvents = async()=>{
     await Event.deleteMany({});

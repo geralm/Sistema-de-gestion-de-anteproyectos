@@ -3,6 +3,9 @@ body{
     background: -webkit-linear-gradient(to bottom, #B7D6EB , #3B95D1);   
     /* background: linear-gradient(to bottom, #B7D6EB, #3B95D1);  */
 }
+.bg-skyblue{
+    background: #B7D6EB;  
+}
 .bg-darkmarine{
     background: #005470;
 }

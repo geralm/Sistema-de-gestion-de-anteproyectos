@@ -17,9 +17,24 @@
                 <li class="list-group-item"> <small>Restante: {{event.duration}}</small> </li>
             </ul>
             <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="/events" class="btn btn-primary btn-large">Volver</a>
+                </div>
             </div>
+            {{!-- Solo si es administrador --}}
+            <div class="card-footer text-muted">
+               
+                <div class="container-fluid">
+                    <div class="row justify-content-md-center">
+                        <div class="col-4">
+                            <a href="/events/{{event.id}}/edit" class="btn btn-warning">Editar</a>    
+                        </div>
+                    </div>
+                </div>
+                
+             
+            </div>
+          
         </div>
         </div>
         
