@@ -7,6 +7,7 @@ const catchAsync = require('../utils/catchAsync');
 router.route('/')
     .get(catchAsync(events.renderIndex)) 
     .post(validateEvent ,catchAsync(events.createEvent));
+    
 router.get('/new',events.renderNewEvent);
 router.route('/:id')
     .get(catchAsync(events.showEvent));
