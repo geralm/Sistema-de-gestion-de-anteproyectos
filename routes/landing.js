@@ -4,4 +4,6 @@ const events = require('../controllers/landing');
 
 router.route('/').get(events.renderLanding)
 
+
+
 module.exports = router;

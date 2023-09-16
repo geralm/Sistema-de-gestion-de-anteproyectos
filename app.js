@@ -3,15 +3,20 @@ const path = require('path')
 const hbs = require('express-handlebars')
 const methodOverride = require('method-override'); //Allows to use delete and update verbs
 const mongoose = require('mongoose');
+const session = require("express-session")
+const passport = require("passport")
 
 //Init
 const app = express()
+
+
 
 //Routers
 const landingRouter = require('./routes/landing')
 const eventsRouter = require('./routes/events');
 const adminRouter = require('./routes/admin')
 const studentRouter = require('./routes/student')
+const userRouter = require('./routes/user')
 
 //Database
 mongoose.connect('mongodb://127.0.0.1:27017/gestion-de-anteproyectos', {
@@ -34,6 +39,14 @@ app.engine('hbs', hbs.create({
     extname:'.hbs'
 }).engine);
 
+app.use(session({
+    secret: 'mysecretapp',
+    resave: true,
+    saveUninitialized: true 
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 //Register partials
 
 app.set('view engine','.hbs')
@@ -45,6 +58,7 @@ app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
 app.use('/',landingRouter)
 app.use('/student',studentRouter)
+app.use('/user',userRouter)
 
 
 //Boot server
