@@ -1,0 +1,96 @@
+<div class="container ">
+
+    <div class="row mb-3"></div>
+
+    <div class="row mb-2">
+        <h1>Revisión de Anteproyectos</h1>
+    </div>
+
+    <div class="row mb-2">
+        <form action="/admin/anteproyectos/find" method="POST">
+            <div class="row">
+                <label class="form-label" for="exampleInputEmail1">Buscar estudiante:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" id="nombreEstudiante" name="nombreEstudiante">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary w-100">Buscar</button>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col">
+            <h3>Estudiante</h3>
+            <img src="/images/avatar.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col">
+            <h3>Empresa</h3>
+            <img src="/images/empresa.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col">
+            <h3>Estado anteproyecto</h3>
+            <img src="/images/estado.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col">
+            <h3>Revisiones</h3>
+            <img src="/images/revisar.png" class="img-fluid" alt="Responsive image">
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        {{#if anteproyectos}}
+        {{#each anteproyectos}}
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="info">
+                                {{nombreEstudiante}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="info">
+                                {{nombreEmpresa}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="info">
+                                {{estado}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary w-100">Revisar</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        {{/each}}
+        {{/if}}
+    </div>
+
+
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div>
+
+</div>

@@ -1,0 +1,105 @@
+<div class="container">
+
+    <div class="row">
+        <h1>          </h1>
+        <h1>Registro de Anteproyectos</h1>
+    </div>
+
+    
+    <div class="row">
+
+    
+    <form action="/student/upload" method="POST" > 
+        <div class="row">
+            <div class="col">
+
+                
+
+                <h3>Datos personales</h3>
+                <div class="form-group">
+                <label class="form-label" for="exampleInputEmail1">Semestre</label>
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[semestre]">  
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>          
+                </div>
+
+                <div class="form-group">
+                <label class="form-label" for="exampleInputPassword1">Nombre Completo</label>
+                <input type="nombre" class="form-control" id="exampleInputPassword1" name="proyecto[nombreEstudiante]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Carnet</label>
+                <input type="carnet" class="form-control" id="exampleInputPassword1" name="proyecto[carnet]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Correo</label>
+                <input type="correo" class="form-control" id="exampleInputPassword1" name="proyecto[correoEstudiante]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Numero telefónico</label>
+                <input type="celularEstudiante" class="form-control" id="exampleInputPassword1" name="proyecto[telefonoEstudiante]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Matricula otro curso? Especifique cuál</label>
+                <input type="matricula" class="form-control" id="exampleInputPassword1" name="proyecto[cursos]">
+                </div>
+            </div>
+
+
+            <div class="col">
+                <h3>Datos de la empresa</h3>
+
+                <div class="form-group">
+                <label for="exampleInputEmail1">Nombre empresa</label>
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[nombreEmpresa]">            
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Dirección</label>
+                <input type="nombre" class="form-control" id="exampleInputPassword1" name="proyecto[direccionEmpresa]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Numero telefónico</label>
+                <input type="carnet" class="form-control" id="exampleInputPassword1" name="proyecto[telefonoEmpresa]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Nombre del supervisor</label>
+                <input type="correo" class="form-control" id="exampleInputPassword1" name="proyecto[nombreSupervisor]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Puesto del supervisor</label>
+                <input type="celularEstudiante" class="form-control" id="exampleInputPassword1" name="proyecto[puestoSupervisor]">
+                </div>
+
+                <div class="form-group">
+                <label for="exampleInputPassword1">Correo del supervisor</label>
+                <input type="matricula" class="form-control" id="exampleInputPassword1" name="proyecto[correoSupervisor]">
+                </div>
+            </div>
+
+
+        </div>
+       
+        <button type="submit" class="btn btn-primary">Subir cuestionario</button>
+    </form>
+
+    </div>
+    
+
+    <div class="row">
+        <form>
+            <button type="submit" class="btn btn-primary">Subir documento</button>
+        </form>
+        
+    </div>
+
+
+</div>

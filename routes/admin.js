@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const{renderAdmin}=require('../controllers/admin')
+const events =require('../controllers/admin')
 
 
-router.route('/admin').get(renderAdmin)
+router.route('/').get(events.renderAdmin)
+router.route('/anteproyectos').get(events.renderAnteproyectos)
+router.route('/anteproyectos/find').post(events.renderOne)
 
 module.exports = router

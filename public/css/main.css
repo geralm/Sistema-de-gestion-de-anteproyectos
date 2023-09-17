@@ -1,9 +1,21 @@
 body{
-    background: #43C6AC;  
-    background: -webkit-linear-gradient(to bottom, aliceblue , lightblue);  
-    background: linear-gradient(to bottom, aliceblue, lightblue); 
+    background: #B7D6EB;   
+    background: -webkit-linear-gradient(to bottom, #B7D6EB , #3B95D1);   
+    /* background: linear-gradient(to bottom, #B7D6EB, #3B95D1);  */
 }
-
+.bg-skyblue{
+    background: #B7D6EB;  
+}
+.bg-darkmarine{
+    background: #005470;
+}
+.bg-turquoise{
+    background: #49C8F2;
+}
+.txt-turquoise{
+    background: #49C8F2;
+    font-weight: bold;
+}
 .title-color{
     color:navy;
     font-weight: bold;

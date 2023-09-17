@@ -5,11 +5,12 @@ const EventSchema = new Schema({
     title: {
         type: String,
         required: true,
-        maxlength: 30
+        maxlength: 50
     },
     description: {
         type:String,
-        maxlength:300
+        required:true,
+        maxlength:500
     },
     startDate: {
         type : Date, 
