@@ -11,3 +11,16 @@ module.exports.eventSchema = Joi.object({
         //have not sense to add a new event already expired
     }).required()
 }); //Create a schema for validate users
+
+module.exports.userSchema = Joi.object({
+    user: Joi.object({
+        nombre: Joi.string().required(),
+        carnet: Joi.number().required(),
+        telefono: Joi.number().max(99999998).min(11111111).required(), 
+        correo: Joi.string().required(), 
+        contrasenia: Joi.string().min(6).required()
+    }).required()
+
+    
+}); 
+
