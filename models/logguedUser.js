@@ -35,6 +35,28 @@ const newUserSchema = new Schema({
         required: true,
         minlength: 6,
         unique: false,
+    },
+    esAdmin: {
+        type: Boolean,
+        required: true,
+        default: false,
+        unique: false,
+    }
+
+});
+
+const userSchema = new Schema({
+    correo: {
+        type: String,
+        required: true,
+        maxlength: 50,
+        unique: true
+    },
+    contrasenia: {
+        type: String,
+        required: true,
+        minlength: 6,
+        unique: false,
     }
 
 });
@@ -44,7 +66,7 @@ newUserSchema.methods.encryptPassword = async (password) => {
     return await bcrypt.hash(password, salt);
 };
   
-newUserSchema.methods.matchPassword = async function (password) {
+userSchema.methods.matchPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
@@ -53,4 +75,7 @@ newUserSchema.plugin(passportLocalMongoose);
 
 
 
-module.exports = mongoose.model('newUser', newUserSchema);
+const NewUser = mongoose.model('NewUser', newUserSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = { NewUser, User };
