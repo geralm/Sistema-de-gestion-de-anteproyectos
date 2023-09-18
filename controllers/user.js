@@ -7,8 +7,9 @@ module.exports.renderLogin = (req, res) => {
 
 module.exports.login = (req, res) => {
     req.flash('success', 'welcome back!');
-    const redirectUrl = req.session.returnTo || '/student';
+    var redirectUrl = req.session.returnTo || '/student';
     delete req.session.returnTo;
+    if (req.user.esAdmin) redirectUrl = '/admin'
     res.redirect(redirectUrl);
 }
 
