@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
 const hbs = require('express-handlebars')
-const cors = require('cors');
 const methodOverride = require('method-override'); //Allows to use delete and update verbs
 const mongoose = require('mongoose');
 const session = require("express-session")
@@ -50,7 +49,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors());
 app.use(flash());
 
 //Register partials
