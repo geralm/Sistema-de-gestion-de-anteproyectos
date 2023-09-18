@@ -7,9 +7,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
+      
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+            <a class="nav-link active" aria-current="page" href="/user/logout">Inicio</a>
           </li>
+          {{#ifEquals user.esAdmin true}}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="/events" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Eventos
@@ -19,6 +21,16 @@
               <li><a class="dropdown-item" href="/events/new">Crear eventos</a></li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/admin/anteproyectos">Anteproyectos</a>
+          </li>
+          {{/ifEquals}}
+          {{#ifEquals user.esAdmin false}}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/student/upload">Subir anteproyecto</a>
+          </li>
+          {{/ifEquals}}
+
       </ul>
     </div>
   </div>

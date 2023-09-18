@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const session = require("express-session")
 const passport = require("passport")
 const flash = require('connect-flash');
+const handlebars = require('handlebars')
 require('./config/passport')
 //Init
 const app = express()
@@ -51,6 +52,14 @@ app.use(passport.session());
 
 app.use(flash());
 
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    res.locals.user = req.user || null;
+    next();
+  }); 
+
 //Register partials
 
 app.set('view engine','.hbs')
@@ -69,4 +78,13 @@ app.use('/user',userRouter)
 const port = app.get('port')
 app.listen(port,()=>{
     console.log(`Server up and running on port ${port}`)
+})
+
+handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+    console.log(arg1,arg2)
+    if (arg1 === arg2) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this)
+    }
 })

@@ -8,6 +8,7 @@ module.exports.renderIndex = async(req, res) =>{
     res.render('events/index', {events: eventsData});
 }
 module.exports.renderNewEvent = (req, res)=>{
+    console.log(req.user)
     res.render('events/new')
 }
 module.exports.showEvent = async (req, res) =>{

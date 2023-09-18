@@ -9,7 +9,6 @@ passport.use(
       passwordField: "contrasenia"
     },
     async (email, password, done) => {     
-      console.log("hola0")
       const user = await User.findOne({ correo: email });
       if (!user) {
         return done(null, false, { message: "Not User found." });
@@ -18,6 +17,7 @@ passport.use(
       if (!isMatch)
         return done(null, false, { message: "Incorrect Password." });
       
+
       return done(null, user);
     }
   )
@@ -33,7 +33,7 @@ passport.serializeUser(async (user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).lean();
     done(null, user);
   } catch (error) {
     done(error);
