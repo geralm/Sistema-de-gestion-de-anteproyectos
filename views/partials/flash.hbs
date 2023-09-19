@@ -2,17 +2,13 @@
 
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     {{success}} 
-    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-        {{!-- <span aria-hidden="true">&times;</span> --}}
-    </button>
+    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/ifflash}}
 
 {{#ifflash error}}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ error }}
-    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
-        {{!-- <span aria-hidden="true">&times;</span> --}}
-    </button>
+    <strong>{{ error }}</strong>
+    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/ifflash}}
