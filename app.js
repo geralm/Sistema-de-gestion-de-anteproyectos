@@ -69,9 +69,14 @@ app.use(methodOverride('_method')); //allows to make update and deletes methods
 //Routes
 app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
-app.use('/',landingRouter)
+// app.use('/',landingRouter) // No utilizamos esto porque ahora el landing es home
 app.use('/student',studentRouter)
-app.use('/user',userRouter)
+app.use('/',userRouter)
+
+app.get('/', (req, res) => {
+    res.render('home', {layout: false})
+});
+
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))

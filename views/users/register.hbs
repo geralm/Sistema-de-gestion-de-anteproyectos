@@ -1,0 +1,90 @@
+<div class="container justify-content-center align-items-center">
+            <div class="row">
+                <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 mt-5 ">
+                    <div class="card shadow">
+                        {{!-- <div class="card-header">
+                            <h3>Ingreso de usuario</h3>
+                        </div> --}}
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Registro de usuario</h5>
+                            <form novalidate class="needs-validation" action="/user/signin" method="POST">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Email</label>
+                                    <input type="email" name="correo" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Email"
+                                        pattern="^[A-Za-z0-9._%+-]+@estudiantec\.cr$" required autofocus>
+                                    <div class="invalid-feedback">
+                                        El email no puede quedar vacío
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="exampleInputPassword1">Contraseña</label>
+                                    <input type="password" name="contrasenia" class="form-control"
+                                        id="exampleInputPassword1" placeholder="Contraseña" required>
+                                    <div class="valid-feedback">
+                                        La contraseña no puede quedar vacía
+                                    </div>
+                                </div>
+                                <br>
+                                <span class="text-center">
+                                      <p>¿Aún no tienes una cuenta?<a href=""> Registrate</a></p>
+                                <button class="btn btn-success btn-block">Ingresar</button>
+                                </span>
+                              
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{{!-- 
+         <div class="col">
+
+            <div class="card">
+
+                <div class="card-header">
+                    <h3>
+                        ¿Nuevo Usuario? - Registrate
+                    </h3>
+                </div>
+
+                <div class="card-body">
+
+                    <form novalidate class="needs-validation" action="/user/signup" method="POST">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nombre completo</label>
+                            <input type="text" name="user[nombre]" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre" required>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Carnet estudiantil</label>
+                            <input type="number" name="user[carnet]" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Carnet" required>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Número telefónico</label>
+                            <input type="number" name="user[telefono]" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Número telefónico" required>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input type="email" name="user[correo]" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" requiredpattern="^[A-Za-z0-9._%+-]+@estudiantec\.cr$" required>                            
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Contraseña</label>
+                            <input type="password" name="user[contrasenia]" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" minlength="6" required>
+                        </div>
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    
+    <div class="row-gap-0">
+        <h1>  </h1>
+        <img src="/images/intern.png" class="img-fluid" alt="Responsive image">
+    </div> --}}

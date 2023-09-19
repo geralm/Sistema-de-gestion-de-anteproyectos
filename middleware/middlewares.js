@@ -27,8 +27,10 @@ module.exports.validateUser = (req, res, next) => {
 module.exports.isLoggedIn =(req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl
+        console.log("The User is not logged in!!!! in middlewares ");
+        console.log(req.originalUrl);
         req.flash('error', '¡Primero debes loggearte!');
-        return res.redirect('user/signin');
+        return res.redirect('/signin');
     }
     next();
 }
