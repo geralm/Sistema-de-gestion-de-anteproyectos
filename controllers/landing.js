@@ -1,5 +1,5 @@
 const renderLanding =  (req,res)=>{
-    res.render('landing/landingWelcome')
+    res.render('home',  { layout: false })
 }
 
 
