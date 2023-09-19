@@ -14,6 +14,9 @@ body {
 .cover-container {
     max-width: 60vw;
 }
+.txt-white, .txt-white:hover{
+  color: rgba(242, 242, 242, 1);
+}
 .nav-link {
     padding: 0.25rem 0;
     font-weight: 700;
@@ -87,6 +90,7 @@ body {
   background-color: #f2f2f2;
   box-shadow: #f2f2f2 (0, 0, 0, 0.25)0 0.05em 0 0.1rem ;
   transform: translateY(-2px);
+  letter-spacing: 0.09em;
 }
 
 .btn-init:active {
@@ -146,4 +150,25 @@ body {
   .button-28:active {
     box-shadow: none;
     transform: translateY(0);
+
+    
+
+.ATM-Finder-App-|-UI-Design-1-hex { color: #010626; }
+.ATM-Finder-App-|-UI-Design-2-hex { color: #0439D9; }
+.ATM-Finder-App-|-UI-Design-3-hex { color: #056CF2; }
+.ATM-Finder-App-|-UI-Design-4-hex { color: #0455BF; }
+.ATM-Finder-App-|-UI-Design-5-hex { color: #F2F2F2; }
+
+
+.ATM-Finder-App-|-UI-Design-1-rgba { color: rgba(0, 6, 38, 1); }
+.ATM-Finder-App-|-UI-Design-2-rgba { color: rgba(4, 57, 216, 1); }
+.ATM-Finder-App-|-UI-Design-3-rgba { color: rgba(4, 107, 242, 1); }
+.ATM-Finder-App-|-UI-Design-4-rgba { color: rgba(3, 85, 191, 1); }
+.ATM-Finder-App-|-UI-Design-5-rgba { color: rgba(242, 242, 242, 1); }
+
+.ATM-Finder-App-|-UI-Design-1-hsla { color: hsla(230, 96, 7, 1); }
+.ATM-Finder-App-|-UI-Design-2-hsla { color: hsla(225, 96, 43, 1); }
+.ATM-Finder-App-|-UI-Design-3-hsla { color: hsla(213, 96, 48, 1); }
+.ATM-Finder-App-|-UI-Design-4-hsla { color: hsla(213, 96, 38, 1); }
+.ATM-Finder-App-|-UI-Design-5-hsla { color: hsla(0, 0, 95, 1); }
   } */

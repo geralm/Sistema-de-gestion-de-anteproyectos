@@ -24,3 +24,11 @@ module.exports.validateUser = (req, res, next) => {
         next();
     }
 }
+module.exports.isLoggedIn =(req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.session.returnTo = req.originalUrl
+        req.flash('error', '¡Primero debes loggearte!');
+        return res.redirect('/signin');
+    }
+    next();
+}

@@ -1,26 +1,54 @@
-body{
-    background: #B7D6EB;   
-    background: -webkit-linear-gradient(to bottom, #B7D6EB , #3B95D1);   
-    /* background: linear-gradient(to bottom, #B7D6EB, #3B95D1);  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+body {
+    font-family: "Roboto", sans-serif;
+    background: radial-gradient(circle, rgba(4, 107, 242, 0.9), rgba(0, 6, 38, 1));
+    color: rgba(242, 242, 242, 1);
 }
-.bg-skyblue{
-    background: #B7D6EB;  
+.txt-white, .txt-white:hover{
+    color: rgba(242, 242, 242, 1);
 }
-.bg-darkmarine{
-    background: #005470;
-}
-.bg-turquoise{
-    background: #49C8F2;
-}
-.txt-turquoise{
-    background: #49C8F2;
-    font-weight: bold;
-}
-.title-color{
-    color:navy;
-    font-weight: bold;
-}
+
 .input-group-append {
     cursor: pointer;
+}
+
+
+.nav-link {
+    padding: 0.25rem 0;
+    font-weight: 700;
+    color: rgba(255,255,255,1);
+    margin-left: 1rem;
+    border-bottom: 0.25rem solid transparent;
+}
+.nav-link:hover{
+    color: rgba(255,255,255,1);
+    border-bottom-color:rgba(4, 107, 242, 1);
+}
+.nav-link.active:not(.inicio-link, .dropdown-toggle) {
+    color: rgba(255,255,255,1);
+    border-bottom-color:rgba(4, 107, 242, 1);
 
 }
+
+.bg-fancynav{
+    background-color:rgba(0, 6, 38, 1);
+    padding: 15px; /* Espacio interno alrededor de los elementos del navbar */
+ 
+    /* linear-gradient(rgba(3, 85, 191, 1), rgba(3, 85, 191, 1)), */ 
+}/* Estilo de los elementos del menú en el navbar, excepto el último */
+.navbar li:not(:last-child) {
+    margin-right: 18px; /* Espacio horizontal entre elementos del menú */
+}
+
+#footerStyle{
+    background-color:rgba(0, 6, 38, 1);
+    padding: 15px; /* Espacio interno alrededor de los elementos del navbar */
+    color: rgba(242,242,242,1);
+    /* linear-gradient(rgba(3, 85, 191, 1), rgba(3, 85, 191, 1)), */ 
+}/* Estilo de los elementos del menú en el navbar, excepto el último */
+
+ /* color: rgba(0, 6, 38, 1);  */
+    /* color: rgba(4, 57, 216, 1); 
+    color: rgba(4, 107, 242, 1); 
+    color: rgba(3, 85, 191, 1); 
+    color: rgba(242, 242, 242, 1);  */

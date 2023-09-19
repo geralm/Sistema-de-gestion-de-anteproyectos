@@ -7,6 +7,7 @@ const session = require("express-session")
 const passport = require("passport")
 const flash = require('connect-flash');
 const handlebars = require('handlebars')
+const ExpressError = require('./utils/ExpressError')
 require('./config/passport')
 //Init
 const app = express()
@@ -53,8 +54,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use((req, res, next) => {
-    res.locals.success_msg = req.flash("success_msg");
-    res.locals.error_msg = req.flash("error_msg");
+    res.locals.success= req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.user = req.user || null;
     next();
@@ -73,7 +73,15 @@ app.use('/',landingRouter)
 app.use('/student',studentRouter)
 app.use('/user',userRouter)
 
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
+})
 
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    res.status(statusCode).render('error', { err })
+})
 //Boot server
 const port = app.get('port')
 app.listen(port,()=>{
