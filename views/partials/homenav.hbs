@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between align-items-left">
+    <nav class="navbar navbar-expand-lg fixed-top justify-content-between bg-fancynav">
+        <div class="container-fluid">
+            <a class="navbar-brand title-color" href="/">Sistema de Prácticas Profesionales</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto "> <!-- Utiliza 'ml-auto' para alinear los elementos a la derecha -->
+                    <li class="nav-item inicio-link">
+                        <a class="nav-link active" aria-current="page" href="/user/logout">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/events" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Eventos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/events">Ver eventos</a></li>
+                            <li><a class="dropdown-item" href="/events/new">Crear eventos</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/admin/anteproyectos">Anteproyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/student/upload">Subir anteproyecto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
