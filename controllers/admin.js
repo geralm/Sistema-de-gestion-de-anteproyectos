@@ -1,8 +1,10 @@
 const Anteproyecto = require('../models/proyecto')
 
-const renderAdmin =  (req,res)=>{
-    res.render('admin/adminWelcome')
-}
+//Se quitó porque ahora usamos un template dinamico para el welcome de admin y usuario
+// const renderAdmin =  (req,res)=>{
+//     res.render('admin/adminWelcome')
+// }
+//El template dinamico se renderiza en routes/user.js 
 
 
 const renderAnteproyectos = async (req,res) => {
@@ -20,5 +22,5 @@ const renderOne = async (req,res)=>{
 
 
 module.exports = {
-    renderAdmin,renderAnteproyectos,renderOne
+    renderAnteproyectos,renderOne
 }

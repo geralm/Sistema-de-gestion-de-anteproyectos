@@ -1,4 +1,4 @@
-<div class="container-fluid ">
+<div class="container-fluid">
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
             <h1 class="mt-3">Detalles del evento</h1>
@@ -7,37 +7,33 @@
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
             <div class="card mt-3" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title title-color">{{event.title}}</h5>
-                <p class="card-text">{{event.description}}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Inicio: {{event.startDate}}</li>
-                <li class="list-group-item">Cierre: {{event.finishDate}}</li>
-                <li class="list-group-item"> <small>Restante: {{event.duration}}</small> </li>
-            </ul>
-            <div class="card-body">
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <a href="/events" class="btn btn-primary btn-large">Volver</a>
+                <div class="card-body">
+                    <h5 class="card-title title-color">{{event.title}}</h5>
+                    <p class="card-text">{{event.description}}</p>
                 </div>
-            </div>
-            {{!-- Solo si es administrador --}}
-            <div class="card-footer text-muted">
-               
-                <div class="container-fluid">
-                    <div class="row justify-content-md-center">
-                        <div class="col-4">
-                            <a href="/events/{{event.id}}/edit" class="btn btn-warning">Editar</a>    
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Inicio: {{event.startDate}}</li>
+                    <li class="list-group-item">Cierre: {{event.finishDate}}</li>
+                    <li class="list-group-item"> <small>Restante: {{event.duration}}</small> </li>
+                </ul>
+                <div class="card-body">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a href="/events" class="btn btn-primary btn-block">Volver</a>
+                    </div>
+                </div>
+                {{#ifEquals user.esAdmin true}}
+            
+                <div class="card-footer text-muted">
+                    <div class="container-fluid">
+                        <div class="row justify-content-center">
+                            <div class="col-4">
+                                <a href="/events/{{event.id}}/edit" class="btn btn-warning btn-block">Editar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-             
+                {{/ifEquals}}
             </div>
-          
         </div>
-        </div>
-        
     </div>
-    
 </div>

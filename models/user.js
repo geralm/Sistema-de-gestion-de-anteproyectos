@@ -22,7 +22,7 @@ const newUserSchema = new Schema({
         required: true,
         maxlength: 8,
         minlength: 8,
-        unique: true
+        unique: false
     },
     correo: {
         type: String,

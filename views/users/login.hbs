@@ -1,0 +1,110 @@
+{{!-- <div class="container d-flex justify-content-center align-items-center mt-5 text-center">
+    <div class="row"> --}}
+        <div class="container justify-content-center align-items-center">
+            <div class="row">
+                <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 mt-5 ">
+                    <div class="card shadow">
+                        {{!-- <div class="card-header">
+                            <h3>Ingreso de usuario</h3>
+                        </div> --}}
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Ingreso de usuario</h5>
+                            <form novalidate class="needs-validation" action="/signin" method="POST">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Email</label>
+                                    <input type="email" name="correo" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="Email"
+                                        pattern="^[A-Za-z0-9._%+-]+@estudiantec\.cr$" required autofocus>
+                                    <div class="invalid-feedback">
+                                        El email no puede quedar vacío
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="exampleInputPassword1">Contraseña</label>
+                                    <input type="password" name="contrasenia" class="form-control"
+                                        id="exampleInputPassword1" placeholder="Contraseña" required>
+                                    <div class="valid-feedback">
+                                        La contraseña no puede quedar vacía
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="d-grid gap-2">
+                                    <span class="text-center">
+                                        <p>¿Aún no tienes una cuenta?<a href="/register"> Registrate</a></p>
+                                        <button class="btn btn-success btn-block">Ingresar</button>
+                                </div>
+                                </span>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{!
+    </div>
+</div> --}}
+
+{{!-- <div class="col">
+    <div class="card">
+
+        <div class="card-header">
+            <h3>
+                Bienvenido de vuelta - Ingreso de usuario
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form novalidate class="needs-validation" action="/user/signin" method="POST">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" name="correo" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Email" pattern="^[A-Za-z0-9._%+-]+@estudiantec\.cr$"
+                        required>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Contraseña</label>
+                    <input type="password" name="contrasenia" class="form-control" id="exampleInputPassword1"
+                        placeholder="Contraseña" required>
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+
+    </div>
+</div> --}}
+{{!--
+<div class="container d-flex justify-content-center align-items-center mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+            <div class="card shadow">
+                <img src="https://images.unsplash.com/photo-1571863533956-01c88e79957e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
+                    alt="" class="card-img-top" />
+                <div class="card-body">
+                    <h5 class="card-title">Login</h5>
+                    <form action="/login" method="POST" class="validated-form" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username</label>
+                            <input class="form-control" type="text" id="username" name="username" autofocus required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" type="password" id="password" name="password" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div> --}}

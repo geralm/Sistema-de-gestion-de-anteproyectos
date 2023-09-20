@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+body {
+    height: 100vh;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("../images/homebg3.jpg");
+    background-size: cover;
+    background-position: center;
+    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+    color: #f2f2f2;
+    font-family: "Roboto", sans-serif;
+}
+.cover-container {
+    max-width: 60vw;
+}
+.txt-white, .txt-white:hover{
+  color: rgba(242, 242, 242, 1);
+}
+.nav-link {
+    padding: 0.25rem 0;
+    font-weight: 700;
+    color: rgba(255,255,255,1);
+    margin-left: 1rem;
+    border-bottom: 0.25rem solid transparent;
+}
+.nav-link:hover{
+    color: rgba(255,255,255,1);
+    border-bottom-color:rgba(4, 107, 242, 1);
+}
+.nav-link.active:not(.inicio-link, .dropdown-toggle) {
+    color: rgba(255,255,255,1);
+    border-bottom-color:rgba(4, 107, 242, 1);
+
+}
+
+.bg-fancynav{
+    background-color:rgba(0, 6, 38, 0.6);
+    padding: 15px; /* Espacio interno alrededor de los elementos del navbar */
+ 
+    /* linear-gradient(rgba(3, 85, 191, 1), rgba(3, 85, 191, 1)), */ 
+}/* Estilo de los elementos del menú en el navbar, excepto el último */
+.navbar li:not(:last-child) {
+    margin-right: 18px; /* Espacio horizontal entre elementos del menú */
+}
+
+/* .btn-fancy{
+
+} */
+.btn-init {
+    
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #f2f2f2;
+  border-radius: 0px;
+  box-sizing: border-box;
+  color: #f2f2f2; /*#3B3B3B; */
+  cursor: pointer; 
+  display: inline-block;
+  /* word-spacing: 0.1em; */
+  /* font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; */
+  font-family : "Roboto", sans-serif;
+  font-size: 25px;
+  font-weight: normal;
+  line-height: normal;
+  margin: 20px;
+  min-height: 60px;
+  min-width: 150px;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 400ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 40%;
+  will-change: transform;
+}
+.main-txt{
+    color: #f2f2f2;
+    font-family: "Roboto", sans-serif;
+    font-size: 75px;
+}
+
+
+
+.btn-init:hover{
+  color: #333;
+  font-weight: normal;
+  background-color: #f2f2f2;
+  box-shadow: #f2f2f2 (0, 0, 0, 0.25)0 0.05em 0 0.1rem ;
+  transform: translateY(-2px);
+  letter-spacing: 0.09em;
+}
+
+.btn-init:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+.title-color , .title-color:hover{
+    color: #f2f2f2;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+    
+}
+
+/* <!-- HTML !-->
+<button class="button-28" role="button">Button 28</button>
+
+/* 
+.button-28 {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #1A1A1A;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 60px;
+    min-width: 0;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    will-change: transform;
+  }
+  
+  .button-28:disabled {
+    pointer-events: none;
+  }
+  
+  .button-28:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  
+  .button-28:active {
+    box-shadow: none;
+    transform: translateY(0);
+
+    
+
+.ATM-Finder-App-|-UI-Design-1-hex { color: #010626; }
+.ATM-Finder-App-|-UI-Design-2-hex { color: #0439D9; }
+.ATM-Finder-App-|-UI-Design-3-hex { color: #056CF2; }
+.ATM-Finder-App-|-UI-Design-4-hex { color: #0455BF; }
+.ATM-Finder-App-|-UI-Design-5-hex { color: #F2F2F2; }
+
+
+.ATM-Finder-App-|-UI-Design-1-rgba { color: rgba(0, 6, 38, 1); }
+.ATM-Finder-App-|-UI-Design-2-rgba { color: rgba(4, 57, 216, 1); }
+.ATM-Finder-App-|-UI-Design-3-rgba { color: rgba(4, 107, 242, 1); }
+.ATM-Finder-App-|-UI-Design-4-rgba { color: rgba(3, 85, 191, 1); }
+.ATM-Finder-App-|-UI-Design-5-rgba { color: rgba(242, 242, 242, 1); }
+
+.ATM-Finder-App-|-UI-Design-1-hsla { color: hsla(230, 96, 7, 1); }
+.ATM-Finder-App-|-UI-Design-2-hsla { color: hsla(225, 96, 43, 1); }
+.ATM-Finder-App-|-UI-Design-3-hsla { color: hsla(213, 96, 48, 1); }
+.ATM-Finder-App-|-UI-Design-4-hsla { color: hsla(213, 96, 38, 1); }
+.ATM-Finder-App-|-UI-Design-5-hsla { color: hsla(0, 0, 95, 1); }
+  } */

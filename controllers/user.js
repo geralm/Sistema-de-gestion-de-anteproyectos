@@ -2,14 +2,21 @@ const User = require('../models/user');
 
 
 module.exports.renderLogin = (req, res) => {
-    res.render('/');
+    res.render('users/login');
 }
-
+module.exports.renderRegister = (req, res) => {
+    res.render('users/register');
+}
+module.exports.renderUserHome = (req , res) => {
+    if (req.user.esAdmin === true) {
+        return res.render('admin/adminHome');
+    } 
+    res.render('student/studentHome');
+}
 module.exports.login = (req, res) => {
-    req.flash('success', 'welcome back!');
-    var redirectUrl = req.session.returnTo || '/student';
+    req.flash('success', '¡Bienvenido de nuevo!');
+    var redirectUrl = req.session.returnTo || '/user';
     delete req.session.returnTo;
-    if (req.user.esAdmin) redirectUrl = '/admin'
     res.redirect(redirectUrl);
 }
 
@@ -24,7 +31,7 @@ module.exports.logout = (req, res) => {
         });
     })
     .then(() => {
-        req.flash('success', "Goodbye!");
+        req.flash('success', "¡Adiós, Esperamos verte pronto!");
         res.redirect('/');
     })
     .catch((err) => {
@@ -36,9 +43,12 @@ module.exports.logout = (req, res) => {
 }
 
 module.exports.createUsuario = async (req,res)=>{
-    const newUsuario  = req.body.user;   
+    const newUsuario  = req.body.user;  
+    newUsuario.esAdmin = false; //Postman podría enviar un usuario con esAdmin true 
     const usuario = new User(newUsuario)
+    console.log(usuario);
     usuario.contrasenia = await usuario.encryptPassword(usuario.contrasenia);
     await usuario.save()
-    res.redirect('/student')
+    req.flash('success', '¡Usuario creado exitosamente! Ahora puedes iniciar sesión');
+    res.redirect('/signin')
   }

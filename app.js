@@ -7,6 +7,7 @@ const session = require("express-session")
 const passport = require("passport")
 const flash = require('connect-flash');
 const handlebars = require('handlebars')
+const ExpressError = require('./utils/ExpressError')
 require('./config/passport')
 //Init
 const app = express()
@@ -38,7 +39,7 @@ app.set('views',path.join(__dirname, '/views'))
 app.engine('hbs', hbs.create({
     defaultLayout:'main',
     layoutsDir:path.join(app.get('views'),'layouts'),
-    partialsDir:path.join(app.get('views'),'partials'),
+    partialsDir:path.join(app.get('views'),'partials'),    
     extname:'.hbs'
 }).engine);
 
@@ -53,8 +54,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use((req, res, next) => {
-    res.locals.success_msg = req.flash("success_msg");
-    res.locals.error_msg = req.flash("error_msg");
+    res.locals.success= req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.user = req.user || null;
     next();
@@ -69,11 +69,24 @@ app.use(methodOverride('_method')); //allows to make update and deletes methods
 //Routes
 app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
-app.use('/',landingRouter)
+// app.use('/',landingRouter) // No utilizamos esto porque ahora el landing es home
 app.use('/student',studentRouter)
-app.use('/user',userRouter)
+app.use('/',userRouter)
+
+app.get('/', (req, res) => {
+    res.render('home', {layout: false})
+});
 
 
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
+})
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    res.status(statusCode).render('error', { err })
+})
 //Boot server
 const port = app.get('port')
 app.listen(port,()=>{
@@ -81,8 +94,21 @@ app.listen(port,()=>{
 })
 
 handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-    console.log(arg1,arg2)
     if (arg1 === arg2) {
+        return options.fn(this)
+    } else {
+        return options.inverse(this)
+    }
+})
+handlebars.registerHelper('iflogged', function(arg1, options) {
+    if(arg1){
+        return options.fn(this)
+    } else {
+        return options.inverse(this)
+    }
+})
+handlebars.registerHelper('ifflash', function(arg1, options) {
+    if(arg1  && arg1.length > 0){
         return options.fn(this)
     } else {
         return options.inverse(this)

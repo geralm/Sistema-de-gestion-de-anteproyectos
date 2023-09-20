@@ -1,7 +1,7 @@
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+{{!-- 
+<nav class="navbar navbar-expand-lg navbar-light bg-fancynav fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand title-color" href="/">Sistema de Prácticas Profesionales</a>
+    <a class="navbar-brand" href="/">Sistema de Prácticas Profesionales</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -18,7 +18,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="/events">Ver eventos</a></li>
+              {{#ifEquals user.esAdmin true}}
               <li><a class="dropdown-item" href="/events/new">Crear eventos</a></li>
+              {{/ifEquals}}
             </ul>
           </li>
           <li class="nav-item">
@@ -34,4 +36,4 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> --}}

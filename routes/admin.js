@@ -1,10 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const events =require('../controllers/admin')
+const admin =require('../controllers/admin')
+const { isLoggedIn, isAdmin } = require('../middleware/middlewares')
+const catchAsync = require('../utils/catchAsync');
 
+// router.route('/').get(events.renderAdmin)
+router.route('/anteproyectos')
+    .get(isLoggedIn, isAdmin,catchAsync(admin.renderAnteproyectos));
 
-router.route('/').get(events.renderAdmin)
-router.route('/anteproyectos').get(events.renderAnteproyectos)
-router.route('/anteproyectos/find').post(events.renderOne)
+//Cambiar esto por un método get para mantenerse a los estándares de restful
+router.route('/anteproyectos/find')
+    .post(isLoggedIn, isAdmin, admin.renderOne);
 
 module.exports = router
