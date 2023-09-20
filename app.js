@@ -100,6 +100,13 @@ handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
         return options.inverse(this)
     }
 })
+handlebars.registerHelper('iflogged', function(arg1, options) {
+    if(arg1){
+        return options.fn(this)
+    } else {
+        return options.inverse(this)
+    }
+})
 handlebars.registerHelper('ifflash', function(arg1, options) {
     if(arg1  && arg1.length > 0){
         return options.fn(this)

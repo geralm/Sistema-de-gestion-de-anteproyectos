@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-left">
-    <nav class="navbar navbar-expand-lg fixed-top justify-content-between bg-fancynav">
+    <nav class="navbar navbar-expand-lg fixed-top justify-content-center bg-fancynav float-md-right">
         <div class="container-fluid">
             <a class="navbar-brand txt-white" href="/">Sistema de Prácticas Profesionales</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -7,9 +7,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto "> <!-- Utiliza 'ml-auto' para alinear los elementos a la derecha -->
+                <ul class="navbar-nav"> <!-- Elementos que estarán en la izquierda -->
                     <li class="nav-item inicio-link">
-                        <a class="nav-link active" aria-current="page" href="/user/logout">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/events" id="navbarDropdownMenuLink" role="button"
@@ -18,15 +18,30 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/events">Ver eventos</a></li>
+                            {{#ifEquals user.esAdmin true}}
                             <li><a class="dropdown-item" href="/events/new">Crear eventos</a></li>
+                            {{/ifEquals}}
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/admin/anteproyectos">Anteproyectos</a>
-                    </li>
+                    {{#ifEquals user.esAdmin true}}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/admin/anteproyectos">Anteproyectos</a>
+                        </li>
+                    {{/ifEquals}}
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/student/upload">Subir anteproyecto</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav ml-auto"> <!-- Utiliza 'ml-auto' para alinear los elementos a la derecha -->
+                    {{#iflogged user}}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/logout">Logout</a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/signin">Ingresar</a>
+                    </li>
+                    {{/iflogged}}
                 </ul>
             </div>
         </div>
