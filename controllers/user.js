@@ -7,12 +7,13 @@ module.exports.renderLogin = (req, res) => {
 module.exports.renderRegister = (req, res) => {
     res.render('users/register');
 }
-
+module.exports.renderUserHome = (req , res) => {
+    res.render('users/userHome');
+}
 module.exports.login = (req, res) => {
     req.flash('success', '¡Bienvenido de nuevo!');
-    var redirectUrl = req.session.returnTo || '/student';
+    var redirectUrl = req.session.returnTo || '/user';
     delete req.session.returnTo;
-    if (req.user.esAdmin) redirectUrl = '/admin'
     res.redirect(redirectUrl);
 }
 
