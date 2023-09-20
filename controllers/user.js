@@ -45,5 +45,6 @@ module.exports.createUsuario = async (req,res)=>{
     console.log(usuario);
     usuario.contrasenia = await usuario.encryptPassword(usuario.contrasenia);
     await usuario.save()
-    res.redirect('/student')
+    req.flash('success', '¡Usuario creado exitosamente! Ahora puedes iniciar sesión');
+    res.redirect('/signin')
   }

@@ -18,10 +18,11 @@ const seedAdmin = async()=>{
         nombre: "admin",
         carnet: 2020426227,
         telefono: 88888888,
-        correo: "admin@estudiantec.cr"
+        correo: "admin@estudiantec.cr",
+        esAdmin: true
     })
     newAdmin.contrasenia = await newAdmin.encryptPassword("administrador");
-    newAdmin.seedAdmin = true;
+    
     await newAdmin.save()
     
     console.log("Admin created");
