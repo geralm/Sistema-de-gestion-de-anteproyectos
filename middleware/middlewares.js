@@ -45,6 +45,6 @@ module.exports.isAdmin = (req, res, next) => {
     }else{
         console.log("No eres admin", req.originalUrl);
         req.flash('error', '¡No tienes permisos para hacer eso!');
-        return res.redirect('/student');
+        return res.redirect('/user');
     }
 }
