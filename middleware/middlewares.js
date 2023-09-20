@@ -39,3 +39,12 @@ module.exports.isLoggedIn =(req, res, next) => {
     }
     next();
 }
+module.exports.isAdmin = (req, res, next) => {
+    if(req.user.esAdmin === true){
+        next();
+    }else{
+        console.log("No eres admin", req.originalUrl);
+        req.flash('error', '¡No tienes permisos para hacer eso!');
+        return res.redirect('/student');
+    }
+}
