@@ -22,3 +22,9 @@ module.exports.userSchema = Joi.object({
     }).required()
 }); 
 
+module.exports.teacherSchema = Joi.object({
+    teacher: Joi.object({
+        name: Joi.string().required(),
+        email: Joi.string().required()
+        }).required()
+});
