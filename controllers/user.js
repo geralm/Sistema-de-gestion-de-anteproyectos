@@ -8,7 +8,10 @@ module.exports.renderRegister = (req, res) => {
     res.render('users/register');
 }
 module.exports.renderUserHome = (req , res) => {
-    res.render('users/userHome');
+    if (req.user.esAdmin === true) {
+        return res.render('admin/adminHome');
+    } 
+    res.render('student/studentHome');
 }
 module.exports.login = (req, res) => {
     req.flash('success', '¡Bienvenido de nuevo!');
