@@ -9,7 +9,7 @@ module.exports.renderRegister = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-    req.flash('success', 'welcome back!');
+    req.flash('success', '¡Bienvenido de nuevo!');
     var redirectUrl = req.session.returnTo || '/student';
     delete req.session.returnTo;
     if (req.user.esAdmin) redirectUrl = '/admin'
@@ -27,7 +27,7 @@ module.exports.logout = (req, res) => {
         });
     })
     .then(() => {
-        req.flash('success', "Goodbye!");
+        req.flash('success', "¡Adiós, Esperamos verte pronto!");
         res.redirect('/');
     })
     .catch((err) => {
