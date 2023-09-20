@@ -16,11 +16,9 @@ module.exports.userSchema = Joi.object({
     user: Joi.object({
         nombre: Joi.string().required(),
         carnet: Joi.number().required(),
-        telefono: Joi.number().max(99999998).min(00000000000).required(), 
+        telefono: Joi.number().max(99999998).min(20000000).required(), 
         correo: Joi.string().required(), 
         contrasenia: Joi.string().min(6).required()
     }).required()
-
-    
 }); 
 
