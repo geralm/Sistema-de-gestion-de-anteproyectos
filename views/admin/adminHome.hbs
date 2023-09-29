@@ -1,19 +1,51 @@
+<div class="container-fluid text-center mb-4">
+    <h1>Semestre {{adminData.semesterInfo.period}}</h1>
+</div>
 <div class="container-fluid">
     <div class="row mb-3">
         <div class="col-12">
             <div class="card container">
-                <h5 class="card-header">Anteproyectos (Semestre n)</h5>
+                <h5 class="card-header text-center">Anteproyectos (Semestre {{adminData.semesterInfo.period}})</h5>
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title">Tienes <strong> n</strong> anteproyectos que revisar</h5>
-                            <a href="/admin/anteproyectos" class="btn btn-primary">Revisar</a>
+                            <div class="card">
+                                {{#ifEquals adminData.projectsCount 0}}
+                                <h5 class="card-header">Sin proyectos pendientes </h5>
+                                <div class="card-body">
+                                    <a href="/admin/anteproyectos" class="btn btn-block btn-primary">Ir a anteproyectos
+
+                                    </a>
+                                </div>
+                                {{else}}
+                                <h5 class="card-header">Tienes <strong> {{adminData.projectsCount}}</strong>
+                                    anteproyectos que revisar </h5>
+                                <div class="card-body">
+                                    <a href="/admin/anteproyectos" class="btn btn-block btn-primary">Revisar
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{adminData.projectsCount}}
+                                            <span class="visually-hidden">unread messages</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                {{/ifEquals}}
+
+                            </div>
                         </div>
                         <div class="col text-center">
                             <div class="card" style="max-width: 25rem;">
                                 <h5 class="card-header ">¿Desea administrar profesores?</h5>
                                 <div class="card-body">
                                     <a href="/" class="btn btn-block btn-primary">Ir a profesores</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            <div class="card" style="max-width: 25rem;">
+                                <h5 class="card-header ">¿Desea iniciar nuevo semestre?</h5>
+                                <div class="card-body">
+                                    <a href="/" class="btn btn-block btn-danger">Iniciar nuevo semestre</a>
                                 </div>
                             </div>
                         </div>
@@ -30,16 +62,16 @@
                 <strong>Proximos eventos</strong>
             </div>
             <ul class="list-group list-group-flush">
-
                 <li class="list-group-item">An item</li>
                 <li class="list-group-item">A second item</li>
                 <li class="list-group-item">A third item</li>
             </ul>
-            <div class="card-body justify-contente-center">
+            <div class="card-body text-center">
                 <a href="/events" class="btn btn-primary">Ver eventos</a>
             </div>
         </div>
     </div>
+
 
 </div>
 

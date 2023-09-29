@@ -26,10 +26,6 @@ const seedProyecto = async () => {
 
     console.log(semestre._id);
     for (let i = 0; i < 5; i++) {
-        /*db.mycoll.aggregate([
-    { $match: { a: 10 } },
-    { $sample: { size: 1 } }
-])*/
         const idEstudiante = sample(estudiantes)._id;
         const empresa = `${sample(nombreEmpresa)}`;
         const newProyect = new Proyect({
@@ -47,7 +43,6 @@ const seedProyecto = async () => {
         console.log(`Proyecto ${newProyect.titulo} creado`);
 
     }
-    console.log("Proyectos added");
 }
 
 seedProyecto().then(() => {

@@ -12,5 +12,6 @@ const teacherSchema = new Schema({
         required: true,
         maxlength: 50,
     }
+    
 })
 module.exports = mongoose.model('Teacher', teacherSchema);
