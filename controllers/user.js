@@ -62,9 +62,14 @@ const forAdminData = async () => {
     const eventos = await events.find({ finishDate: { $gte: new Date() } })
         .sort({ finishDate: 1 }) // Ordenar por finishDate en lugar de fecha
         .limit(3);
+    const semestreData = semestre.map(s => ({ // Se mapea por el handlebars
+        id: s._id,
+        period: s.period,
+        year: s.year
+    }));
     return {
         projectsCount: anteproyectos.length,
-        semesterInfo: semestre.length > 0 ? semestre[0] : null,
+        semesterInfo: semestreData.length > 0 ? semestreData[0] : null,
         events: mapManyEvents(eventos, toDateString)
     };
 

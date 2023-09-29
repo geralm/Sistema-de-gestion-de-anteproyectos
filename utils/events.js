@@ -4,6 +4,7 @@ module.exports.mapManyEvents = (events,dateFunc) => {
         title: e.title,
         startDate: dateFunc(e.startDate),
         finishDate: dateFunc(e.finishDate),
+        duration: calcDuration(Date.now(), e.finishDate),
         description: e.description || 'Sin descripción'
       }));
 }

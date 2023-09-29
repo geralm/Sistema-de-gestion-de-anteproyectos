@@ -1,5 +1,10 @@
 <div class="container-fluid text-center mb-4">
+    {{#ifEquals adminData.semesterInfo null}}
+    <h1>No hay semestres activos</h1>
+
+    {{else}}
     <h1>Semestre {{adminData.semesterInfo.period}}</h1>
+    {{/ifEquals}}
 </div>
 <div class="container-fluid">
     <div class="row mb-3">
@@ -14,7 +19,6 @@
                                 <h5 class="card-header">Sin proyectos pendientes </h5>
                                 <div class="card-body">
                                     <a href="/admin/anteproyectos" class="btn btn-block btn-primary">Ir a anteproyectos
-
                                     </a>
                                 </div>
                                 {{else}}
@@ -62,9 +66,9 @@
                 <strong>Proximos eventos</strong>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
+                {{#each adminData.events}}
+                <li class="list-group-item">{{this.title}} <br><small>{{this.duration}}</small></li>
+                {{/each}}
             </ul>
             <div class="card-body text-center">
                 <a href="/events" class="btn btn-primary">Ver eventos</a>
