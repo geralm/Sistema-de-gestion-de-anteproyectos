@@ -1,0 +1,17 @@
+
+.table{
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+    justify-content: center ;
+}
+.table th{
+    font-size: 25px;
+}
+.table tr{
+    font-size: 20px;
+
+}
+.table img{
+    width: 50px;
+    height: 50px;
+}

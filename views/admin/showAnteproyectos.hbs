@@ -7,7 +7,7 @@
     </div>
 
     <div class="row mb-2">
-        <form action="/admin/anteproyectos/find" method="POST">
+        <form action="/admin/anteproyectos" method="POST">
             <div class="row">
                 <label class="form-label" for="exampleInputEmail1">Buscar estudiante:</label>
             </div>
@@ -19,8 +19,55 @@
                     <button type="submit" class="btn btn-primary w-100">Buscar</button>
                 </div>
             </div>
-            
+
         </form>
+    </div>
+
+    <div class="row mb-2">
+        <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Estudiante
+                        <img src="/images/avatar.png" class="img-fluid" alt="Responsive image">
+
+                    </th>
+                    <th scope="col">Empresa
+                        <img src="/images/empresa.png" class="img-fluid" alt="Responsive image">
+                    </th>
+                    <th scope="col">Información del proyecto
+                        <img src="/images/google-docs.png" class="img-fluid" alt="Responsive image">
+
+                    </th>
+                    <th scope="col">Estado del proyecto
+                        <img src="/images/estado.png" class="img-fluid" alt="Responsive image">
+
+                    </th>
+                    <th scope="col">Revisión
+                        <img src="/images/revisar.png" class="img-fluid" alt="Responsive image">
+                    </th>
+                </tr>
+            <tbody class="table-group-divider valign-middle">
+                {{#if anteproyectos}}
+                {{#each anteproyectos}}
+                <tr>
+                    <td>{{this.estudiante.nombre}}</td>
+                    <td>{{this.nombreEmpresa}}</td>
+                    <td>{{this.informacionProyecto}}</td>
+                    <td>{{this.estado}}</td>
+                    <td>
+                        <form action="/admin/anteproyectos/{{this._id}}" method="POST">
+                            <button type="submit" class="btn btn-primary w-100">Revisar</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+                {{/if}}
+            </tbody>
+            </thead>
+
+        </table>
+
     </div>
 
     <div class="row mb-2">
@@ -45,46 +92,46 @@
     <div class="row mb-2">
         {{#if anteproyectos}}
         {{#each anteproyectos}}
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="info">
-                                {{nombreEstudiante}}
-                            </h4>
-                        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="info">
+                            {{nombreEstudiante}}
+                        </h4>
                     </div>
                 </div>
-
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="info">
-                                {{nombreEmpresa}}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="info">
-                                {{estado}}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <button type="submit" class="btn btn-primary w-100">Revisar</button>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="info">
+                            {{nombreEmpresa}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="info">
+                            {{estado}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary w-100">Revisar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         {{/each}}
         {{/if}}
     </div>
