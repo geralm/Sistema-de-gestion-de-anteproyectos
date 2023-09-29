@@ -16,7 +16,7 @@ module.exports.validateEvent = (req, res, next) => {
 module.exports.validateUser = (req, res, next) => {
     const {error} = userSchema.validate(req.body);
     // console.log("Error", error);
-     /* Recordar que Joi valida el usuario pero no mongo; mongo niega usuarios con 
+    /* Recordar que Joi valida el usuario pero no mongo; mongo niega usuarios con 
      el mismo id, correo...*/
     if (error) {
         

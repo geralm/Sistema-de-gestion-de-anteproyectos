@@ -9,7 +9,12 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav"> <!-- Elementos que estarán en la izquierda -->
                     <li class="nav-item inicio-link">
-                        <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+                        {{#iflogged user}}
+                            <a class="nav-link active" aria-current="page" href="/user">Inicio</a>
+                        {{else}}
+                            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+                        {{/iflogged}}
+
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="/events" id="navbarDropdownMenuLink" role="button"
