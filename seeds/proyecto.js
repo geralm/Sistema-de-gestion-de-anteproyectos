@@ -21,11 +21,12 @@ const seedProyecto = async () => {
     await Proyect.deleteMany({});
     const estudiantes = await User.aggregate([
         { $match: { esAdmin: false } }, // Corrección: Filtrar usuarios que no son administradores
-        { $sample: { size: 1 } }
+        { $sample: { size: 5 } }
     ]);
 
     console.log(semestre._id);
     for (let i = 0; i < 5; i++) {
+
         const idEstudiante = sample(estudiantes)._id;
         const empresa = `${sample(nombreEmpresa)}`;
         const newProyect = new Proyect({
@@ -41,8 +42,9 @@ const seedProyecto = async () => {
         })
         await newProyect.save()
         console.log(`Proyecto ${newProyect.titulo} creado`);
-
+        
     }
+    console.log(await Proyect.find({}).populate('estudiante').lean());
 }
 
 seedProyecto().then(() => {

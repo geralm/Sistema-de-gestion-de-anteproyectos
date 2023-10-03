@@ -1,4 +1,5 @@
 const Anteproyecto = require('../models/proyecto')
+const {toDateString} = require('../utils/events')
 
 //Se quitó porque ahora usamos un template dinamico para el welcome de admin y usuario
 // const renderAdmin =  (req,res)=>{
@@ -10,6 +11,9 @@ const Anteproyecto = require('../models/proyecto')
 const renderAnteproyectos = async (req, res) => {
     // const anteproyectos = await Anteproyecto.find({}).lean()
     const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
+
+    // anteproyectos.fechaInicio = toDateString(anteproyectos.fechaInicio);
+    // anteproyectos.fechaFinal = toDateString(anteproyectos.fechaFinal);
     res.render('admin/showAnteproyectos',{anteproyectos})
 
 }
