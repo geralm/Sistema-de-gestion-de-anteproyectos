@@ -1,9 +1,8 @@
 const Proyecto = require('../models/proyecto');
+let pdfUploaded = false
 
-// const renderStudentWelcome =  (req,res)=>{
-//     res.render('student/studentWelcome')
-// }
-//El template dinamico se renderiza en routes/user.js
+
+
 
 const renderStudentUpload =  (req,res)=>{
     res.render('student/studentUpload')
@@ -11,13 +10,24 @@ const renderStudentUpload =  (req,res)=>{
 
 const subirProyecto = async (req,res)=>{
     const newProyecto  = req.body.proyecto;
+    const fileBuffer = req.file.buffer;
+    //console.log(fileBuffer)
     newProyecto.estado = "Por revisar"
+    newProyecto.documento = fileBuffer
     const proyecto = new Proyecto(newProyecto)
     await proyecto.save()
-    res.redirect('/student')
+    res.redirect('/user')
   
 }
 
+
+const subirPdf = async (req,res)=>{
+    pdfUploaded = true
+    console.log("\nPDF subido con éxito!")
+    res.redirect('/user')
+    
+}
+
 module.exports = {
-    renderStudentUpload,subirProyecto
+    renderStudentUpload,subirProyecto,subirPdf
 }

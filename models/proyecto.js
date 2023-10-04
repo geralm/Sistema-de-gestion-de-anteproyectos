@@ -1,3 +1,4 @@
+const { binary } = require('joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -61,6 +62,10 @@ const ProyectSchema = new Schema({
         type: String,
         required: true,
         maxlength:20
+    },
+    documento:{
+        type: Buffer,
+        required: true
     }
 })
 
