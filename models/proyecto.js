@@ -3,36 +3,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProyectSchema = new Schema({
-    semestre: {
-        type: Number,
-        required: true,
-        maxlength: 4
-    },
-    nombreEstudiante: {
-        type: String,
-        required: true,
-        maxlength: 50
-    },
-    carnet: {
-        type: Number,
-        required: true,
-        maxlength: 50
-    },
-    correoEstudiante: {
-        type: String,
-        required: true,
-        maxlength: 50
-    },
-    telefonoEstudiante: {
-        type: Number,
-        required: true,
-        maxlength: 8
-    },
-    cursos: {
+    titulo: {
         type: String,
         required: true,
         maxlength: 100
     },
+    estudiante: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    cursos: [{
+        type: String,
+        maxlength: 50
+    }],
     nombreEmpresa: {
         type: String,
         required: true,
@@ -42,11 +26,6 @@ const ProyectSchema = new Schema({
         type: String,
         required: true,
         maxlength: 50
-    },
-    telefonoEmpresa: {
-        type: Number,
-        required: true,
-        maxlength: 8
     },
     nombreSupervisor: {
         type: String,
@@ -61,10 +40,25 @@ const ProyectSchema = new Schema({
     estado: {
         type: String,
         required: true,
-        maxlength:20
+        enum: ['Revisión', 'Aprobado', 'Rechazado', 'Finalizado'],
+        default: 'Revisión'
     },
-    documento:{
-        type: Buffer,
+    fechaInicio: {
+        type: Date,
+        required: true,
+    },
+    fechaFinal: {
+        type: Date,
+        required: true,
+    },
+    isConfidencial:{
+        type:Boolean,
+        default:false
+    },
+    
+    semestre:{
+        type: Schema.Types.ObjectId,
+        ref: 'Semestre',
         required: true
     }
 })

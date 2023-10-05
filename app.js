@@ -20,7 +20,8 @@ const landingRouter = require('./routes/landing')
 const eventsRouter = require('./routes/events');
 const adminRouter = require('./routes/admin')
 const studentRouter = require('./routes/student')
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/user');
+const { toDateString } = require('./utils/events');
 
 //Database
 mongoose.connect('mongodb://127.0.0.1:27017/gestion-de-anteproyectos', {
@@ -114,3 +115,6 @@ handlebars.registerHelper('ifflash', function(arg1, options) {
         return options.inverse(this)
     }
 })
+
+
+
