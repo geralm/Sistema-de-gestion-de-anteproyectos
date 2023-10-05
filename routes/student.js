@@ -31,8 +31,10 @@ router.route('/upload')
     .get(isLoggedIn,student.renderStudentUpload)
     .post(isLoggedIn,upload.single('pdfFile'),catchAsync(student.subirProyecto));
 
+    /*
 router.route('/upload/pdf')
     .post(isLoggedIn,upload.single('pdfFile'),catchAsync(student.subirPdf));
+*/
 
 module.exports = router
 

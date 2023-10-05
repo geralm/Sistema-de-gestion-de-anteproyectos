@@ -10,12 +10,14 @@ const renderStudentUpload =  (req,res)=>{
 
 const subirProyecto = async (req,res)=>{
     const newProyecto  = req.body.proyecto;
+    console.log(newProyecto)
+    /*
     const fileBuffer = req.file.buffer;
     //console.log(fileBuffer)
     newProyecto.estado = "Por revisar"
     newProyecto.documento = fileBuffer
     const proyecto = new Proyecto(newProyecto)
-    await proyecto.save()
+    await proyecto.save()*/
     res.redirect('/user')
   
 }

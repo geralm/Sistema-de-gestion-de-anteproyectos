@@ -11,11 +11,12 @@
     
     <form action="/student/upload" method="POST" enctype="multipart/form-data"> 
         <div class="row">
-            <div class="col">
+            <div class="col mb-3">
 
                 
 
                 <h3>Datos personales</h3>
+                {{!
                 <div class="form-group">
                 <label class="form-label" for="exampleInputEmail1">Semestre</label>
                 <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[semestre]">  
@@ -28,11 +29,13 @@
                 <label class="form-label" for="exampleInputPassword1">Nombre Completo</label>
                 <input type="nombre" class="form-control" id="exampleInputPassword1" name="proyecto[nombreEstudiante]">
                 </div>
-
-                <div class="form-group">
+                }}
+                <div class="form-group mb-3">
                 <label for="exampleInputPassword1">Carnet</label>
                 <input type="carnet" class="form-control" id="exampleInputPassword1" name="proyecto[carnet]">
                 </div>
+
+                {{! 
 
                 <div class="form-group">
                 <label for="exampleInputPassword1">Correo</label>
@@ -43,15 +46,109 @@
                 <label for="exampleInputPassword1">Numero telefónico</label>
                 <input type="celularEstudiante" class="form-control" id="exampleInputPassword1" name="proyecto[telefonoEstudiante]">
                 </div>
+                }}
 
-                <div class="form-group">
-                <label for="exampleInputPassword1">Matricula otro curso? Especifique cuál</label>
-                <input type="matricula" class="form-control" id="exampleInputPassword1" name="proyecto[cursos]">
+                <label for="exampleInputPassword1">Matricula otros cursos en el semestre?</label>
+                <div class="dropdown m-3"> 
+                    <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                    Seleccionar Cursos 
+                    </button> 
+                    <ul class="dropdown-menu" 
+                        aria-labelledby="multiSelectDropdown"> 
+
+
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="N/A" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">N/A</label>
+                            </div>
+                        </a>
+                        </li> 
+
+                        <div class="dropdown-divider"></div>
+                        
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Redes" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">Redes</label>
+                            </div>
+                        </a>
+                        </li> 
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Electiva 2" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">Electiva 2</label>
+                            </div>
+                        </a>
+                        </li> 
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Inteligencia Artificial" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">Inteligencia Artificial </label>
+                            </div>
+                        </a>
+                        </li> 
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Desarrollo de emprendedores" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">Desarrollo De Emprendedores</label>
+                            </div>
+                        </a>
+                        </li> 
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Proyecto de ingeniería" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">Proyecto de ingeniería de software</label>
+                            </div>
+                        </a>
+                        </li> 
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="centros de formacion humanistica" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">Centros de formación Humanística</label>
+                            </div>
+                        </a>
+                        </li> 
+
+                        <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Otro" name = "proyecto[cursos]" />
+                                <label class="form-check-label" for="Checkme3">Otro</label>
+                            </div>
+                        </a>
+                        </li>
+                    </ul> 
                 </div>
-            </div>
+                
+                <label for="exampleInputPassword1" class="mb-3">Subir documento PDF de anteproyecto</label>
+                <div class="form-group mb-3">
+                    <input type="file" name="pdfFile" class="form-control-file">
+                </div>
+                
+            
+                </div> 
 
 
-            <div class="col">
+            <div class="col mb-3">
                 <h3>Datos de la empresa</h3>
 
                 <div class="form-group">
@@ -85,29 +182,22 @@
                 </div>
             </div>
 
-            <div class="form-group">
-            <input type="file" name="pdfFile" class="form-control-file">
-            </div>
+            
         </div>
-        <button type="submit" class="btn btn-primary">Enviar cuestionario</button>
+        <button type="submit" class="btn btn-primary mb-4">Enviar cuestionario</button>
     </form>
 
     </div>
     
+        
+    
+    
 
-    <div class="row">
-        <form action="/student/upload/pdf" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-            <input type="file" name="pdfFile" class="form-control-file">
-            </div>
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </form>
+    <div class="mb-5">
+        <h1>         </h1>
+        <h6>Recuerda subir el documento de tu anteproyecto en formato pdf antes de enviar el formulario!</h6>   
     </div>
 
-    <div class="mb-4">
-        <h1>          </h1>
-        <h1>          </h1>
-    </div>
 
 
 </div>
