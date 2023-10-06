@@ -59,4 +59,4 @@ newUserSchema.methods.matchPassword = async function (password) {
 
 
 
-module.exports = mongoose.model('user', newUserSchema);
+module.exports = mongoose.model('User', newUserSchema);

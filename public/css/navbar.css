@@ -1,0 +1,26 @@
+.nav-link {
+    padding: 0.25rem 0;
+    font-weight: 700;
+    color: rgba(255,255,255,1);
+    margin-left: 1rem;
+    border-bottom: 0.25rem solid transparent;
+}
+.nav-link:hover{
+    color: rgba(255,255,255,1);
+    border-bottom-color:rgba(4, 107, 242, 1);
+}
+.nav-link.active:not(.inicio-link, .dropdown-toggle) {
+    color: rgba(255,255,255,1);
+    border-bottom-color:rgba(4, 107, 242, 1);
+
+}
+
+.bg-fancynav{
+    background-color:rgba(0, 6, 38, 0.6);
+    padding: 15px; /* Espacio interno alrededor de los elementos del navbar */
+ 
+    /* linear-gradient(rgba(3, 85, 191, 1), rgba(3, 85, 191, 1)), */ 
+}/* Estilo de los elementos del menú en el navbar, excepto el último */
+.navbar li:not(:last-child) {
+    margin-right: 18px; /* Espacio horizontal entre elementos del menú */
+}

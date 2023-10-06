@@ -1,0 +1,36 @@
+
+.table{
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+    
+}
+.table th{
+    font-size: 25px;
+}
+.table tr{
+    font-size: 20px;
+
+}
+.table img{
+    width: 50px;
+    height: 50px;
+}
+.table td small{
+    font-size: 13px;
+}
+tbody .Revisión{
+    font-size: larger;
+    font-weight: 10px;
+    color: #834800;
+}
+.Aprobado{
+    font-size: larger;
+    color: #3c6901;
+}
+.Rechazado{
+    font-size: larger;
+    color: #c03f03;
+}
+.Finalizado{
+    color: #0326c0;
+}

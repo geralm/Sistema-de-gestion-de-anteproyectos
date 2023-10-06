@@ -1,49 +1,54 @@
-<div class="container-fluid ">
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <h1 class="mt-3">Editar evento</h1>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto ">
-            <form action="/events/{{event.id}}/?_method=PUT" method="POST" novalidate 
-            class="needs-validation form-group">
-                <div class="mb-3">
-                    <label class="form-label"for="title">Titulo</label>
-                    <input class= "form-control"type="text" id="title" name="event[title]"
-                    value="{{event.title}}" required>
-                    <div class="invalid-feedback">Este campo no puede quedar vacío</div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="description">Description </label>
-                    <textarea required class="form-control"type="text" id="description" name="event[description]">{{event.description}}</textarea>
-                    <div class="invalid-feedback"> Este campo no puede quedar vacío </div>
-                </div>
-                <div class="mb-3">
-                    <label for="startdate">Empieza</label>
-                    <input id="startdate" class="form-control" type="datetime-local" name="event[startDate]" value="{{event.startDate}}"required/>   
-                    <div class="invalid-feedback">Este campo no puede quedar vacío</div>
-                   
-                </div>
-                <div class="mb-3">
-                    <label for="finishdate">Termina</label>
-                    <input id="finishdate" class="form-control" type="datetime-local" name="event[finishDate]" value="{{event.finishDate}}" required/>   
-                    <div class="invalid-feedback">Este campo no puede quedar vacío</div>
-                </div>
-                <button class="btn btn-warning offset-1">Salvar</button>   
-                
-            </form>
-            
-            <div class="d-grid gap-2 col-6 mx-auto">
-                    <a href="/events/{{event.id}}" class="btn btn-primary btn-large">Volver</a>
-                    <form class="d-inline " action="/events/{{event.id}}/?_method=DELETE" method="POST">
-                        <button class="btn btn-danger">Eliminar</a>
-                    </form> 
+<div class="container justify-content-center align-items-center">
+    <div class="row">
+        <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 ">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Editar evento</h5>
+                    <form action="/events/{{event.id}}/?_method=PUT" method="POST" novalidate
+                        class="needs-validation form-group d-inline">
+                        <div class="mb-3">
+                            <label class="form-label" for="title">Titulo</label>
+                            <input class="form-control" type="text" id="title" name="event[title]"
+                                value="{{event.title}}" required>
+                            <div class="invalid-feedback">Este campo no puede quedar vacío</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Description </label>
+                            <textarea required class="form-control" type="text" id="description"
+                                name="event[description]">{{event.description}}</textarea>
+                            <div class="invalid-feedback"> Este campo no puede quedar vacío </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startdate">Empieza</label>
+                            <input id="startdate" class="form-control" type="datetime-local" name="event[startDate]"
+                                value="{{event.startDate}}" required />
+                            <div class="invalid-feedback">Este campo no puede quedar vacío</div>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="finishdate">Termina</label>
+                            <input id="finishdate" class="form-control" type="datetime-local" name="event[finishDate]"
+                                value="{{event.finishDate}}" required />
+                            <div class="invalid-feedback">Este campo no puede quedar vacío</div>
+                        </div>
+                        <button class="btn btn-warning btn-block">Salvar</button>
+                    </form>
+                    <form class="d-inline" action="/events/{{event.id}}/?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-block">Eliminar</a>
+                    </form>
+
+
+                    {{!--
+                </div> --}}
             </div>
-          
+
+
+
+            <div class="card-footer">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a href="/events/{{event.id}}" class="btn btn-primary btn-block">Volver</a>
+                </div>
+            </div>
         </div>
-        </div>
-        
     </div>
-    
 </div>

@@ -4,6 +4,7 @@ module.exports.mapManyEvents = (events,dateFunc) => {
         title: e.title,
         startDate: dateFunc(e.startDate),
         finishDate: dateFunc(e.finishDate),
+        duration: calcDuration(Date.now(), e.finishDate),
         description: e.description || 'Sin descripción'
       }));
 }
@@ -28,7 +29,7 @@ module.exports.toInputString = (date) =>{
     console.log(month)
     return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}T${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:00`;
 }
-module.exports.toDateString = (date) => (date.toDateString());
+module.exports.toDateString = date => (date.toDateString());
 
 const calcDuration = function (startdate, finishdate){
     const diferenciaMs = Math.abs(finishdate - startdate);
