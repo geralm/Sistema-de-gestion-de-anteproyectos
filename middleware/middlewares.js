@@ -1,4 +1,4 @@
-const {eventSchema, userSchema} = require('./schemas.js');
+const {eventSchema, userSchema, proyectSchema} = require('./schemas.js');
 const ExpressError = require('../utils/ExpressError.js')
 
 module.exports.validateEvent = (req, res, next) => {
@@ -44,5 +44,22 @@ module.exports.isAdmin = (req, res, next) => {
         console.log("No eres admin", req.originalUrl);
         req.flash('error', '¡No tienes permisos para hacer eso!');
         return res.redirect('/user');
+    }
+}
+
+module.exports.validateProyect = (req, res, next) => {
+
+
+    const {error} = proyectSchema.validate(req.body);
+
+    if (error) {
+        
+        const msg = error.details.map(el => el.message).join(',')
+        console.log("Project could not be validated by middlewares ");
+        console.log(msg);
+        req.flash('error', msg);
+        return res.redirect('/user');
+    } else {
+        next();
     }
 }

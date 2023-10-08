@@ -11,7 +11,7 @@ const ProyectSchema = new Schema({
     estudiante: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: false
     },
     cursos: [{
         type: String,
@@ -32,6 +32,16 @@ const ProyectSchema = new Schema({
         required: true,
         maxlength: 50
     },
+    puestoSupervisor: {
+        type: String,
+        required: true,
+        maxlength: 50
+    },
+    correoSupervisor: {
+        type: String,
+        required: true,
+        maxlength: 50
+    },
     telefonoEmpresa: {
         type: Number,
         required: true,
@@ -40,7 +50,7 @@ const ProyectSchema = new Schema({
     estado: {
         type: String,
         required: true,
-        enum: ['Revisión', 'Aprobado', 'Rechazado', 'Finalizado'],
+        enum: ['Revision', 'Aprobado', 'Rechazado', 'Finalizado'],
         default: 'Revisión'
     },
     fechaInicio: {
@@ -57,7 +67,7 @@ const ProyectSchema = new Schema({
     },
     
     semestre:{
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Semestre',
         required: true
     },
@@ -70,8 +80,8 @@ const ProyectSchema = new Schema({
     tipo:{
         type: String,
         required: true,
-        enum: ['Desarrollo', 'Investigación', 'Infraestructura'],
-        default: 'Desarrollo'
+        enum: ['desarrollo', 'investigacion', 'infraestructura'],
+        default: 'desarrollo'
     },
     teletrabajo:{
         type:Boolean,

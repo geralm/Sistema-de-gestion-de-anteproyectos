@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const student = require('../controllers/student')
 const catchAsync = require('../utils/catchAsync');
-const { isLoggedIn } = require('../middleware/middlewares');
+const { isLoggedIn, validateProyect } = require('../middleware/middlewares');
 const multer = require('multer')
 const path = require('path')
 
@@ -29,12 +29,8 @@ const upload = multer({ storage });
 
 router.route('/upload')
     .get(isLoggedIn,student.renderStudentUpload)
-    .post(isLoggedIn,upload.single('pdfFile'),catchAsync(student.subirProyecto));
+    .post(isLoggedIn,upload.single('pdfFile'),validateProyect,catchAsync(student.subirProyecto));
 
-    /*
-router.route('/upload/pdf')
-    .post(isLoggedIn,upload.single('pdfFile'),catchAsync(student.subirPdf));
-*/
 
 module.exports = router
 

@@ -28,3 +28,28 @@ module.exports.teacherSchema = Joi.object({
         email: Joi.string().required()
         }).required()
 });
+
+module.exports.proyectSchema = Joi.object({
+    proyecto: Joi.object({
+
+        titulo: Joi.string(),
+        estudiante:Joi.object(),
+        cursos:Joi.string(),
+        telefonoEmpresa: Joi.number(),
+        estado:Joi.string() ,
+        fechaInicio:Joi.date(),
+        fechaFinal:Joi.date(),
+        isConfidencial:Joi.bool(),
+        semestre:Joi.string(),
+        documento:Joi.object(),
+        tipo:Joi.string(),
+        teletrabajo:Joi.bool(),
+
+        nombreEmpresa:Joi.string().required(),
+        direccionEmpresa:Joi.string().max(200).required(),
+        telefonoEmpresa:Joi.number().max(89999999).min(20000000).required(),
+        nombreSupervisor:Joi.string().max(70).required(),
+        puestoSupervisor:Joi.string().max(150).required(),
+        correoSupervisor:Joi.string().max(70).required()
+    }).required()
+})

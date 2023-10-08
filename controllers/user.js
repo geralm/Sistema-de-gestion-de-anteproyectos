@@ -49,7 +49,7 @@ module.exports.createUsuario = async (req, res) => {
     const newUsuario = req.body.user;
     newUsuario.esAdmin = false; //Postman podría enviar un usuario con esAdmin true 
     const usuario = new User(newUsuario)
-    console.log(usuario);
+    //console.log(usuario);
     usuario.contrasenia = await usuario.encryptPassword(usuario.contrasenia);
     await usuario.save()
     req.flash('success', '¡Usuario creado exitosamente! Ahora puedes iniciar sesión');

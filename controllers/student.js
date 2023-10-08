@@ -1,8 +1,7 @@
-const { string } = require('joi');
-const Proyecto = require('../models/proyecto');
-const { application } = require('express');
-let pdfUploaded = false
 
+const Proyecto = require('../models/proyecto');
+let pdfUploaded = false
+const User = require('../models/user');
 
 
 
@@ -11,22 +10,22 @@ const renderStudentUpload =  (req,res)=>{
 }
 
 const subirProyecto = async (req,res)=>{
-    
+
+    /*
+    usar esto solo para el rendering de los anteproyectos tipo
+    proyecto.estudiante.nombreEstudiante
+
     nombreEstudiante = req.user.nombre
-    carnet = req.user.carnet
     mailEstudiante = req.user.correo
     telefonoEstudiante = req.user.telefono
-
+    */
     const newProyecto  = req.body.proyecto;
-    //console.log(newProyecto)
-    console.log(semestre)
-    /*
     const fileBuffer = req.file.buffer;
-    //console.log(fileBuffer)
-    newProyecto.estado = "Por revisar"
+    newProyecto.estado = "Revision"
     newProyecto.documento = fileBuffer
+    newProyecto.estudiante = req.user._id
     const proyecto = new Proyecto(newProyecto)
-    await proyecto.save()*/
+    await proyecto.save()
     res.redirect('/user')
   
 }
