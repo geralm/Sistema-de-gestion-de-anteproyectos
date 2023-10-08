@@ -1,4 +1,6 @@
+const { string } = require('joi');
 const Proyecto = require('../models/proyecto');
+const { application } = require('express');
 let pdfUploaded = false
 
 
@@ -9,8 +11,15 @@ const renderStudentUpload =  (req,res)=>{
 }
 
 const subirProyecto = async (req,res)=>{
+    
+    nombreEstudiante = req.user.nombre
+    carnet = req.user.carnet
+    mailEstudiante = req.user.correo
+    telefonoEstudiante = req.user.telefono
+
     const newProyecto  = req.body.proyecto;
-    console.log(newProyecto)
+    //console.log(newProyecto)
+    console.log(semestre)
     /*
     const fileBuffer = req.file.buffer;
     //console.log(fileBuffer)

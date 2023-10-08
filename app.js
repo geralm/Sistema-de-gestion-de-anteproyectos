@@ -14,7 +14,6 @@ const app = express()
 
 
 
-
 //Routers
 const landingRouter = require('./routes/landing')
 const eventsRouter = require('./routes/events');

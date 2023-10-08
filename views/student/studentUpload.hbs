@@ -1,3 +1,5 @@
+
+
 <div class="container">
 
     <div class="row">
@@ -9,53 +11,49 @@
     <div class="row">
 
     
-    <form action="/student/upload" method="POST" enctype="multipart/form-data"> 
+    <form action="/student/upload" method="POST" enctype="multipart/form-data" novalidate class="needs-validation"> 
         <div class="row">
             <div class="col mb-3">
 
-                
 
                 <h3>Datos personales</h3>
-                {{!
-                <div class="form-group">
-                <label class="form-label" for="exampleInputEmail1">Semestre</label>
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[semestre]">  
-                <div class="invalid-feedback">
-                    Este campo no puede quedar vacío
-                </div>          
-                </div>
+                
 
-                <div class="form-group">
-                <label class="form-label" for="exampleInputPassword1">Nombre Completo</label>
-                <input type="nombre" class="form-control" id="exampleInputPassword1" name="proyecto[nombreEstudiante]">
-                </div>
-                }}
-                <div class="form-group mb-3">
-                <label for="exampleInputPassword1">Carnet</label>
-                <input type="carnet" class="form-control" id="exampleInputPassword1" name="proyecto[carnet]">
-                </div>
+                <label for="exampleInputPassword1">Semestre</label>
+                <div class="dropdown">
+                <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                        Seleccionar 
+                </button> 
+                
 
-                {{! 
-
-                <div class="form-group">
-                <label for="exampleInputPassword1">Correo</label>
-                <input type="correo" class="form-control" id="exampleInputPassword1" name="proyecto[correoEstudiante]">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value=1 name = "proyecto[semestre]" />
+                                <label class="form-check-label" for="Checkme3">1</label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value=2 name = "proyecto[semestre]" />
+                                <label class="form-check-label" for="Checkme3">2</label>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                <label for="exampleInputPassword1">Numero telefónico</label>
-                <input type="celularEstudiante" class="form-control" id="exampleInputPassword1" name="proyecto[telefonoEstudiante]">
-                </div>
-                }}
 
                 <label for="exampleInputPassword1">Matricula otros cursos en el semestre?</label>
-                <div class="dropdown m-3"> 
+                <div class="dropdown mb-3"> 
                     <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
                         id="multiSelectDropdown"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
-                    Seleccionar Cursos 
+                        Seleccionar Cursos 
                     </button> 
                     <ul class="dropdown-menu" 
                         aria-labelledby="multiSelectDropdown"> 
@@ -139,10 +137,143 @@
                     </ul> 
                 </div>
                 
-                <label for="exampleInputPassword1" class="mb-3">Subir documento PDF de anteproyecto</label>
-                <div class="form-group mb-3">
-                    <input type="file" name="pdfFile" class="form-control-file">
+                <h3>Datos del Proyecto</h3>
+                <div class="form-group">
+                <label for="exampleInputEmail1">Titulo del proyecto</label>
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]">            
                 </div>
+
+                <div class="mb-3">
+                <label for="startdate">Inicia</label>
+                <input id="startdate" class="form-control" type="datetime-local" name="proyecto[fechaInicio]"required/>   
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="finishdate">Finaliza</label>
+                <input id="finishdate" class="form-control" type="datetime-local" name="proyecto[fechaFinal]"required/>   
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>
+            </div>
+
+
+            <label for="exampleInputPassword1">Tipo de proyecto</label>
+                <div class="dropdown" >
+                <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                        Seleccionar 
+                </button> 
+                
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="desarrollo" name = "proyecto[tipo]" />
+                                <label class="form-check-label" for="Checkme3">Desarrollo</label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="investigacion" name = "proyecto[tipo]" />
+                                <label class="form-check-label" for="Checkme3">Investigación</label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="infraestructura" name = "proyecto[tipo]" />
+                                <label class="form-check-label" for="Checkme3">Infraestructura</label>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
+
+                </div>
+
+            
+            <label for="exampleInputPassword1">Realiza teletrabajo?</label>
+                <div class="dropdown" required>
+                <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                        Seleccionar 
+                </button> 
+                
+                    
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value=true name = "proyecto[teletrabajo]" required/>
+                                <label class="form-check-label" for="Checkme3">Sí</label>
+                                
+                                <div class="invalid-feedback">
+                                    Este campo no puede quedar vacío
+                                </div>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value=false name = "proyecto[teletrabajo]" required/>
+                                <label class="form-check-label" for="Checkme3">No</label>
+
+                                <div class="invalid-feedback">
+                                    Este campo no puede quedar vacío
+                                </div>
+                            </div>
+                        </a>
+
+                        
+                    </div>
+                    
+                    
+
+                    
+
+                </div>
+
+
+                <label for="exampleInputPassword1">Requiere acuerdo de confidencialidad?</label>
+                <div class="dropdown" required>
+                <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                        Seleccionar 
+                </button> 
+                
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value=true name = "proyecto[isConfidencial]" />
+                                <label class="form-check-label" for="Checkme3">Sí</label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value=false name = "proyecto[isConfidencial]" />
+                                <label class="form-check-label" for="Checkme3">No</label>
+                            </div>
+                        </a>
+                    
+                    </div>
+
+                    <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
+                </div>
+
                 
             
                 </div> 
@@ -153,38 +284,72 @@
 
                 <div class="form-group">
                 <label for="exampleInputEmail1">Nombre empresa</label>
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[nombreEmpresa]">            
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[nombreEmpresa]" required>  
+                <div class="invalid-feedback">
+                    Este campo no puede quedar vacío
+                </div>          
                 </div>
 
                 <div class="form-group">
                 <label for="exampleInputPassword1">Dirección</label>
-                <input type="nombre" class="form-control" id="exampleInputPassword1" name="proyecto[direccionEmpresa]">
+                <input type="nombre" class="form-control" id="exampleInputPassword1" name="proyecto[direccionEmpresa]"required>
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
                 </div>
 
                 <div class="form-group">
                 <label for="exampleInputPassword1">Numero telefónico</label>
-                <input type="carnet" class="form-control" id="exampleInputPassword1" name="proyecto[telefonoEmpresa]">
+                <input type="carnet" class="form-control" id="exampleInputPassword1" name="proyecto[telefonoEmpresa]"required>
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
                 </div>
 
                 <div class="form-group">
                 <label for="exampleInputPassword1">Nombre del supervisor</label>
-                <input type="correo" class="form-control" id="exampleInputPassword1" name="proyecto[nombreSupervisor]">
+                <input type="correo" class="form-control" id="exampleInputPassword1" name="proyecto[nombreSupervisor]"required>
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
                 </div>
 
                 <div class="form-group">
                 <label for="exampleInputPassword1">Puesto del supervisor</label>
-                <input type="celularEstudiante" class="form-control" id="exampleInputPassword1" name="proyecto[puestoSupervisor]">
+                <input type="celularEstudiante" class="form-control" id="exampleInputPassword1" name="proyecto[puestoSupervisor]"required>
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                 <label for="exampleInputPassword1">Correo del supervisor</label>
-                <input type="matricula" class="form-control" id="exampleInputPassword1" name="proyecto[correoSupervisor]">
+                <input type="matricula" class="form-control" id="exampleInputPassword1" name="proyecto[correoSupervisor]"required>
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
                 </div>
+
+
+                <h3>Subir documento</h3>
+                <p>En este apartado debes incluir el documento de anteproyecto llenado a mano, en formato PDF.
+                Además recuerda incluir la breve descripción del proyecto en el mismo documento.</p>
+
+                <label for="exampleInputPassword1" class="mb-3">Subir documento PDF de anteproyecto</label>
+                <div class="form-group mb-3">
+                    <input type="file" name="pdfFile" class="form-control-file" required>
+                    <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                    </div>
+                </div>
+
+                <h3>Enviar cuestionario</h3>
+                <button type="submit" class="btn btn-primary mb-4">Enviar</button> 
             </div>
 
-            
+               
         </div>
-        <button type="submit" class="btn btn-primary mb-4">Enviar cuestionario</button>
+        
     </form>
 
     </div>
@@ -201,3 +366,5 @@
 
 
 </div>
+
+<script src="/utils/studentUpload.js"></script>

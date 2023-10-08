@@ -60,7 +60,23 @@ const ProyectSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Semestre',
         required: true
-    }
+    },
+
+    documento:{
+        type:Buffer,
+        required:true
+    },
+
+    tipo:{
+        type: String,
+        required: true,
+        enum: ['Desarrollo', 'Investigación', 'Infraestructura'],
+        default: 'Desarrollo'
+    },
+    teletrabajo:{
+        type:Boolean,
+        default:false
+    },
 })
 
 module.exports = mongoose.model('Proyect', ProyectSchema);
