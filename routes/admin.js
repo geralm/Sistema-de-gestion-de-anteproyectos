@@ -12,4 +12,7 @@ router.route('/anteproyectos')
 router.route('/anteproyectos/find')
     .post(isLoggedIn, isAdmin, admin.renderOne);
 
+router.route('/anteproyectos/:id/download')
+    .get(isLoggedIn, isAdmin, admin.downloadOne);
+
 module.exports = router
