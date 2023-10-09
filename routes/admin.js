@@ -13,6 +13,9 @@ router.route('/anteproyectos/find')
     .post(isLoggedIn, isAdmin, admin.renderOne);
 
 router.route('/anteproyectos/:id/download')
-    .get(isLoggedIn, isAdmin, admin.downloadOne);
+    .get(isLoggedIn, isAdmin, admin.showPdf);
+
+router.route('/anteproyectos/open-pdf')
+    .get(isLoggedIn,isAdmin,admin.showPdf)
 
 module.exports = router

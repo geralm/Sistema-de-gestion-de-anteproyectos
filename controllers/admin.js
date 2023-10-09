@@ -24,12 +24,22 @@ const renderOne = async (req, res) => {
 
 const downloadOne = async (req, res) => {
     const anteproyecto = await Anteproyecto.findById(req.params.id);
-    fs.writeFileSync('someFile.pdf', anteproyecto.documento)
+    pdf = fs.writeFileSync('pdfs/someFile.pdf', anteproyecto.documento)
+    //res.send(pdf);
+    const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
+    res.render('admin/showAnteproyectos', { anteproyectos })
+}
+
+const showPdf = async (req, res) => {
+    const anteproyecto = await Anteproyecto.findById(req.params.id);
+    fs.writeFileSync('pdfs/someFile.pdf', anteproyecto.documento)
+    const pdfFilename = 'pdfs/someFile.pdf';
+    res.sendFile('pdfs/someFile.pdf',{root: './'})
     const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
     res.render('admin/showAnteproyectos', { anteproyectos })
 }
 
 
 module.exports = {
-    renderAnteproyectos, renderOne, downloadOne
+    renderAnteproyectos, renderOne, downloadOne,showPdf
 }
