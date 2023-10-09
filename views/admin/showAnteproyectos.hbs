@@ -96,14 +96,18 @@
                                 {{/ifEquals}}
                                 <p>Fecha de inicio: {{this.fechaInicio}}</p>
                                 <p>Fecha final: {{this.fechaFinal}}</p>
-                                <p><a href="/admin/anteproyectos/{{this._id}}/download">Descargar documento</a></p>
+                                
+
+                                <form action="/admin/anteproyectos/{{this._id}}/download" method="get">
+                                    <button type="submit" class="btn btn-primary w-100">Descargar documento</button>
+                                </form>
                             </div>
                         </div>
                         {{!-- {{this.informacionProyecto}} --}}
                     </td>
                     <td class="{{this.estado}}">{{this.estado}}</td>
                     <td>
-                        <form action="/admin/anteproyectos/{{this._id}}" method="POST">
+                        <form action="/admin/anteproyectos/{{this._id}}/revisar" method="POST">
                             <button type="submit" class="btn btn-primary w-100">Revisar</button>
                         </form>
                     </td>
