@@ -1,0 +1,165 @@
+<div class="container">
+
+    <div class="row m-3">
+
+    </div>
+    
+    <form action="/toBeDeveloped" method="POST">
+        <h2>Revisión de Anteproyectos</h2>
+    <div class="row m-3">
+
+    </div>
+
+    <div class="row m-3">
+        <div class="row m-3">
+            <div class="col m-3"><div class="h2">Aspecto</div></div>
+            <div class="col m-3"><div class="h2">Estado</div></div>
+            <div class="col m-3"><div class="h2">Observaciones</div></div>
+        </div>
+
+        <div class="card m-3">
+        <div class="row m-3">
+            <div class="col m-3"><div class="h4">General-Info. del estudiante</div></div>
+            <div class="col m-3">
+                <div class="dropdown">
+                <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                        Seleccionar
+                </button> 
+                
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <label class="form-check-label" for="Checkme3">Aceptado</label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <label class="form-check-label" for="Checkme3">Incompleto</label>
+                            
+                                <div class="invalid-feedback">
+                                    Seleccione una opcion
+                                </div>
+                            </div>
+                        </a>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col m-3">
+                <div class="form-group">
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                </div>           
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="card m-3">
+        <div class="row m-3">
+            <div class="col m-3"><div class="h4">General-Info. de la empresa</div></div>
+            <div class="col m-3">
+                <div class="dropdown">
+                <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                        Seleccionar
+                </button> 
+                
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <label class="form-check-label" for="Checkme3">Aceptado</label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <label class="form-check-label" for="Checkme3">Incompleto</label>
+                            
+                                <div class="invalid-feedback">
+                                    Seleccione una opcion
+                                </div>
+                            </div>
+                        </a>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col m-3">
+                <div class="form-group">
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                </div>           
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="card m-3">
+        <div class="row m-3">
+            <div class="col m-3"><div class="h4">General-Info. del contraparte</div></div>
+            <div class="col m-3">
+                <div class="dropdown">
+                <button class="btn btn-primary mb-3  dropdown-toggle"
+                        type="button" 
+                        id="multiSelectDropdown"
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"> 
+                        Seleccionar
+                </button> 
+                
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <label class="form-check-label" for="Checkme3">Aceptado</label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <label class="form-check-label" for="Checkme3">Incompleto</label>
+                            
+                                <div class="invalid-feedback">
+                                    Seleccione una opcion
+                                </div>
+                            </div>
+                        </a>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col m-3">
+                <div class="form-group">
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
+                <div class="invalid-feedback">
+                        Este campo no puede quedar vacío
+                </div>           
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+    <h3>Enviar cuestionario</h3>
+    <button type="submit" class="btn btn-primary m-4">Enviar</button> 
+
+    </form>
+
+</div>
