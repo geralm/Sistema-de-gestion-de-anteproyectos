@@ -4,10 +4,10 @@
 
     </div>
     
-    <form action="/toBeDeveloped" method="POST">
+    <form action='/admin/anteproyectos/enviarRevisado' method="POST" novalidate class="needs-validation">
     <h2>Revisión de Anteproyectos</h2>
     
-
+<div class="container">
     <div class="row m-3">
         <div class="row m-3">
             <div class="col m-3"><div class="h2">Aspecto</div></div>
@@ -22,7 +22,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown1"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -32,13 +32,15 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
-                                <label class="form-check-label" for="Checkme3">Aceptado</label>
+                                <label>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "infoEstudiante.estado" required/>
+                                <div class="span">Aceptado</div>
+                                </label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "infoEstudiante.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -52,10 +54,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="infoEstudiante.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown2"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -78,13 +78,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "infoEmpresa.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "infoEmpresa.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -98,10 +98,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="infoEmpresa.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -112,9 +110,10 @@
             <div class="col m-3"><div class="h5">General - Información del contraparte</div></div>
             <div class="col m-3">
                 <div class="dropdown">
+                
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown3"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -124,13 +123,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "infoContraparte.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "infoContraparte.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -144,10 +143,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="infoContraparte.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -160,7 +157,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown4"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -170,13 +167,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "infoBasica.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "infoBasica.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -190,10 +187,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="infoBasica" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -206,7 +201,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown5"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -216,13 +211,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "descripcionGeneral.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "descripcionGeneral.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -236,10 +231,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="descripcionGeneral.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -252,7 +245,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown6"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -262,13 +255,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "antecedentes.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "antecedentes.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -282,10 +275,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="antecedentes.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -298,7 +289,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown7"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -308,13 +299,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "objetivos.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "objetivos.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -328,10 +319,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="objetivos.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -344,7 +333,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown8"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -354,13 +343,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "tecnologias.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "tecnologias.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -374,10 +363,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="tecnologias.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -390,7 +377,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown9"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -400,13 +387,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "productos.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "productos.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -420,10 +407,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="productos.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -436,7 +421,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown10"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -446,13 +431,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "alcance.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "alcance.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -466,10 +451,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="alcance.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -482,7 +465,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown11"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -492,13 +475,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "personal.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "personal.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -512,10 +495,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="personal.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -528,7 +509,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown12"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -538,13 +519,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "duracion.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "duracion.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -558,10 +539,8 @@
             </div>
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="duracion.observaciones" > 
+                Observaciones          
                 </div>
             </div>
         </div>
@@ -574,7 +553,7 @@
                 <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown13"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
                         Seleccionar
@@ -584,13 +563,13 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "cronograma.estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aceptado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "cronograma.estado" required />
                                 <label class="form-check-label" for="Checkme3">Incompleto</label>
                             
                                 <div class="invalid-feedback">
@@ -602,14 +581,14 @@
                     </div>
                 </div>
             </div>
+
             <div class="col m-3">
                 <div class="form-group">
-                <input type="semestre" class="form-control" id="exampleInputEmail1" name="proyecto[titulo]" required> 
-                <div class="invalid-feedback">
-                        Este campo no puede quedar vacío
-                </div>           
+                <input type="semestre" class="form-control" id="exampleInputEmail1" name="cronograma.observaciones" > 
+                Observaciones          
                 </div>
             </div>
+            
         </div>
         </div>
 
@@ -617,34 +596,30 @@
 
     
     <div class="row m-3">
+        
         <div class="row m-3">
-
-        </div>
-        <div class="row m-3">
-
-        </div>
-        <div class="row">
-        <div class="card m-3">
+        <h5>Estado del proyecto</h5>
+        
             <div class="dropdown">
                 <button class="btn btn-primary mb-3  dropdown-toggle"
                         type="button" 
-                        id="multiSelectDropdown"
+                        id="multiSelectDropdown14"
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"> 
-                        Estado del proyecto
+                        Seleccionar
                 </button> 
                 
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="aceptado" name = "proyecto[semestre]" required/>
+                                <input class="form-check-input" type="radio" value="aceptado" name = "estado" required/>
                                 <label class="form-check-label" for="Checkme3">Aprobado</label>
                             </div>
                         </a>
                         <a class="dropdown-item" href="#">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="incompleto" name = "proyecto[semestre]" required />
+                                <input class="form-check-input" type="radio" value="incompleto" name = "estado" required />
                                 <label class="form-check-label" for="Checkme3">No aprobado</label>
                             
                                 <div class="invalid-feedback">
@@ -655,18 +630,25 @@
                     
                     </div>
                 </div>
-        </div>
+        
+        
         </div>
     </div>
 
-    <div class="row m-3">
-        <div class="card m-3">
-            <h3>Enviar cuestionario</h3>
-            <button type="submit" class="btn btn-primary m-4">Enviar</button> 
-        </div>
+    <div class="row m-3">    
+        <div class="h5">Enviar Revision</div>    
+        <button type="submit" class="btn btn-primary m-3">Enviar</button>  
     </div>
+    <div class="invalid-feedback">
+            Cuestionario incompleto
+    </div> 
+    </form>
+</div>
+
     
 
-    </form>
+    <div class="row m-3">    
+        <div class="p">Sistema de Gestión de prácticas profesionales - 2023</div> 
+    </div>
 
 </div>

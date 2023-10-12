@@ -21,4 +21,8 @@ router.route('/anteproyectos/open-pdf')
 router.route('/anteproyectos/:id/revisar')
     .get(isLoggedIn, isAdmin, admin.revisar);
 
+router.route('/anteproyectos/enviarRevisado')
+    .post(isLoggedIn, isAdmin, admin.actualizarRevision);
+    
+
 module.exports = router

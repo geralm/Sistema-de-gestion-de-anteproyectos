@@ -38,6 +38,15 @@ const revisar = async (req, res) => {
     res.render('admin/revisarAnteproyecto', { anteproyecto })
 }
 
+const actualizarRevision = async (req, res) => {
+    console.log("\nInfo recibida:")
+    console.log(req.body)
+    res.redirect('/user');
+}
+
+
+
+
 module.exports = {
-    renderAnteproyectos, renderOne, showPdf,revisar
+    renderAnteproyectos, renderOne, showPdf,revisar,actualizarRevision
 }
