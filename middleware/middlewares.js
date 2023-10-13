@@ -1,4 +1,4 @@
-const {eventSchema, userSchema, proyectSchema} = require('./schemas.js');
+const {eventSchema, userSchema, proyectSchema, teacherSchema} = require('./schemas.js');
 const ExpressError = require('../utils/ExpressError.js')
 
 module.exports.validateEvent = (req, res, next) => {
@@ -29,6 +29,24 @@ module.exports.validateUser = (req, res, next) => {
         next();
     }
 }
+
+module.exports.validateTeacher = (req, res, next) => {
+    const {error} = teacherSchema.validate(req.body);
+    // console.log("Error", error);
+    /* Recordar que Joi valida el usuario pero no mongo; mongo niega usuarios con 
+     el mismo id, correo...*/
+    if (error) {
+        
+        const msg = error.details.map(el => el.message).join(',')
+        console.log("This teacher could not be validated in middleware ");
+        console.log(msg);
+        req.flash('error', msg);
+        return res.redirect('/user');
+    } else {
+        next();
+    }
+}
+
 module.exports.isLoggedIn =(req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl

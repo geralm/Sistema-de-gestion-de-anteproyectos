@@ -53,3 +53,18 @@ body {
     color: rgba(4, 107, 242, 1); 
     color: rgba(3, 85, 191, 1); 
     color: rgba(242, 242, 242, 1);  */
+
+select {
+    font-family: "Roboto", sans-serif;
+    background-color: white; /* Fondo blanco */
+    color: rgba(0, 6, 38, 1); /* Texto oscuro */
+    border: 2px solid rgba(4, 107, 242, 1); /* Borde grueso y azul */
+    border-radius: 10px; /* Bordes redondos */
+    padding: 10px; /* Espacio interno dentro del elemento select */
+    width: 100%; /* Opcional: hacer que el ancho sea del 100% del contenedor */
+}
+
+select option {
+    background-color: white; /* Fondo blanco */
+    color: rgba(0, 6, 38, 1); /* Texto oscuro */
+}
