@@ -8,9 +8,11 @@ const passport = require("passport")
 router.route('/signin')
     .get(user.renderLogin)
     .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/signin' }), user.login)
+    
 router.route('/register')
     .get(user.renderRegister)
     .post(validateUser, catchAsync(user.createUsuario))
+
 router.get('/logout', user.logout)
 
 router.get('/user',isLoggedIn, user.renderUserHome);

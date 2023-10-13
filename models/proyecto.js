@@ -8,6 +8,12 @@ const ProyectSchema = new Schema({
         required: true,
         maxlength: 100
     },
+    profesor: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher',
+        required: false,
+        default: null
+    },
     estudiante: {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -61,32 +67,33 @@ const ProyectSchema = new Schema({
         type: Date,
         required: true,
     },
-    isConfidencial:{
-        type:Boolean,
-        default:false
+    isConfidencial: {
+        type: Boolean,
+        default: false
     },
-    
-    semestre:{
+
+    semestre: {
         type: String,
         ref: 'Semestre',
         required: true
     },
 
-    documento:{
-        type:Buffer,
-        required:true
+    documento: {
+        type: Buffer,
+        required: true
     },
 
-    tipo:{
+    tipo: {
         type: String,
         required: true,
         enum: ['desarrollo', 'investigacion', 'infraestructura'],
         default: 'desarrollo'
     },
-    teletrabajo:{
-        type:Boolean,
-        default:false
+    teletrabajo: {
+        type: Boolean,
+        default: false
     },
+
 })
 
 module.exports = mongoose.model('Proyect', ProyectSchema);

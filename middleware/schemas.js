@@ -44,7 +44,7 @@ module.exports.proyectSchema = Joi.object({
         documento:Joi.object(),
         tipo:Joi.string(),
         teletrabajo:Joi.bool(),
-
+        profesor:Joi.object(),
         nombreEmpresa:Joi.string().required(),
         direccionEmpresa:Joi.string().max(200).required(),
         telefonoEmpresa:Joi.number().max(89999999).min(20000000).required(),
