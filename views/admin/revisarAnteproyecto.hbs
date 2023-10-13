@@ -6,6 +6,14 @@
     
     <form action='/admin/anteproyectos/enviarRevisado' method="POST" novalidate class="needs-validation">
     <h2>Revisión de Anteproyectos</h2>
+
+    <div class="row m-3">
+        <div class="h3">Info:</div>
+            <p>Estudiante: {{estudiante.nombre}}</p>
+            <p>Carnet: {{estudiante.carnet}}</p>
+            <p>Email: {{estudiante.correo}}</p>
+            <p>Proyecto: {{anteproyecto.titulo}}</p>
+    </div>
     
 <div class="container">
     <div class="row m-3">
