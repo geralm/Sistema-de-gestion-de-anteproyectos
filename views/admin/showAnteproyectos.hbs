@@ -7,7 +7,7 @@
     </div>
 
     <div class="row mb-2">
-        <form action="/admin/anteproyectos" method="POST">
+        <form action="/admin/anteproyectos/find" method="POST">
             <div class="row">
                 <label class="form-label" for="exampleInputEmail1">Buscar estudiante:</label>
             </div>
@@ -107,7 +107,7 @@
                     </td>
                     <td class="{{this.estado}}">{{this.estado}}</td>
                     <td>
-                        <form action="/admin/anteproyectos/{{this._id}}/revisar" method="POST">
+                        <form action="/admin/anteproyectos/{{this._id}}/revisar" method="GET">
                             <button type="submit" class="btn btn-primary w-100">Revisar</button>
                         </form>
                     </td>

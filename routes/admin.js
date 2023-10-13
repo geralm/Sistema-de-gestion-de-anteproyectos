@@ -36,4 +36,16 @@ router.route('/anteproyectos/:id/download')
 router.route('/anteproyectos/open-pdf')
     .get(isLoggedIn,isAdmin,admin.showPdf)
 
+router.route('/anteproyectos/:id/revisar')
+    .get(isLoggedIn, isAdmin, admin.revisar);
+
+router.route('/anteproyectos/enviarRevisado')
+    .post(isLoggedIn, isAdmin, admin.actualizarRevision);
+    
+
+router.route('anteproyectos/send-email')
+    .post(isLoggedIn,isAdmin,admin.enviarMail)
+
+    
+
 module.exports = router

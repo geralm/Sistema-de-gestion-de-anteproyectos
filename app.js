@@ -9,6 +9,8 @@ const flash = require('connect-flash');
 const handlebars = require('handlebars')
 const ExpressError = require('./utils/ExpressError')
 require('./config/passport')
+require('dotenv').config();
+const nodemailer = require('nodemailer');
 //Init
 const app = express()
 
