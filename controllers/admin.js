@@ -134,5 +134,6 @@ const transporter = nodemailer.createTransport({
 
 
 module.exports = {
-    renderAnteproyectos, renderOne, downloadOne, showPdf, renderProyectos, renderAsignarProfesor, crearTeacher, renderCrearTeacher, asignarProfesor
+    renderAnteproyectos, renderOne, showPdf, renderProyectos, renderAsignarProfesor,
+    crearTeacher, renderCrearTeacher, asignarProfesor,actualizarRevision,revisar,enviarMail
 }
