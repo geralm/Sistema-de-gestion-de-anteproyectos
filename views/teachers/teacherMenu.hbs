@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row mb-2">
+        <h1>Menú profesores</h1>
+    </div>
+    <div class="row mb-2">
+        <form method="POST" id="getForm">
+            <div class="row">
+                <div class="col">
+                    <label class="form-label" for="exampleInputEmail1">Profesor escogido:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select id="miSelect" name="selectProfesor">
+                        {{#each profesores}}
+                        <option value="{{this._id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                    <input name="idProyecto" value="{{proyecto._id}}" hidden />
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary w-100" formaction="/admin/eliminarTeacher">Borrar</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary w-100" formaction="/admin/renderEditarTeacher">Editar</button>
+                </div>
+            </div>
+        </form>
+        <form action="/admin/renderCrearTeacher" method="GET" id="createForm">
+            <div class="col">
+                <button type="submit" class="btn btn-primary w-100" value="crear">Crear</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Manejar el evento de clic en los botones
+    document.querySelectorAll('button[type="submit"]').forEach(button => {
+        button.addEventListener('click', function (event) {
+            const action = this.getAttribute('value'); // Obtén el valor del atributo value
+            const formId = (action === 'crear') ? 'createForm' : 'getForm'; // Determina qué formulario usar
+            const form = document.getElementById(formId); // Encuentra el formulario por ID
+            if (form) {
+                if (action === 'crear') {
+                    // Si es el botón "Crear", cambia el método a GET
+                    form.setAttribute('method', 'GET');
+                } else {
+                    // Para otros botones, mantén el método POST
+                    form.setAttribute('method', 'POST');
+                }
+                form.submit(); // Envía el formulario
+            }
+        });
+    });
+</script>

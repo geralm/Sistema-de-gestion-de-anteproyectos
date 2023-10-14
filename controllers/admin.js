@@ -41,7 +41,7 @@ const renderAsignarProfesor = async (req, res) => {
     const estudiante = await Estudiante.findById(proyecto.estudiante).lean();
     const profesorAsignado = await Profesores.findById(proyecto.profesor).lean();
     const profesores = await Profesores.find({}).populate().lean();
-    res.render('admin/asignarProfesorView', { proyecto, estudiante, profesores,profesorAsignado })
+    res.render('admin/asignarProfesorView', { proyecto, estudiante, profesores, profesorAsignado })
 }
 
 const renderOne = async (req, res) => {
@@ -49,8 +49,6 @@ const renderOne = async (req, res) => {
     const anteproyectos = await Anteproyecto.find({ nombreEstudiante: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean();
     res.render('admin/showAnteproyectos', { anteproyectos })
 }
-
-
 
 const showPdf = async (req, res) => {
     const anteproyecto = await Anteproyecto.findById(req.params.id);
@@ -64,8 +62,18 @@ const showPdf = async (req, res) => {
 const revisar = async (req, res) => {
     const anteproyecto = await Anteproyecto.findById(req.params.id).lean();
     const estudiante = await User.findById(anteproyecto.estudiante).lean();
-    res.render('admin/revisarAnteproyecto', { anteproyecto,estudiante })
+    res.render('admin/revisarAnteproyecto', { anteproyecto, estudiante })
 }
+
+const renderMenuTeacher = async (req, res) => {
+    const profesores = await Profesores.find({}).populate().lean();
+    res.render('teachers/teacherMenu', { profesores })
+}
+
+const renderCrearTeacher = (req, res) => {
+    res.render('teachers/crearTeacher')
+}
+
 const crearTeacher = async (req, res) => {
     const newTeacher = req.body.teacher;
     console.log(newTeacher)
@@ -75,9 +83,46 @@ const crearTeacher = async (req, res) => {
     res.redirect('/user')
 }
 
-const renderCrearTeacher = (req, res) => {
-    res.render('teachers/crearTeacher')
+const renderEditarTeacher = async (req, res) => {
+    const idProfesor = req.body.selectProfesor
+    const profesor = await Profesores.findById(idProfesor).lean();
+    console.log(profesor)
+    res.render('teachers/editarTeacher', { profesor })
 }
+
+const editarTeacher = async (req, res) => {
+    const updatedTeacher = req.body.teacher;
+    const idTeacher = req.body.idTeacher;
+    const teacher = await Profesores.findByIdAndUpdate(idTeacher, updatedTeacher);
+    console.log(updatedTeacher)
+    console.log(idTeacher)
+    await teacher.save();
+    req.flash('success', '¡Profesor editado exitosamente!');
+    res.redirect('/user');
+}
+
+const eliminarTeacher = async (req, res) => {
+    const idProfesor = req.body.selectProfesor
+    try {
+        // Encuentra el profesor por su ID
+        const teacher = await Profesores.findById(idProfesor);
+
+        if (!teacher) {
+            req.flash('error', 'El profesor no fue encontrado.');
+            return res.redirect('/user');
+        }
+
+        // Realiza la eliminación
+        await Profesores.findByIdAndDelete(idProfesor);
+        req.flash('success', '¡Profesor eliminado exitosamente!');
+        res.redirect('/user');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Ocurrió un error al eliminar el profesor.');
+        res.redirect('/user');
+    }
+}
+
 
 
 //hace varias cosas...
@@ -90,31 +135,31 @@ const actualizarRevision = async (req, res) => {
         to: 'mauarrieta24@gmail.com',
         subject: 'Test Email',
         text: 'This is a test email sent from my Node.js server.',
-      };
+    };
     enviarMail(emailData)
     res.redirect('/user');
 }
 
-function enviarMail (data,res) {
-    
+function enviarMail(data, res) {
+
     console.log(data)
     const { to, subject, text } = data;
-  
+
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to,
-      subject,
-      text,
+        from: process.env.EMAIL_USER,
+        to,
+        subject,
+        text,
     };
-  
+
     transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending email:', error);
-        //res.status(500).send('Error sending email');
-      } else {
-        console.log('Email sent:', info.response);
-        //res.status(200).send('Email sent successfully');
-      }
+        if (error) {
+            console.error('Error sending email:', error);
+            //res.status(500).send('Error sending email');
+        } else {
+            console.log('Email sent:', info.response);
+            //res.status(200).send('Email sent successfully');
+        }
     });
 }
 
@@ -124,16 +169,17 @@ const transporter = nodemailer.createTransport({
 
     service: 'Gmail', // Use the email service you want to send emails through
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
     },
     secure: false,
     tls: { rejectUnauthorized: false }
 
-  });
+});
 
 
 module.exports = {
     renderAnteproyectos, renderOne, showPdf, renderProyectos, renderAsignarProfesor,
-    crearTeacher, renderCrearTeacher, asignarProfesor,actualizarRevision,revisar,enviarMail
+    crearTeacher, renderCrearTeacher, asignarProfesor, actualizarRevision, revisar, enviarMail,
+    renderMenuTeacher, eliminarTeacher, renderEditarTeacher, editarTeacher
 }

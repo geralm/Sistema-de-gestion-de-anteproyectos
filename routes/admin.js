@@ -20,11 +20,23 @@ router.route('/proyectos/asignarProfesor')
 router.route('/administrarProfesores')
     .get(isLoggedIn, isAdmin, admin.renderAsignarProfesor);
 
-router.route('/renderCrearTeacher')
-    .get(isLoggedIn, isAdmin, admin.renderCrearTeacher);
+router.route('/MenuTeacher')
+    .get(isLoggedIn, isAdmin, admin.renderMenuTeacher);
 
 router.route('/crearTeacher')
     .post(isLoggedIn, isAdmin, validateTeacher, catchAsync(admin.crearTeacher));
+
+router.route('/renderCrearTeacher')
+    .get(isLoggedIn, isAdmin, admin.renderCrearTeacher);
+
+router.route('/eliminarTeacher')
+    .post(isLoggedIn, isAdmin, admin.eliminarTeacher);
+
+router.route('/renderEditarTeacher')
+    .post(isLoggedIn, isAdmin, admin.renderEditarTeacher);
+
+router.route('/editarTeacher')
+    .post(isLoggedIn, isAdmin, admin.editarTeacher);
 
 //Cambiar esto por un método get para mantenerse a los estándares de restful
 router.route('/anteproyectos/find')
@@ -42,10 +54,9 @@ router.route('/anteproyectos/:id/revisar')
 router.route('/anteproyectos/enviarRevisado')
     .post(isLoggedIn, isAdmin, admin.actualizarRevision);
     
-
 router.route('anteproyectos/send-email')
     .post(isLoggedIn,isAdmin,admin.enviarMail)
 
-    
+   
 
 module.exports = router
