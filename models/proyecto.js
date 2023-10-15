@@ -92,7 +92,7 @@ const ProyectSchema = new Schema({
     teletrabajo: {
         type: Boolean,
         default: false
-    },
+    }
 
 })
 

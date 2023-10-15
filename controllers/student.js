@@ -26,6 +26,7 @@ const subirProyecto = async (req,res)=>{
     newProyecto.estudiante = req.user._id
     const proyecto = new Proyecto(newProyecto)
     await proyecto.save()
+    console.log(proyecto)
     res.redirect('/user')
   
 }
