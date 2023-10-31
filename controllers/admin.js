@@ -125,14 +125,15 @@ const eliminarTeacher = async (req, res) => {
 
 
 
-//hace varias cosas...
+//Funciones
 //1) manda el mail
 //2) actualiza estado de proyecto en DB (si es necesario)
 const actualizarRevision = async (req, res) => {
     console.log("\nInfo recibida:")
     console.log(req.body)
+    
     const emailData = {
-        to: 'mauarrieta24@gmail.com',
+        to: req.body.correoEstudiante,
         subject: 'Test Email',
         text: 'This is a test email sent from my Node.js server.',
     };
