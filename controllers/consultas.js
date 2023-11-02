@@ -19,8 +19,11 @@ const estudiantesXempresa = async (req, res) => {
     
     //realizar consulta
     obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, semestre)
-    .then((data) => {
-        console.log(data);
+    .then((data1) => {
+        console.log(data1);
+        const data = ordenarYFormatearDatos(data1);
+
+console.log(data);
         //exportarResultadosAExcel(resultado)
         res.render('queries/estudiantexempresa',{data})
     })
@@ -116,109 +119,6 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', semes
     }
 };
 
-const obtenerInformacionEstudiantesAgrupados = async (nombreEmpresa = '') => {
-    try {
-        // Filtro inicial
-        const filtro = {};
-
-        // Si se proporciona una empresa, agrégala al filtro
-        if (nombreEmpresa) {
-            filtro.nombreEmpresa = nombreEmpresa;
-        }
-
-        const resultado = await Anteproyecto.aggregate([
-            {
-                $lookup: {
-                    from: 'users',
-                    localField: 'estudiante',
-                    foreignField: '_id',
-                    as: 'estudiante_info'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'teachers',
-                    localField: 'profesor',
-                    foreignField: '_id',
-                    as: 'profesor_info'
-                }
-            },
-            {
-                $match: filtro
-            },
-            {
-                $unwind: '$estudiante_info'
-            },
-            {
-                $lookup: {
-                    from: 'cursos',
-                    localField: 'estudiante_info._id',
-                    foreignField: 'estudiante',
-                    as: 'cursos_info'
-                }
-            },
-            {
-                $project: {
-                    _id: 1,
-                    titulo: 1,
-                    'profesor_info._id': 1,
-                    'profesor_info.name': 1,
-                    'estudiante_info._id': 1,
-                    'estudiante_info.nombre': 1,
-                    'estudiante_info.carnet': 1,
-                    'estudiante_info.correo': 1,
-                    'estudiante_info.telefono': 1,
-                    nombreEmpresa: 1,
-                    direccionEmpresa: 1,
-                    telefonoEmpresa: 1,
-                    nombreSupervisor: 1,
-                    puestoSupervisor: 1,
-                    correoSupervisor: 1,
-                    tipo: 1,
-                    teletrabajo: 1,
-                    semestre: 1,
-                    estado: 1,
-                    cursos: {
-                        $cond: {
-                            if: { $eq: ['$cursos_info', []] },
-                            then: ['N/A'],
-                            else: { $ifNull: ['$cursos_info.nombre', 'N/A'] }
-                        }
-                    }
-                }
-            },
-            {
-                $group: {
-                    _id: { semestre: '$semestre', nombreEmpresa: '$nombreEmpresa' },
-                    estudiantes: { $push: '$$ROOT' }
-                }
-            },
-            {
-                $group: {
-                    _id: '$_id.semestre',
-                    empresas: { $push: { nombreEmpresa: '$_id.nombreEmpresa', estudiantes: '$estudiantes' } }
-                }
-            }
-        ]);
-
-        // Desenrolla los datos anidados para una estructura más legible
-        const datosLegibles = resultado.map((semestre) => {
-            const empresas = semestre.empresas.map((empresa) => {
-                const estudiantes = empresa.estudiantes.map((estudiante) => ({
-                    nombreEmpresa: empresa.nombreEmpresa,
-                    ...estudiante
-                }));
-                return estudiantes;
-            });
-            return empresas.flat();
-        });
-
-        return datosLegibles;
-    } catch (error) {
-        throw error;
-    }
-};
-
 
 
 
@@ -275,18 +175,48 @@ async function exportarResultadosAExcel(resultados) {
     console.log(`Archivo Excel "${nombreArchivo}" creado con éxito.`);
 }
 
-/*
-// Uso de la función para obtener información de estudiantes por nombre de empresa
-const nombreEmpresa = '';
-obtenerInformacionEstudiantesPorEmpresa2(nombreEmpresa, "1")
-    .then((resultado) => {
-        console.log(resultado);
-        exportarResultadosAExcel(resultado)
-    })
-    .catch((error) => {
-        console.error('Error: ', error);
+function ordenarYFormatearDatos(datos) {
+    // Primero, ordena los datos por semestre y luego por empresa
+    datos.sort((a, b) => {
+        if (a.semestre < b.semestre) return -1;
+        if (a.semestre > b.semestre) return 1;
+        if (a.nombreEmpresa < b.nombreEmpresa) return -1;
+        if (a.nombreEmpresa > b.nombreEmpresa) return 1;
+        return 0;
     });
-*/
+
+    // Luego, crea un nuevo array con el formato de llaves deseado
+    const datosFormateados = datos.map((dato) => ({
+        _id: dato._id,
+        titulo: dato.titulo,
+        nombreEmpresa: dato.nombreEmpresa,
+        direccionEmpresa: dato.direccionEmpresa,
+        nombreSupervisor: dato.nombreSupervisor,
+        puestoSupervisor: dato.puestoSupervisor,
+        correoSupervisor: dato.correoSupervisor,
+        telefonoEmpresa: dato.telefonoEmpresa,
+        estado: dato.estado,
+        semestre: dato.semestre,
+        tipo: dato.tipo,
+        teletrabajo: dato.teletrabajo,
+        estudiante_info: {
+            _id: dato.estudiante_info._id,
+            nombre: dato.estudiante_info.nombre,
+            carnet: dato.estudiante_info.carnet,
+            telefono: dato.estudiante_info.telefono,
+            correo: dato.estudiante_info.correo,
+        },
+        profesor_info: dato.profesor_info,
+        cursos: dato.cursos,
+    }));
+
+    return datosFormateados;
+}
+
+// Para usar la función:
+
+
+
 module.exports = {
     renderConsultas, estudiantesXempresa
 }
