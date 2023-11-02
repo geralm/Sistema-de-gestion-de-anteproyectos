@@ -1,0 +1,35 @@
+<div class="container">
+    <h1>Consultas</h1> <!-- Título de la página -->
+
+    <form method="GET" id="getForm">
+
+
+        <h5>Semestre:</h5>
+        <select id="semestre" name="semestre">
+            <option value="">Histórico</option> <!-- Select con la opción "Histórico" -->
+            <option value="1">1</option>
+        </select>
+        <br><br>
+
+        <h5>Empresa:</h5>
+        <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa">
+        <br><br>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100" formaction="/consultas/estudianteXempresa">Estudiantes por Empresa</button>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100" formaction="">Profesores por Empresa</button>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100" formaction="">Consulta General</button>
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+</div>
