@@ -50,6 +50,7 @@
             <tbody class="table-group-divider valign-middle">
                 {{#if anteproyectos}}
                 {{#each anteproyectos}}
+                {{#ifEquals this.estado "Revision"}}
                 <tr>
                     <td>
                         <p>{{this.estudiante.nombre}} <br>
@@ -112,6 +113,7 @@
                         </form>
                     </td>
                 </tr>
+                {{/ifEquals}}
                 {{/each}}
                 {{else}}
                 <h3>No hay anteproyectos que mostrar para este semestre</h3>

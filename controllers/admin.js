@@ -8,6 +8,7 @@ const User = require('../models/user');
 const fs = require('fs');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const { Console } = require('console');
 
 const renderAnteproyectos = async (req, res) => {
     // const anteproyectos = await Anteproyecto.find({}).lean()
@@ -123,15 +124,59 @@ const eliminarTeacher = async (req, res) => {
     }
 }
 
+function estadoRevision(body) {
+    try {
+      
+      // Convert the request body object to a JSON string
+      const jsonString = JSON.stringify(body);
+      const data = JSON.parse(jsonString);
+      
+      // Iterate through the key-value pairs
+      for (const key in data) {
+        if (data[key] === 'incompleto') {
+          return false;  // Return false if 'incompleto' is found
+        }
+      }
+      
+      // If no 'incompleto' is found, return true
+      return true;
+    } catch (error) {
+      return "parsing error";  // Return false if the JSON parsing fails
+    }
+  }
 
-
-//Funciones
+//Funciones 
 //1) manda el mail
-//2) actualiza estado de proyecto en DB (si es necesario)
+//2) actualiza estado de anteproyecto en DB (de ser aprobado)
 const actualizarRevision = async (req, res) => {
-    console.log("\nInfo recibida:")
-    console.log(req.body)
+
+    //console.log("\nInfo recibida:")
+    //console.log(req.body)
+    estadoProyecto = estadoRevision(req.body)
+
+    //si fue aprobado
+    if (estadoProyecto){
+        //modificar estado en db
+        //acordarnos que los aprobados no salgan en lista de anteproyectos
+        console.log(req.body.id_proyecto)
+        try {
+            const updatedDocument = await Anteproyecto.findOneAndUpdate(
+              { _id: req.body.id_proyecto }, // Filter for the document you want to update
+              { estado: "Aprobado" }, // The field and value to update
+              { new: true } // Return the updated document
+            );
+        
+            if (updatedDocument) {
+              console.log("updated doc... yay")
+            } else {
+              res.status(404).json({ error: 'Document not found' });
+            }
+          } catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
+          }
+    }
     
+
     const emailData = {
         to: req.body.correoEstudiante,
         subject: 'Test Email',
