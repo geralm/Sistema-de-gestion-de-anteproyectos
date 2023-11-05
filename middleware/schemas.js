@@ -34,7 +34,7 @@ module.exports.proyectSchema = Joi.object({
 
         titulo: Joi.string(),
         estudiante:Joi.object(),
-        cursos:Joi.string(),
+        cursos:Joi.any(),
         telefonoEmpresa: Joi.number(),
         estado:Joi.string() ,
         fechaInicio:Joi.date(),
