@@ -38,7 +38,6 @@ router.route('/renderEditarTeacher')
 router.route('/editarTeacher')
     .post(isLoggedIn, isAdmin, admin.editarTeacher);
 
-//Cambiar esto por un método get para mantenerse a los estándares de restful
 router.route('/anteproyectos/find')
     .post(isLoggedIn, isAdmin, admin.renderOne);
 

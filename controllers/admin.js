@@ -11,7 +11,6 @@ const nodemailer = require('nodemailer');
 const { Console } = require('console');
 
 const renderAnteproyectos = async (req, res) => {
-    // const anteproyectos = await Anteproyecto.find({}).lean()
     const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
     res.render('admin/showAnteproyectos', { anteproyectos })
 
@@ -46,8 +45,9 @@ const renderAsignarProfesor = async (req, res) => {
 }
 
 const renderOne = async (req, res) => {
-    console.log(req.body)
-    const anteproyectos = await Anteproyecto.find({ nombreEstudiante: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean();
+    const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
+    const anteproyectos = await Anteproyecto.find({ estudiante: id_estudiantes[0]._id }).populate('estudiante').lean();
+    console.log(anteproyectos)
     res.render('admin/showAnteproyectos', { anteproyectos })
 }
 
