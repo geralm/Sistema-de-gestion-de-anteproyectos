@@ -22,6 +22,7 @@ const eventsRouter = require('./routes/events');
 const adminRouter = require('./routes/admin')
 const studentRouter = require('./routes/student')
 const userRouter = require('./routes/user');
+const semesterRouter = require('./routes/semestre');
 const { toDateString } = require('./utils/events');
 
 //Database
@@ -73,6 +74,7 @@ app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
 // app.use('/',landingRouter) // No utilizamos esto porque ahora el landing es home
 app.use('/student',studentRouter)
+app.use('/s', semesterRouter);
 app.use('/',userRouter)
 
 app.get('/', (req, res) => {
