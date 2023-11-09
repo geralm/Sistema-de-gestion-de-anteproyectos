@@ -73,11 +73,10 @@ const ProyectSchema = new Schema({
     },
 
     semestre: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'Semestre',
         required: true
     },
-
     documento: {
         type: Buffer,
         required: true

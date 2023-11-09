@@ -5,7 +5,8 @@ const semestreSchema = new Schema({
     year: {
         type: Number,
         required: true,
-        maxlength: 4
+        maxlength: 4,
+        min: 2000,
         
     },
     period:{
@@ -13,10 +14,11 @@ const semestreSchema = new Schema({
         enum: ['I','II'],
         required: true,
     },
-    isAvailable:{
+    isActual:{
         type:Boolean,
         default:true
     }
 });
+semestreSchema.index({year:1,period:1},{unique:true});
 
 module.exports = mongoose.model('Semestre', semestreSchema);
