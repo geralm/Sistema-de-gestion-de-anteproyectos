@@ -21,7 +21,7 @@ const seedAdmin = async()=>{
         correo: "admin@estudiantec.cr",
         esAdmin: true
     })
-    newAdmin.contrasenia = await newAdmin.encryptPassword("administrador");
+    newAdmin.contrasenia = await newAdmin.encryptPassword("admin");
     
     await newAdmin.save()
     
