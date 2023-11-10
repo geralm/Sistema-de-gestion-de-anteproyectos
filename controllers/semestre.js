@@ -17,7 +17,7 @@ module.exports.deleteSemester = async (req, res) => {
 
 module.exports.renderAdminSemester = async (req, res) => {
     //Create a funcction to get next 5 years in array
-    const years = getnextYears(7);    
+    const years = getnextYears(3);    
     const semestres = await Semestre.find({}).lean();
     res.render('admin/crearSemestre', { years , semestres});
 }
