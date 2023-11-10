@@ -4,7 +4,7 @@
             <div class="card shadow">
                 <div class="card-body">
                     <h5 class="card-title text-center">Crear Semestre</h5>
-                    <form action="/s" method="POST" novalidate class="needs-validation form-group d-inline">
+                    <form action="/semestre" method="POST" novalidate class="needs-validation form-group d-inline">
                         <div class="mb-3">
                             <label for="selectYear" class="form-label">Selecciona un año:</label>
                             <select id="selectYear" name="semestre[year]" class="form-select">
@@ -40,8 +40,8 @@
 
     </div>
     <div class="row">
-        <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 mt-5">
-            <div class="card shadow overflow-auto position-relative"style="height: 300px">
+        <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 mt-3">
+            <div class="card shadow overflow-auto position-relative"style="height: 250px">
                 <div class="card-body">
                     {{!-- <div class="container-fluid"> --}}
                         <div class="row">
@@ -62,7 +62,7 @@
                                     class="scrollspy-example" tabindex="0">
                                     {{#each semestres}}
                                     <div id="list-item-{{this._id}}">
-                                        <form id="list-item-{{this._id}}" action="/s/{{this._id}}/?_method=DELETE" method="POST">
+                                        <form id="list-item-{{this._id}}" action="/semestre/{{this._id}}/?_method=DELETE" method="POST">
                                             <h4 id="list-item-{{this._id}}">{{this.period}} {{this.year}}</h4>
                                             <p>Actual:{{this.isActual}}</p>
                                             <button class="btn btn-danger btn-block">Eliminar</button>

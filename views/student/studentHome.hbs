@@ -1,15 +1,121 @@
+<div class="container-fluid">
+    <div class="row mb-5">
+        <div class="card shadow">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-header">
+                        <strong>Anteproyecto</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div>
+                                            <h6 class="card-title d-inline">Titulo: </h6>
+                                            <p class="card-text d-inline">{{anteproyecto.titulo}}</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div>
+                                            <h6 class="card-title d-inline">Estado: </h6>
 
-    <div class="container">
-        <div class="card">
-            <h1>
-                ¡Welcome home, student!
-            </h1>    
+                                            <p class="card-text d-inline">{{anteproyecto.estado}} </p>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div>
+                                            <h6 class="card-title d-inline">Profesor asignado: </h6>
+                                            {{#ifEquals anteproyecto.profesorAsignado null}}
+                                            <p class="card-text d-inline">Sin asignar</p>
+                                            {{else}}
+                                            <p class="card-text d-inline">{{anteproyecto.profesorAsignado.name}} |
+                                                {{anteproyecto.profesorAsignado.correo}}</p>
+                                            {{/ifEquals}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div>
+                                            <h6 class="card-title d-inline">Tipo: </h6>
+                                            <p class="card-text d-inline">{{anteproyecto.tipo}} </p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div>
+                                            <h6 class="card-title d-inline">Confidencialidad: </h6>
+                                            {{#ifEquals anteproyecto.isConfidencial true}}
+                                            <p class="card-text d-inline">Confidencial</p>
+                                            {{else}}
+                                            <p class="card-text d-inline">No confidencial</p>
+                                            {{/ifEquals}}
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div>
+                                            <h6 class="card-title d-inline">Modalidad: </h6>
+                                            {{#ifEquals anteproyecto.teletrabajo true}}
+                                            <p class="card-text d-inline">Teletrabajo</p>
+                                            {{else}}
+                                            <p class="card-text d-inline">Regular</p>
+                                            {{/ifEquals}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-header">
+                        <strong>Empresa</strong>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div>
+                                    <h6 class="card-title d-inline">Nombre: </h6>
+                                    <p class="card-text d-inline">{{anteproyecto.nombreEmpresa}} |
+                                        Telefono: {{anteproyecto.telefonoEmpresa}}</p>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div>
+                                    <h6 class="card-title d-inline">Supervisor: </h6>
+                                    <p class="card-text d-inline">{{anteproyecto.puestoSupervisor}} |
+                                        {{anteproyecto.nombreSupervisor}} ({{anteproyecto.correoSupervisor}})</p>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <p>
-        To Do: Generar esta página de welcome para los estudiantes
-        </p>
+        {{!-- offset-xl-3 offset-md-3 --}}
+
     </div>
+    <div class="row">
+        <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 ">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Proximos eventos</strong>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {{#each eventos}}
+                    <li class="list-group-item">{{this.title}} <br><small>{{this.duration}}</small></li>
+                    {{/each}}
+                </ul>
+                <div class="card-body text-center">
+                    <a href="/events" class="btn btn-primary">Ver eventos</a>
+                </div>
+            </div>
+        </div>
 
 
-
+    </div>
+</div>

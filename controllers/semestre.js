@@ -11,8 +11,13 @@ module.exports.createSemester = async (req, res) => {
 module.exports.deleteSemester = async (req, res) => {
     const {id} = req.params;
     const semester = await Semestre.findByIdAndDelete(id);
+    const latestSemestre = await Semestre.findOne({}).sort({ year: -1, period: -1 });
+    if (latestSemestre) {
+        //This is to update the isActual field because we deleted the actual semester and we need to update the new one to isActual = true
+        await Semestre.updateOne({ _id: latestSemestre._id }, { $set: { isActual: true } });
+    }
     req.flash('success', '¡Semestre eliminado exitosamente!');
-    res.redirect('/s');
+    res.redirect('/semestre');
 }
 
 module.exports.renderAdminSemester = async (req, res) => {

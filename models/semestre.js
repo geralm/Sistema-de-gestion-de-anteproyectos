@@ -24,9 +24,10 @@ semestreSchema.index({ year: 1, period: 1 }, { unique: true });
 // Definir un método para actualizar el campo isActual
 semestreSchema.statics.updateIsActual = async function () {
     const latestSemestre = await this.findOne().sort({ year: -1, period: -1 });
-
+    
     if (latestSemestre) {
         await this.updateMany({ _id: { $ne: latestSemestre._id } }, { $set: { isActual: false } });
+        
         //$ne es not equal
     }
 };

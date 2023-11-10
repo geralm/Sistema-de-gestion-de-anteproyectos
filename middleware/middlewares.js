@@ -35,16 +35,15 @@ module.exports.validateSemester = async(req, res, next) => {
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         req.flash('error', msg);
-        return res.redirect('/s');
+        return res.redirect('/semestre');
     } else {
         const isExist = await Semestre.findOne({year: req.body.semestre.year, period: req.body.semestre.period});
         if(isExist) {
             req.flash('error', '¡El semestre ya está registrado!');
-            return res.redirect('/s');
+            return res.redirect('/semestre');
         }
         next();
     }
-    
 }
 
 module.exports.validateTeacher = (req, res, next) => {
