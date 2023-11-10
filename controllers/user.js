@@ -11,8 +11,14 @@ module.exports.renderRegister = (req, res) => {
 }
 module.exports.renderUserHome = async (req, res) => {
     if (req.user.esAdmin === true) {
-        const result = await forAdminData();
-        return res.render('admin/adminHome', { adminData: result });
+        //Get count anteproyectos in revision state
+        const projectsCount = (await project.find({ estado: 'Revision' })).length;
+        const semestre = await semester.findOne({ isActual: true }).lean();
+        console.log(semestre);
+        const eventos = await events.find({ finishDate: { $gte: new Date() } })
+            .sort({ finishDate: 1 }) // Ordenar por finishDate en lugar de fecha
+            .limit(3).lean();
+        return res.render('admin/adminHome', { projectsCount, semestre, eventos: mapManyEvents(eventos, toDateString)});
     }
     res.render('student/studentHome');
 }
@@ -56,24 +62,6 @@ module.exports.createUsuario = async (req, res) => {
     res.redirect('/signin')
 }
 
-const forAdminData = async () => {
-    const anteproyectos = await project.find({ estado: 'Revisión' });
-    const semestre = await semester.find({ isAvailable: true });
-    const eventos = await events.find({ finishDate: { $gte: new Date() } })
-        .sort({ finishDate: 1 }) // Ordenar por finishDate en lugar de fecha
-        .limit(3);
-    const semestreData = semestre.map(s => ({ // Se mapea por el handlebars
-        id: s._id,
-        period: s.period,
-        year: s.year
-    }));
-    return {
-        projectsCount: anteproyectos.length,
-        semesterInfo: semestreData.length > 0 ? semestreData[0] : null,
-        events: mapManyEvents(eventos, toDateString)
-    };
-
-};
 
 
 

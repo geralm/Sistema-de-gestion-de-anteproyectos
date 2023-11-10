@@ -1,28 +1,27 @@
 <div class="container-fluid text-center mb-4">
-    {{#ifEquals adminData.semesterInfo null}}
+    {{#ifEquals semestre null}}
     <h1>No hay semestres activos</h1>
-
     {{else}}
-    <h1>Semestre {{adminData.semesterInfo.period}}</h1>
+    <h1>Semestre {{semestre.period}} {{semestre.year}} </h1>
     {{/ifEquals}}
 </div>
 <div class="container-fluid">
     <div class="row mb-3">
         <div class="col-12">
             <div class="card container">
-                <h5 class="card-header text-center">Anteproyectos (Semestre {{adminData.semesterInfo.period}})</h5>
+                <h5 class="card-header text-center">semestre {{semestre.period}} {{semestre.year}}</h5>
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
                             <div class="card">
-                                {{#ifEquals adminData.projectsCount 0}}
+                                {{#ifEquals projectsCount 0}}
                                 <h5 class="card-header">Sin proyectos pendientes </h5>
                                 <div class="card-body">
                                     <a href="/admin/anteproyectos" class="btn btn-block btn-primary">Ir a anteproyectos
                                     </a>
                                 </div>
                                 {{else}}
-                                <h5 class="card-header">Tienes <strong> {{adminData.projectsCount}}</strong>
+                                <h5 class="card-header">Tienes <strong> {{projectsCount}}</strong>
                                     anteproyectos que revisar </h5>
                                 <div class="card-body">
                                     <a href="/admin/anteproyectos" class="btn btn-block btn-primary">Revisar
@@ -66,7 +65,7 @@
                 <strong>Proximos eventos</strong>
             </div>
             <ul class="list-group list-group-flush">
-                {{#each adminData.events}}
+                {{#each eventos}}
                 <li class="list-group-item">{{this.title}} <br><small>{{this.duration}}</small></li>
                 {{/each}}
             </ul>
