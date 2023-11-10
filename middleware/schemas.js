@@ -28,7 +28,12 @@ module.exports.teacherSchema = Joi.object({
         email: Joi.string().required()
         }).required()
 });
-
+module.exports.semesterSchema = Joi.object({
+    semestre: Joi.object({
+        year: Joi.number().required(),
+        period: Joi.string().required()
+    }).required()
+});
 module.exports.proyectSchema = Joi.object({
     proyecto: Joi.object({
 
