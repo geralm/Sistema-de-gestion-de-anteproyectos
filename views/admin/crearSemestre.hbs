@@ -1,0 +1,85 @@
+<div class="container justify-content-center align-items-center">
+    <div class="row">
+        <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 ">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Crear Semestre</h5>
+                    <form action="/s" method="POST" novalidate class="needs-validation form-group d-inline">
+                        <div class="mb-3">
+                            <label for="selectYear" class="form-label">Selecciona un año:</label>
+                            <select id="selectYear" name="semestre[year]" class="form-select">
+                                {{#each years}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label px-2" for="periodo">Periodo</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="semestre[period]" id="inlineRadio1"
+                                    value="I">
+                                <label class="form-check-label" for="inlineRadio1"><strong>I</strong> </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="semestre[period]" id="inlineRadio2"
+                                    value="II">
+                                <label class="form-check-label" for="inlineRadio2"><strong>II</strong></label>
+                            </div>
+                        </div>
+                        <button class="btn btn-success btn-block">Crear</button>
+                    </form>
+
+                </div>
+                <div class="card-footer">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a href="/user" class="btn btn-primary btn-block">Volver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xl-6 offset-xl-3 offset-md-3 mt-5">
+            <div class="card shadow overflow-auto position-relative"style="height: 300px">
+                <div class="card-body">
+                    {{!-- <div class="container-fluid"> --}}
+                        <div class="row">
+                            <h5 class="card-title text-center">Semestres registrados</h5>
+                        </div>
+                        <div class="row ">
+                            <div class="col-4">
+                                <div id="list-example" class="list-group">
+                                    {{#each semestres}}
+                                    <a class="list-group-item list-group-item-action" href="#list-item-{{this._id}}">
+                                        {{this.period}} {{this.year}}
+                                    </a>
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div class="col-6 ">
+                                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0"
+                                    class="scrollspy-example" tabindex="0">
+                                    {{#each semestres}}
+                                    <div id="list-item-{{this._id}}">
+                                        <form id="list-item-{{this._id}}" action="/s/{{this._id}}/?_method=DELETE" method="POST">
+                                            <h4 id="list-item-{{this._id}}">{{this.period}} {{this.year}}</h4>
+                                            <p>Actual:{{this.isActual}}</p>
+                                            <button class="btn btn-danger btn-block">Eliminar</button>
+                                            <!-- Corregido aquí -->
+                                        </form>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                        {{!--
+                    </div> --}}
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
