@@ -9,7 +9,7 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage });
 
 router.route('/upload')
-    .get(isLoggedIn,student.renderStudentUpload)
+    .get(isLoggedIn,catchAsync(student.renderStudentUpload))
     .post(isLoggedIn,upload.single('pdfFile'),validateProyect,catchAsync(student.subirProyecto));
 
 

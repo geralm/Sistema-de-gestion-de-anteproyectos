@@ -2,11 +2,13 @@
 const Proyecto = require('../models/proyecto');
 let pdfUploaded = false
 const User = require('../models/user');
+const semester = require('../models/semestre');
 
 
 
-const renderStudentUpload =  (req,res)=>{
-    res.render('student/studentUpload')
+const renderStudentUpload =  async(req,res)=>{
+    const semestre = await semester.findOne({ isActual: true }).lean();
+    res.render('student/studentUpload', {semestre});
 }
 
 const subirProyecto = async (req,res)=>{

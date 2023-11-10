@@ -10,17 +10,17 @@ module.exports.renderRegister = (req, res) => {
     res.render('users/register');
 }
 module.exports.renderUserHome = async (req, res) => {
+    const semestre = await semester.findOne({ isActual: true }).lean();
     if (req.user.esAdmin === true) {
         //Get count anteproyectos in revision state
         const projectsCount = (await project.find({ estado: 'Revision' })).length;
-        const semestre = await semester.findOne({ isActual: true }).lean();
-        console.log(semestre);
         const eventos = await events.find({ finishDate: { $gte: new Date() } })
             .sort({ finishDate: 1 }) // Ordenar por finishDate en lugar de fecha
             .limit(3).lean();
         return res.render('admin/adminHome', { projectsCount, semestre, eventos: mapManyEvents(eventos, toDateString)});
     }
-    res.render('student/studentHome');
+    
+    res.render('student/studentHome', { user: req.user });
 }
 module.exports.login = (req, res) => {
     req.flash('success', '¡Bienvenido de nuevo!');
