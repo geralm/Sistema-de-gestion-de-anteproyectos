@@ -1,6 +1,7 @@
 const {eventSchema, userSchema, proyectSchema, teacherSchema} = require('./schemas.js');
 const ExpressError = require('../utils/ExpressError.js')
-
+const {semesterSchema} = require('./schemas.js');
+const Semestre = require('../models/semestre');
 module.exports.validateEvent = (req, res, next) => {
     const { error } = eventSchema.validate(req.body);
     // console.log(req.body);
@@ -28,6 +29,22 @@ module.exports.validateUser = (req, res, next) => {
     } else {
         next();
     }
+}
+module.exports.validateSemester = async(req, res, next) => {
+    const {error} = semesterSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        req.flash('error', msg);
+        return res.redirect('/s');
+    } else {
+        const isExist = await Semestre.findOne({year: req.body.semestre.year, period: req.body.semestre.period});
+        if(isExist) {
+            req.flash('error', '¡El semestre ya está registrado!');
+            return res.redirect('/s');
+        }
+        next();
+    }
+    
 }
 
 module.exports.validateTeacher = (req, res, next) => {
