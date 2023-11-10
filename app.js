@@ -74,7 +74,7 @@ app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
 // app.use('/',landingRouter) // No utilizamos esto porque ahora el landing es home
 app.use('/student',studentRouter)
-app.use('/s', semesterRouter);
+app.use('/semestre', semesterRouter);
 app.use('/',userRouter)
 
 app.get('/', (req, res) => {

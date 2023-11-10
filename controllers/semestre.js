@@ -12,7 +12,7 @@ module.exports.deleteSemester = async (req, res) => {
     const {id} = req.params;
     const semester = await Semestre.findByIdAndDelete(id);
     req.flash('success', '¡Semestre eliminado exitosamente!');
-    res.redirect('/s');
+    res.redirect('/semestre');
 }
 
 module.exports.renderAdminSemester = async (req, res) => {
