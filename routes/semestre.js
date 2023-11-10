@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const {createSemester, renderCreateSemester} = require('../controllers/semestre');
 
 //TODO: Add isLoggedIn, isAdmin middleware
-router.route('/create')
+router.route('/')
     .get(renderCreateSemester)
     .post(catchAsync(createSemester));
 
