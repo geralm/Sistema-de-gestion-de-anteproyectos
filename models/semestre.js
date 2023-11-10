@@ -6,8 +6,7 @@ const semestreSchema = new Schema({
         type: Number,
         required: true,
         maxlength: 4,
-        min: 2000,
-        
+        min: 2000,    
     },
     period:{
         type: String,
