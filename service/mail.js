@@ -1,6 +1,8 @@
 require('dotenv').config()
 const nodemailer = require('nodemailer');
 
+// Singleton class to send emails using nodemailer
+// OnLy use sendMail method to send emails
 class MailService {
     constructor() {
         //IMPORTANTE!! para produccion hay que hacerlo con "Use a CA-Signed Certificate"
@@ -38,7 +40,6 @@ class MailService {
     }
 
 }
-
 module.exports.sendMail = async (to, subject, text) => {
     const mailService = MailService.getInstance();
     return await mailService._sendMail(to, subject, text);

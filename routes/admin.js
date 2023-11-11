@@ -54,7 +54,7 @@ router.route('/anteproyectos/enviarRevisado')
     .post(isLoggedIn, isAdmin, admin.actualizarRevision);
     
 router.route('anteproyectos/send-email')
-    .post(isLoggedIn,isAdmin,admin.enviarMail)
+    .post(isLoggedIn,isAdmin,admin.sendMail)
 
    
 

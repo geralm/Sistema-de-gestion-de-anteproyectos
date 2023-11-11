@@ -181,6 +181,6 @@ const actualizarRevision = async (req, res) => {
 
 module.exports = {
     renderAnteproyectos, renderOne, showPdf, renderProyectos, renderAsignarProfesor,
-    crearTeacher, renderCrearTeacher, asignarProfesor, actualizarRevision, revisar, enviarMail,
+    crearTeacher, renderCrearTeacher, asignarProfesor, actualizarRevision, revisar,
     renderMenuTeacher, eliminarTeacher, renderEditarTeacher, editarTeacher
 }

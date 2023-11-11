@@ -3,6 +3,9 @@ const project = require('../models/proyecto');
 const events = require('../models/events');
 const semester = require('../models/semestre');
 const { mapManyEvents, toDateString } = require('../utils/events');
+const mail = require('../service/mail');
+const { getRandomCode } = require('../utils/passwordRestoration');
+
 module.exports.renderLogin = (req, res) => {
     res.render('users/login');
 }
@@ -62,6 +65,33 @@ module.exports.createUsuario = async (req, res) => {
     res.redirect('/signin')
 }
 
+module.exports.passwordRestoration = async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ correo: email }).lean();
+    if (!user) {
+        req.flash('error', 'El correo no está registrado');
+        return res.redirect('/signin');
+    }
+    const code = getRandomCode();
+    // Crear un nuevo documento TempCode en la base de datos
+    const tempCode = new TempCode({
+        email: email,
+        code: code,
+    });
+    await tempCode.save();
+    const subject = "Restauración de contraseña";
+    const text = `Hola, para restaurar tu contraseña ingresa el siguiente código: ${code}. No compartas este código con nadie.`;
+    try {
+        await mail.sendMail(email, subject, text);
+        console.log('Correo enviado con éxito');
+        req.flash('success', 'Se ha enviado un correo con el código de restauración');
+        res.redirect('/signin');
+    } catch (error) {
+        console.error('Error al enviar el correo:', error);
+        req.flash('error', 'Ocurrió un error al enviar el correo');
+        res.redirect('/signin');
+    }
+}
 
 
 
