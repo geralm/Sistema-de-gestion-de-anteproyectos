@@ -12,10 +12,16 @@ const tempCodeSchema = new Schema({
         type: String,
         required: true,
         maxlength: 6,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
     }
-}, {
-    expires: 300, // El tiempo de expiración en segundos (5 minutos = 300 segundos)
 });
+
+// Definir tiempo de expiración de 5 minutos
+tempCodeSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });
+
 
 // tempCodeSchema.methods.isCodeValid = async (email, code) => {
 //     const tempCode = await this.findOne({ email: email, code: code });
