@@ -90,17 +90,16 @@ module.exports.restorePassword = async (req, res) => {
     const carnet =  req.body.user.carnet;
     const user = await User.findOne({carnet: carnet});
     const email = user.correo;  
-    const isCodeValid = await passwordRestoration.isCodeValid(email, code);
+    const isCodeValid = await passwordRestoration.isValidCode(email, req.body.user.code);
     if(isCodeValid){
-        user.contrasenia = await user.encryptPassword(password);
+        user.contrasenia = await user.encryptPassword(req.body.user.contrasenia);
         await user.save();
         req.flash('success', 'La contraseña se ha restaurado exitosamente');
-        res.redirect('/signin');
+        return res.redirect('/signin');
     }else{
         req.flash('error', 'El código es inválido o ha expirado');
-        res.redirect('/restore-password');        
+        return res.redirect('/restore-password');        
     }
-    res.send({carnet, code, password})
 }
 
 

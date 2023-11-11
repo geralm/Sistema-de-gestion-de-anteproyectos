@@ -16,7 +16,7 @@ const seedAdmin = async()=>{
     await user.deleteMany({});
     const newAdmin = new user({
         nombre: "admin",
-        carnet: 2020426227,
+        carnet: 123456789,
         telefono: 88888888,
         correo: "admin@estudiantec.cr",
         esAdmin: true

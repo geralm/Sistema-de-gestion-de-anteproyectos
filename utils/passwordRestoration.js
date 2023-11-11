@@ -21,7 +21,7 @@ module.exports.sendCodeMail = async (to) => {
     const text = `Hola, para restaurar tu contraseña ingresa el siguiente código: ${code}. No compartas este código con nadie.\nExpira en 5 minutos.`;
     try {
         await mail.sendMail(to, subject, text);
-        console.log('Correo enviado con éxito');
+        console.log('Correo enviado con éxito a', to);
         return true;
     } catch (error) {
         console.error('Error al enviar el correo:', error);
@@ -31,6 +31,7 @@ module.exports.sendCodeMail = async (to) => {
 };
 module.exports.isValidCode = async (email, code) => {
     const tempCode = await TempCode.findOne({ email: email, code: code });
+    console.log(tempCode)
     return !!tempCode;
 }
 // passwordRestoration("estebanlm@estudiantec.cr");
