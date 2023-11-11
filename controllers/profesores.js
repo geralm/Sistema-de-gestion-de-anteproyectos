@@ -20,9 +20,13 @@ module.exports.crearTeacher = async (req, res) => {
 
 module.exports.renderEditarTeacher = async (req, res) => {
     const idProfesor = req.body.selectProfesor
-    const profesor = await Profesores.findById(idProfesor).lean();
-    console.log(profesor)
-    res.render('teachers/editarTeacher', { profesor })
+    if (idProfesor) {
+        const profesor = await Profesores.findById(idProfesor).lean();
+        res.render('teachers/editarTeacher', { profesor })
+    } else {
+        req.flash('error', 'No se seleccionó ningún profesor.');
+        res.redirect('/user');
+    }
 }
 
 module.exports.editarTeacher = async (req, res) => {
@@ -37,7 +41,7 @@ module.exports.editarTeacher = async (req, res) => {
 }
 
 module.exports.eliminarTeacher = async (req, res) => {
-    const idProfesor = req.body.selectProfesor
+    const idProfesor = req.params.id
     try {
         // Encuentra el profesor por su ID
         const teacher = await Profesores.findById(idProfesor);

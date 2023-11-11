@@ -5,11 +5,11 @@ const { isLoggedIn, isAdmin, validateTeacher } = require('../middleware/middlewa
 const {renderMenuTeacher,crearTeacher,renderCrearTeacher,renderEditarTeacher,editarTeacher,eliminarTeacher} = require('../controllers/profesores')
 Router.route('/')
     .get(isLoggedIn, isAdmin,renderMenuTeacher)
+    .post(isLoggedIn, isAdmin,catchAsync(renderEditarTeacher))
 Router.route('/new')
     .get(isLoggedIn, isAdmin,renderCrearTeacher)
-    .post(isLoggedIn, isAdmin,validateTeacher,crearTeacher)
+    .post(isLoggedIn, isAdmin,validateTeacher,crearTeacher)    
 Router.route('/:id')
-    .get(isLoggedIn, isAdmin,catchAsync(renderEditarTeacher))
     .put(isLoggedIn, isAdmin,catchAsync(editarTeacher))
     .delete(isLoggedIn, isAdmin,catchAsync(eliminarTeacher))
 module.exports = Router;

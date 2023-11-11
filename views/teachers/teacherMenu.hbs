@@ -3,7 +3,7 @@
         <h1>Menú profesores</h1>
     </div>
     <div class="row mb-2">
-        <form method="POST" id="getForm">
+        <form method="POST" action="/profesor" id="getForm">
             <div class="row">
                 <div class="col">
                     <label class="form-label" for="exampleInputEmail1">Profesor escogido:</label>
@@ -19,21 +19,18 @@
                     <input name="idProyecto" value="{{proyecto._id}}" hidden />
                 </div>
                 <div class="col">
-                    <button type="submit" class="btn btn-primary w-100" formaction="/admin/eliminarTeacher">Borrar</button>
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-primary w-100" formaction="/admin/renderEditarTeacher">Editar</button>
+                    <button type="submit" class="btn btn-primary w-100">Editar</button>
                 </div>
             </div>
         </form>
-        <form action="/admin/renderCrearTeacher" method="GET" id="createForm">
+        <form action="/profesor/new" method="GET" id="createForm">
             <div class="col">
                 <button type="submit" class="btn btn-primary w-100" value="crear">Crear</button>
             </div>
         </form>
     </div>
 </div>
-
+{{!-- 
 <script>
     // Manejar el evento de clic en los botones
     document.querySelectorAll('button[type="submit"]').forEach(button => {
@@ -53,4 +50,4 @@
             }
         });
     });
-</script>
+</script> --}}
