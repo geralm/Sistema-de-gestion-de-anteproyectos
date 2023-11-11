@@ -20,6 +20,7 @@ const app = express()
 const landingRouter = require('./routes/landing')
 const eventsRouter = require('./routes/events');
 const adminRouter = require('./routes/admin')
+const consultasRouter = require('./routes/consultas')
 const studentRouter = require('./routes/student')
 const userRouter = require('./routes/user');
 const semesterRouter = require('./routes/semestre');
@@ -72,6 +73,7 @@ app.use(methodOverride('_method')); //allows to make update and deletes methods
 //Routes
 app.use('/admin',adminRouter)
 app.use('/events', eventsRouter);
+app.use('/consultas',consultasRouter);
 // app.use('/',landingRouter) // No utilizamos esto porque ahora el landing es home
 app.use('/student',studentRouter)
 app.use('/semestre', semesterRouter);
