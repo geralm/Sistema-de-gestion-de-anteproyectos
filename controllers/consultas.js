@@ -48,26 +48,16 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
             matchSemestre.period = periodo;
         }
 
-        // Consulta de agregación para encontrar los semestres que cumplen con los parámetros
         const semestresEncontrados = await Semestre.aggregate([
             { $match: matchSemestre }
         ]);
 
         const idsSemestresEncontrados = semestresEncontrados.map(semestre => semestre._id);
 
-        // Filtro adicional por nombreEmpresa si no es cadena vacía
-        const filters = [
-            { semestre: { $in: idsSemestresEncontrados } } // Filtro por semestre
-        ];
-
-        if (nombreEmpresa !== '') {
-            filters.push({ nombreEmpresa: nombreEmpresa }); // Filtro por nombreEmpresa
-        }
-
         const anteproyectos = await Anteproyecto.aggregate([
             {
                 $match: {
-                    $and: filters
+                    semestre: { $in: idsSemestresEncontrados }
                 }
             },
             {
@@ -80,10 +70,23 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
             },
             {
                 $project: {
-                    documento: 0 // Exclusión del campo 'documento'
+                    documento: 0
                 }
             }
         ]);
+
+        for (const anteproyecto of anteproyectos) {
+            const semestreInfo = semestresEncontrados.find(sem => sem._id.toString() === anteproyecto.semestre.toString());
+            anteproyecto.info_semestre = semestreInfo;
+
+            const estudiante = await Estudiante.findOne({ _id: anteproyecto.estudiante }, { contrasenia: 0 });
+            anteproyecto.info_estudiante = estudiante;
+
+            if (anteproyecto.profesor) {
+                const profesor = await Profesores.findOne({ _id: anteproyecto.profesor });
+                anteproyecto.info_profesor = { name: profesor.name };
+            }
+        }
 
         return anteproyectos;
     } catch (error) {
@@ -94,9 +97,13 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
 
 
+
+
+
+
 async function testFunction() {
     try {
-        const resultado = await obtenerInformacionEstudiantesPorEmpresa('Konrad', 2023, 'II');
+        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', 2023, '');
         console.log(resultado);
         // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
         //await exportarResultadosAExcel(resultado);
