@@ -17,5 +17,10 @@ const tempCodeSchema = new Schema({
     expires: 300, // El tiempo de expiración en segundos (5 minutos = 300 segundos)
 });
 
-module.exports = mongoose.model('Tempcode', tempCodeSchema);
+// tempCodeSchema.methods.isCodeValid = async (email, code) => {
+//     const tempCode = await this.findOne({ email: email, code: code });
+//     return !!tempCode;
+// };
+
+module.exports = mongoose.model('TempCode', tempCodeSchema);
 

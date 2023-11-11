@@ -1,9 +1,7 @@
-const { type } = require('os');
 const Anteproyecto = require('../models/proyecto')
 const Profesores = require('../models/teachers')
 const Estudiante = require('../models/user')
 const { Types } = require('mongoose');
-const { toDateString } = require('../utils/events')
 const User = require('../models/user');
 const fs = require('fs');
 const mail = require('../service/mail')
