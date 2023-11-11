@@ -23,11 +23,10 @@ const estudiantesXempresa = async (req, res) => {
     obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
         .then((data1) => {
             console.log(data1);
-            const data = ordenarYFormatearDatos(data1);
-
-            console.log(data);
+            console.log("BIEEEN");
+            //const data = ordenarYFormatearDatos(data1);
             //exportarResultadosAExcel(resultado)
-            res.render('queries/estudiantexempresa', { data })
+            res.render('queries/estudiantexempresa', { data1 })
         })
         .catch((error) => {
             req.flash('error', '¡Error al realizar la consulta!');
@@ -39,6 +38,7 @@ const estudiantesXempresa = async (req, res) => {
 const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year = 0, periodo = '') => {
     try {
         const matchSemestre = {};
+        const matchStage = {};
 
         if (year) {
             matchSemestre.year = year;
@@ -48,13 +48,17 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
             matchSemestre.period = periodo;
         }
 
+        if (nombreEmpresa) {
+            matchStage.nombreEmpresa = nombreEmpresa;
+        }
+
         const semestresEncontrados = await Semestre.aggregate([
             { $match: matchSemestre }
         ]);
 
         const idsSemestresEncontrados = semestresEncontrados.map(semestre => semestre._id);
 
-        const anteproyectos = await Anteproyecto.aggregate([
+        const pipeline = [
             {
                 $match: {
                     semestre: { $in: idsSemestresEncontrados }
@@ -73,7 +77,13 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
                     documento: 0
                 }
             }
-        ]);
+        ];
+
+        if (Object.keys(matchStage).length !== 0) {
+            pipeline.unshift({ $match: matchStage });
+        }
+
+        const anteproyectos = await Anteproyecto.aggregate(pipeline);
 
         for (const anteproyecto of anteproyectos) {
             const semestreInfo = semestresEncontrados.find(sem => sem._id.toString() === anteproyecto.semestre.toString());
@@ -101,9 +111,10 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
 
 
+
 async function testFunction() {
     try {
-        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', 2023, '');
+        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', 2023, 'II');
         console.log(resultado);
         // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
         //await exportarResultadosAExcel(resultado);
