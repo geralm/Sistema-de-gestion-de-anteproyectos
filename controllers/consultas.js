@@ -1,6 +1,7 @@
 const ExcelJS = require('exceljs');
 const { type } = require('os');
 const Anteproyecto = require('../models/proyecto')
+const Semestre = require('../models/semestre')
 const Profesores = require('../models/teachers')
 const Estudiante = require('../models/user')
 const { Types } = require('mongoose');
@@ -14,110 +15,90 @@ const renderConsultas = async (req, res) => {
 }
 
 const estudiantesXempresa = async (req, res) => {
-    const semestre = req.query.semestre;
+    const semestre = req.query.period;
+    const anho = req.query.year;
     const nombreEmpresa = req.query.nombreEmpresa;
-    
+
     //realizar consulta
-    obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, semestre)
-    .then((data1) => {
-        console.log(data1);
-        const data = ordenarYFormatearDatos(data1);
+    obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        .then((data1) => {
+            console.log(data1);
+            const data = ordenarYFormatearDatos(data1);
 
-console.log(data);
-        //exportarResultadosAExcel(resultado)
-        res.render('queries/estudiantexempresa',{data})
-    })
-    .catch((error) => {
-        req.flash('error', '¡Error al realizar la consulta!');
-        res.redirect('queries/consultas')
-    });
+            console.log(data);
+            //exportarResultadosAExcel(resultado)
+            res.render('queries/estudiantexempresa', { data })
+        })
+        .catch((error) => {
+            req.flash('error', '¡Error al realizar la consulta!');
+            res.redirect('queries/consultas')
+        });
 
-    
+
 }
-
-const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', semestre = '') => {
+const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year = 0, periodo = '') => {
     try {
-        // Crea un filtro inicial vacío
-        const filtro = {};
+        const matchSemestre = {};
 
-        // Si se proporciona una empresa, agrégala al filtro
-        if (nombreEmpresa) {
-            filtro.nombreEmpresa = nombreEmpresa;
+        if (year) {
+            matchSemestre.year = year;
         }
 
-        // Si se proporciona un semestre, agrégalo al filtro
-        if (semestre) {
-            filtro.semestre = semestre;
+        if (periodo) {
+            matchSemestre.period = periodo;
         }
 
-        const resultado = await Anteproyecto.aggregate([
+        // Consulta de agregación para encontrar los semestres que cumplen con los parámetros
+        const semestresEncontrados = await Semestre.aggregate([
+            { $match: matchSemestre }
+        ]);
+
+        const idsSemestresEncontrados = semestresEncontrados.map(semestre => semestre._id);
+
+        // Consulta de agregación para encontrar los anteproyectos vinculados a los semestres encontrados
+        const anteproyectos = await Anteproyecto.aggregate([
             {
-                $lookup: {
-                    from: 'users',
-                    localField: 'estudiante',
-                    foreignField: '_id',
-                    as: 'estudiante_info'
+                $match: {
+                    semestre: { $in: idsSemestresEncontrados }
                 }
             },
             {
                 $lookup: {
-                    from: 'teachers',
-                    localField: 'profesor',
+                    from: 'semestres',
+                    localField: 'semestre',
                     foreignField: '_id',
-                    as: 'profesor_info'
-                }
-            },
-            {
-                $match: filtro
-            },
-            {
-                $unwind: '$estudiante_info'
-            },
-            {
-                $lookup: {
-                    from: 'cursos',
-                    localField: 'estudiante_info._id',
-                    foreignField: 'estudiante',
-                    as: 'cursos_info'
+                    as: 'info_semestre'
                 }
             },
             {
                 $project: {
-                    _id: 1,
-                    titulo: 1,
-                    'profesor_info._id': 1,
-                    'profesor_info.name': 1,
-                    'estudiante_info._id': 1,
-                    'estudiante_info.nombre': 1,
-                    'estudiante_info.carnet': 1,
-                    'estudiante_info.correo': 1,
-                    'estudiante_info.telefono': 1,
-                    nombreEmpresa: 1,
-                    direccionEmpresa: 1,
-                    telefonoEmpresa: 1,
-                    nombreSupervisor: 1,
-                    puestoSupervisor: 1,
-                    correoSupervisor: 1,
-                    tipo: 1,
-                    teletrabajo: 1,
-                    semestre: 1,
-                    estado: 1,
-                    cursos: {
-                        $cond: {
-                            if: { $eq: ['$cursos_info', []] },
-                            then: ['N/A'],
-                            else: { $ifNull: ['$cursos_info.nombre', 'N/A'] }
-                        }
-                    }
+                    documento: 0 // Exclusión del campo 'documento'
                 }
             }
         ]);
 
-        return resultado;
+        return anteproyectos;
     } catch (error) {
+        console.log("Error en la consulta:", error);
         throw error;
     }
 };
+
+
+
+async function testFunction() {
+    try {
+        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', 2023, 'II');
+        console.log(resultado);
+        // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
+        //await exportarResultadosAExcel(resultado);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
+// Llamando a la función para probarla
+testFunction();
 
 
 
