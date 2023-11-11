@@ -2,6 +2,7 @@ const {eventSchema, userSchema, proyectSchema, teacherSchema} = require('./schem
 const ExpressError = require('../utils/ExpressError.js')
 const {semesterSchema} = require('./schemas.js');
 const Semestre = require('../models/semestre');
+const User = require('../models/user');
 module.exports.validateEvent = (req, res, next) => {
     const { error } = eventSchema.validate(req.body);
     // console.log(req.body);
@@ -42,6 +43,16 @@ module.exports.validateSemester = async(req, res, next) => {
             req.flash('error', '¡El semestre ya está registrado!');
             return res.redirect('/semestre');
         }
+        next();
+    }
+}
+module.exports.registeredCarnet = async (req, res, next) => {
+    const carnet = req.body.user.carnet;
+    const user = await User.findOne({carnet: carnet});
+    if(!user){
+        req.flash('error', 'El carnet no está registrado');
+        return res.redirect('/register');
+    }else{
         next();
     }
 }

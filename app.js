@@ -24,7 +24,7 @@ const studentRouter = require('./routes/student')
 const userRouter = require('./routes/user');
 const semesterRouter = require('./routes/semestre');
 const { toDateString } = require('./utils/events');
-
+const profesoresRouter = require('./routes/profesores');
 //Database
 mongoose.connect('mongodb://127.0.0.1:27017/gestion-de-anteproyectos', {
     useNewUrlParser: true,
@@ -75,6 +75,7 @@ app.use('/events', eventsRouter);
 // app.use('/',landingRouter) // No utilizamos esto porque ahora el landing es home
 app.use('/student',studentRouter)
 app.use('/semestre', semesterRouter);
+app.use('/profesor', profesoresRouter);
 app.use('/',userRouter)
 
 app.get('/', (req, res) => {

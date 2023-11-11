@@ -1,15 +1,10 @@
-const { type } = require('os');
 const Anteproyecto = require('../models/proyecto')
 const Profesores = require('../models/teachers')
 const Estudiante = require('../models/user')
 const { Types } = require('mongoose');
-const { toDateString } = require('../utils/events')
 const User = require('../models/user');
 const fs = require('fs');
-require('dotenv').config();
-const nodemailer = require('nodemailer');
-const { Console } = require('console');
-
+const mail = require('../service/mail')
 const renderAnteproyectos = async (req, res) => {
     const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
     res.render('admin/showAnteproyectos', { anteproyectos })
@@ -66,63 +61,7 @@ const revisar = async (req, res) => {
     res.render('admin/revisarAnteproyecto', { anteproyecto, estudiante })
 }
 
-const renderMenuTeacher = async (req, res) => {
-    const profesores = await Profesores.find({}).populate().lean();
-    res.render('teachers/teacherMenu', { profesores })
-}
 
-const renderCrearTeacher = (req, res) => {
-    res.render('teachers/crearTeacher')
-}
-
-const crearTeacher = async (req, res) => {
-    const newTeacher = req.body.teacher;
-    console.log(newTeacher)
-    const teacher = new Profesores(newTeacher)
-    await teacher.save()
-    req.flash('success', '¡Profesor creado exitosamente!');
-    res.redirect('/user')
-}
-
-const renderEditarTeacher = async (req, res) => {
-    const idProfesor = req.body.selectProfesor
-    const profesor = await Profesores.findById(idProfesor).lean();
-    console.log(profesor)
-    res.render('teachers/editarTeacher', { profesor })
-}
-
-const editarTeacher = async (req, res) => {
-    const updatedTeacher = req.body.teacher;
-    const idTeacher = req.body.idTeacher;
-    const teacher = await Profesores.findByIdAndUpdate(idTeacher, updatedTeacher);
-    console.log(updatedTeacher)
-    console.log(idTeacher)
-    await teacher.save();
-    req.flash('success', '¡Profesor editado exitosamente!');
-    res.redirect('/user');
-}
-
-const eliminarTeacher = async (req, res) => {
-    const idProfesor = req.body.selectProfesor
-    try {
-        // Encuentra el profesor por su ID
-        const teacher = await Profesores.findById(idProfesor);
-
-        if (!teacher) {
-            req.flash('error', 'El profesor no fue encontrado.');
-            return res.redirect('/user');
-        }
-
-        // Realiza la eliminación
-        await Profesores.findByIdAndDelete(idProfesor);
-        req.flash('success', '¡Profesor eliminado exitosamente!');
-        res.redirect('/user');
-    } catch (error) {
-        console.error(error);
-        req.flash('error', 'Ocurrió un error al eliminar el profesor.');
-        res.redirect('/user');
-    }
-}
 
 function estadoRevision(body) {
     try {
@@ -175,57 +114,14 @@ const actualizarRevision = async (req, res) => {
             res.status(500).json({ error: 'Internal server error' });
           }
     }
-    
-
-    const emailData = {
-        to: req.body.correoEstudiante,
-        subject: 'Test Email',
-        text: 'This is a test email sent from my Node.js server.',
-    };
-    enviarMail(emailData)
+    mail.sendMail(req.body.correoEstudiante, "test","test")
     res.redirect('/user');
 }
 
-function enviarMail(data, res) {
 
-    console.log(data)
-    const { to, subject, text } = data;
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to,
-        subject,
-        text,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error('Error sending email:', error);
-            //res.status(500).send('Error sending email');
-        } else {
-            console.log('Email sent:', info.response);
-            //res.status(200).send('Email sent successfully');
-        }
-    });
-}
-
-//IMPORTANTE!! para produccion hay que hacerlo con "Use a CA-Signed Certificate"
-//para cumplir con normas de seguridad
-const transporter = nodemailer.createTransport({
-
-    service: 'Gmail', // Use the email service you want to send emails through
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-    secure: false,
-    tls: { rejectUnauthorized: false }
-
-});
 
 
 module.exports = {
     renderAnteproyectos, renderOne, showPdf, renderProyectos, renderAsignarProfesor,
-    crearTeacher, renderCrearTeacher, asignarProfesor, actualizarRevision, revisar, enviarMail,
-    renderMenuTeacher, eliminarTeacher, renderEditarTeacher, editarTeacher
+    asignarProfesor, actualizarRevision, revisar
 }

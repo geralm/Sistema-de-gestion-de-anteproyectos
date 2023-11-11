@@ -3,6 +3,8 @@ const project = require('../models/proyecto');
 const events = require('../models/events');
 const semester = require('../models/semestre');
 const { mapManyEvents, toDateString } = require('../utils/events');
+const mail = require('../service/mail');
+const passwordRestoration  = require('../utils/passwordRestoration');
 module.exports.renderLogin = (req, res) => {
     res.render('users/login');
 }
@@ -61,7 +63,44 @@ module.exports.createUsuario = async (req, res) => {
     req.flash('success', '¡Usuario creado exitosamente! Ahora puedes iniciar sesión');
     res.redirect('/signin')
 }
+module.exports.renderForgotPassword = (req, res) => {
+    res.render('users/forgotPassword');
+}
+module.exports.sendRestorationCode = async (req, res) => {
+    const carnet = req.body.user.carnet;
+    const user = await User.findOne({carnet: carnet});
+    const email = user.correo;
+    // Crear un nuevo documento TempCode en la base de datos
+    try {
+        await passwordRestoration.sendCodeMail(email);
+        console.log('Correo enviado con éxito');
+        req.flash('success', 'Se ha enviado un correo con el código de restauración de contraseña');
+        res.redirect('/restore-password');
+    } catch (error) {
+        console.error('Error al enviar el correo:', error);
+        req.flash('error', error.message);
+        res.redirect('/signin');
+    }
+}
+module.exports.renderRestorePassword = async (req, res) => {
+    res.render('users/restorePassword');
+}
 
+module.exports.restorePassword = async (req, res) => {
+    const carnet =  req.body.user.carnet;
+    const user = await User.findOne({carnet: carnet});
+    const email = user.correo;  
+    const isCodeValid = await passwordRestoration.isValidCode(email, req.body.user.code);
+    if(isCodeValid){
+        user.contrasenia = await user.encryptPassword(req.body.user.contrasenia);
+        await user.save();
+        req.flash('success', 'La contraseña se ha restaurado exitosamente');
+        return res.redirect('/signin');
+    }else{
+        req.flash('error', 'El código es inválido o ha expirado');
+        return res.redirect('/restore-password');        
+    }
+}
 
 
 
