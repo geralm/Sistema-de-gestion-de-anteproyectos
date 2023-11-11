@@ -55,11 +55,19 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
         const idsSemestresEncontrados = semestresEncontrados.map(semestre => semestre._id);
 
-        // Consulta de agregación para encontrar los anteproyectos vinculados a los semestres encontrados
+        // Filtro adicional por nombreEmpresa si no es cadena vacía
+        const filters = [
+            { semestre: { $in: idsSemestresEncontrados } } // Filtro por semestre
+        ];
+
+        if (nombreEmpresa !== '') {
+            filters.push({ nombreEmpresa: nombreEmpresa }); // Filtro por nombreEmpresa
+        }
+
         const anteproyectos = await Anteproyecto.aggregate([
             {
                 $match: {
-                    semestre: { $in: idsSemestresEncontrados }
+                    $and: filters
                 }
             },
             {
@@ -88,7 +96,7 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
 async function testFunction() {
     try {
-        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', 2023, 'II');
+        const resultado = await obtenerInformacionEstudiantesPorEmpresa('Konrad', 2023, 'II');
         console.log(resultado);
         // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
         //await exportarResultadosAExcel(resultado);
