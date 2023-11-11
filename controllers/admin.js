@@ -6,10 +6,7 @@ const { Types } = require('mongoose');
 const { toDateString } = require('../utils/events')
 const User = require('../models/user');
 const fs = require('fs');
-require('dotenv').config();
-const nodemailer = require('nodemailer');
-const { Console } = require('console');
-
+const mail = require('../service/mail')
 const renderAnteproyectos = async (req, res) => {
     const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
     res.render('admin/showAnteproyectos', { anteproyectos })
@@ -175,53 +172,11 @@ const actualizarRevision = async (req, res) => {
             res.status(500).json({ error: 'Internal server error' });
           }
     }
-    
-
-    const emailData = {
-        to: req.body.correoEstudiante,
-        subject: 'Test Email',
-        text: 'This is a test email sent from my Node.js server.',
-    };
-    enviarMail(emailData)
+    mail.sendMail(req.body.correoEstudiante, "test","test")
     res.redirect('/user');
 }
 
-function enviarMail(data, res) {
 
-    console.log(data)
-    const { to, subject, text } = data;
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to,
-        subject,
-        text,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error('Error sending email:', error);
-            //res.status(500).send('Error sending email');
-        } else {
-            console.log('Email sent:', info.response);
-            //res.status(200).send('Email sent successfully');
-        }
-    });
-}
-
-//IMPORTANTE!! para produccion hay que hacerlo con "Use a CA-Signed Certificate"
-//para cumplir con normas de seguridad
-const transporter = nodemailer.createTransport({
-
-    service: 'Gmail', // Use the email service you want to send emails through
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-    secure: false,
-    tls: { rejectUnauthorized: false }
-
-});
 
 
 module.exports = {
