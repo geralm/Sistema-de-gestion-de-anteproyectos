@@ -17,6 +17,26 @@
     <div class="container">
         <h1>Estudiantes por Empresa</h1> <!-- Título de la página -->
 
+        <br>
+        {{#if Semestre}}
+        <h5>Semestre: {{Semestre}}</h5>
+        {{else}}
+        <h5> Semestre: ---</h5>
+        {{/if}}
+
+        <!-- Ahno -->
+        {{#if Anho}}
+        <h5>Año: {{Anho}}</h5>
+        {{else}}
+        <h5> Año: ---</h5>
+        {{/if}}
+
+        {{#if NombreEmpresa}}
+        <h5>Empresa: {{NombreEmpresa}}</h5>
+        {{else}}
+        <h5> Empresa: ---</h5>
+        {{/if}}
+
         <div class="row mb-2">
             <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
             <table class="table table-hover text-center mb-5 ">

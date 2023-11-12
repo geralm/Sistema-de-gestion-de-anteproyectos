@@ -14,13 +14,14 @@
 
             <h6>Año:</h6>
             <select id="year" name="year">
-                <option value="" >Sin Filtro por año</option>
+                <option value="">Sin Filtro por año</option>
             </select>
 
             <br>
             <h6>Semestre:</h6>
+
             <select id="period" name="period" disabled>
-                <option value="" >Sin Filtro por semestre </option>
+                <option value="">Sin Filtro por semestre </option>
                 <option value="I">I</option>
                 <option value="II">II</option>
                 <!-- Agrega aquí los períodos que tengas -->
@@ -37,7 +38,8 @@
                         formaction="/consultas/estudianteXempresa">Estudiantes por Empresa</button>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary w-100" formaction="/consultas/profesoresXempresa">Profesores por Empresa</button>
+                    <button type="submit" class="btn btn-primary w-100"
+                        formaction="/consultas/profesoresXempresa">Profesores por Empresa</button>
                 </div>
                 <div class="col-md-4">
                     <button type="submit" class="btn btn-primary w-100" formaction="">Consulta General</button>
@@ -48,30 +50,30 @@
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const yearInput = document.getElementById('year');
-        const periodInput = document.getElementById('period');
+        document.addEventListener("DOMContentLoaded", function () {
+            const yearInput = document.getElementById('year');
+            const periodInput = document.getElementById('period');
 
-        yearInput.addEventListener('change', () => {
-            if (yearInput.value === "") {
-                periodInput.disabled = true;
-                periodInput.selectedIndex = 0; // Resetea el valor del período si se elimina el año
-            } else {
-                periodInput.disabled = false;
+            yearInput.addEventListener('change', () => {
+                if (yearInput.value === "") {
+                    periodInput.disabled = true;
+                    periodInput.selectedIndex = 0; // Resetea el valor del período si se elimina el año
+                } else {
+                    periodInput.disabled = false;
+                }
+            });
+
+            const yearSelect = document.getElementById('year');
+            const currentYear = 2023;
+
+            for (let i = currentYear; i <= currentYear + 10; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = i;
+                yearSelect.appendChild(option);
             }
         });
-
-        const yearSelect = document.getElementById('year');
-        const currentYear = 2023;
-
-        for (let i = currentYear; i <= currentYear + 10; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.text = i;
-            yearSelect.appendChild(option);
-        }
-    });
-</script>
+    </script>
 
 
 
