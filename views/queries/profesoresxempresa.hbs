@@ -17,40 +17,64 @@
     <div class="container">
         <h1>Profesores por Empresa</h1> <!-- Título de la página -->
 
+        <br>
+        <h5>Semestre: {{Semestre}}</h5>
+        {{#if Anho}}
+        {{#if (isFinite Anho)}}
+        <h5>Año: {{Anho}}</h5>
+        {{else}}
+        <h5> Año: ---</h5>
+        {{/if}}
+        {{else}}
+        <h5>Año: ---</h5>
+        {{/if}}
+        <h5>Empresa: {{NombreEmpresa}}</h5>
+        <br>
+
         <div class="row mb-2">
             <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
             <table class="table table-hover text-center mb-5">
                 <thead>
                     <tr>
-                        <th>Profesor</th>
-                        <th>Empresas</th>
-                        <th>Total Estudiantes</th>
+                        <th>Profesor </th>
+                        <th>Empresas </th>
+                        <th>Total Estudiantes </th>
                     </tr>
                 </thead>
                 <tbody>
+
                     {{#each datos as |profesorInfo|}}
+
                     <tr>
                         <td>{{profesorInfo.profesor}}</td>
-                        
-                        <td style="text-align: left; "> 
+
+                        <td style="text-align: left; ">
                             <ul>
                                 {{#each profesorInfo.empresas as |empresaInfo|}}
-                                <span>{{empresaInfo.empresa}} - Cant Estudiantes: {{empresaInfo.apariciones}} </span><br>
+                                <span>{{empresaInfo.empresa}} - Cant Estudiantes: {{empresaInfo.apariciones}}
+                                </span><br>
                                 {{/each}}
                             </ul>
                         </td>
-                        
+
                         <td>{{profesorInfo.apariciones}}</td>
                     </tr>
+
                     {{/each}}
+                    <tr>
+                        <td> </td>
+                        <td> </td>
+                        <td> Suma total: {{AparicionesTotales}}</td>
+                    </tr>
                 </tbody>
             </table>
 
 
-            <form method="POST" id="getForm" action="/consultas/estudianteXempresa/downloadExcel">
+            <form method="POST" id="getForm" action="/consultas/profesorXempresa/downloadExcel">
                 <input type="hidden" id="semestre" name="semestre" value="{{Semestre}}" />
                 <input type="hidden" id="anho" name="anho" value="{{Anho}}" />
                 <input type="hidden" id="nombreEmpresa" name="nombreEmpresa" value="{{NombreEmpresa}}" />
+                <input type="hidden" id="cantTotal" name="cantTotal" value="{{AparicionesTotales}}" />
 
                 <button type="submit" class="btn btn-primary w-100">Descargar Excel</button>
             </form>

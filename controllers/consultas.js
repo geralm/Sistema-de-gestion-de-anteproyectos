@@ -14,74 +14,88 @@ const renderConsultas = async (req, res) => {
     res.render('queries/consultas')
 }
 
+const formatoProfes = async (datos) => {
+    //ORDENAR FORMATO PARA PROFES
+    const profesores = {};
+
+    datos.forEach(item => {
+        const nombreProfesor = item.info_profesor?.name;
+        const nombreEmpresa = item.nombreEmpresa;
+
+        if (nombreProfesor) {
+            if (!profesores[nombreProfesor]) {
+                profesores[nombreProfesor] = { apariciones: 0, empresas: {} };
+            }
+
+            if (!profesores[nombreProfesor].empresas[nombreEmpresa]) {
+                profesores[nombreProfesor].empresas[nombreEmpresa] = 1;
+            } else {
+                profesores[nombreProfesor].empresas[nombreEmpresa]++;
+            }
+
+            profesores[nombreProfesor].apariciones++;
+        }
+    });
+
+    console.log("Resumen de profesores:");
+    Object.entries(profesores).forEach(([nombreProfesor, info]) => {
+        console.log(`Profesor: ${nombreProfesor}`);
+        console.log(`Apariciones totales: ${info.apariciones}`);
+        console.log("Empresas asociadas:");
+        Object.entries(info.empresas).forEach(([empresa, apariciones]) => {
+            console.log(`- ${empresa}: ${apariciones} apariciones`);
+        });
+        console.log("------------");
+    });
+    const datosOriginales = JSON.stringify(profesores, null, 2);
+
+    console.log(datosOriginales);
+    const data = [] // Inicializamos un array para guardar la información
+
+    Object.entries(profesores).forEach(([nombreProfesor, info]) => {
+        const empresas = [];
+
+        Object.entries(info.empresas).forEach(([empresa, apariciones]) => {
+            empresas.push({ empresa, apariciones });
+        });
+
+        const profesor = {
+            profesor: nombreProfesor,
+            apariciones: info.apariciones,
+            empresas
+        };
+
+        data.push(profesor);
+    });
+
+    return data
+}
+
+async function sumarApariciones  (datos)  {
+    let sumaApariciones = 0;
+
+    datos.forEach((item) => {
+        console.log("entra")
+        console.log(item)
+        sumaApariciones += item.apariciones;
+    });
+
+    return sumaApariciones;
+};
+
 const profesoresXempresa = async (req, res) => {
     const semestre = req.query.period;
     const anho = parseInt(req.query.year);
     const nombreEmpresa = req.query.nombreEmpresa;
 
     try {
+        //CONSULTA GENERAL
         const datos = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
-        //Busqueda profesores
-        // Suponiendo que tu data es el arreglo con la estructura proporcionada
-
-        // Crear un objeto para almacenar las apariciones de profesores y sus empresas
-        const profesores = {};
-
-
-        datos.forEach(item => {
-            const nombreProfesor = item.info_profesor?.name;
-            const nombreEmpresa = item.nombreEmpresa;
-
-            if (nombreProfesor) {
-                if (!profesores[nombreProfesor]) {
-                    profesores[nombreProfesor] = { apariciones: 0, empresas: {} };
-                }
-
-                if (!profesores[nombreProfesor].empresas[nombreEmpresa]) {
-                    profesores[nombreProfesor].empresas[nombreEmpresa] = 1;
-                } else {
-                    profesores[nombreProfesor].empresas[nombreEmpresa]++;
-                }
-
-                profesores[nombreProfesor].apariciones++;
-            }
-        });
-
-        console.log("Resumen de profesores:");
-        Object.entries(profesores).forEach(([nombreProfesor, info]) => {
-            console.log(`Profesor: ${nombreProfesor}`);
-            console.log(`Apariciones totales: ${info.apariciones}`);
-            console.log("Empresas asociadas:");
-            Object.entries(info.empresas).forEach(([empresa, apariciones]) => {
-                console.log(`- ${empresa}: ${apariciones} apariciones`);
-            });
-            console.log("------------");
-        });
-        const datosOriginales = JSON.stringify(profesores, null, 2);
-
-        console.log(datosOriginales);
-        const data = [] // Inicializamos un array para guardar la información
-
-        Object.entries(profesores).forEach(([nombreProfesor, info]) => {
-            const empresas = [];
-
-            Object.entries(info.empresas).forEach(([empresa, apariciones]) => {
-                empresas.push({ empresa, apariciones });
-            });
-
-            const profesor = {
-                profesor: nombreProfesor,
-                apariciones: info.apariciones,
-                empresas
-            };
-
-            data.push(profesor);
-        });
-
-        const jsonData = JSON.stringify(data, null, 2);
-        console.log(jsonData)
-
-        res.render('queries/profesoresxempresa', { datos: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+        //FORMATO PROFES
+        const data = await formatoProfes(datos)
+        const aparicionesTotales = await sumarApariciones(data);
+        console.log("aparicionesTotales "+aparicionesTotales)
+        res.render('queries/profesoresxempresa', { datos: data, AparicionesTotales: aparicionesTotales, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
 
     } catch (error) {
         console.log(error);
@@ -90,6 +104,102 @@ const profesoresXempresa = async (req, res) => {
     }
 
 }
+async function exportarResultadosAExcel_profesor(resultados, cantTotal) {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Información de Profesores');
+
+    // Definir las cabeceras de las columnas en el archivo Excel
+    worksheet.columns = [
+        { header: 'Profesor Asesor', key: 'profesor' },
+        { header: 'Empresa', key: 'empresa' },
+        { header: 'Cuenta de Estudiantes', key: 'cantEstudiantes' },
+    ];
+    // Agregar la información
+    resultados.forEach((resultado) => {
+        const empresas = resultado.empresas;
+        worksheet.addRow({
+            profesor: resultado.profesor,
+            cantEstudiantes: " ",
+        }).eachCell({ includeEmpty: true }, (cell, colNumber) => {
+            if (colNumber <= 3) { // Aplica solo a las primeras tres columnas
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: '4BB3F3' } // Color azulado
+                };
+            }
+        });
+
+        if (empresas.length > 0) {
+            empresas.forEach((empresa) => {
+                worksheet.addRow({
+                    empresa: empresa.empresa,
+                    cantEstudiantes: empresa.apariciones,
+                });
+            });
+        } else {
+            worksheet.addRow({
+                empresa: 'Sin empresas',
+                cantEstudiantes: 0,
+            });
+        }
+        worksheet.addRow({
+            profesor: "Total de "+resultado.profesor,
+            cantEstudiantes: resultado.apariciones
+        }).eachCell({ includeEmpty: true }, (cell, colNumber) => {
+            if (colNumber <= 3) { // Aplica solo a las primeras tres columnas
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'AAD9F5' } // Color azulado
+                };
+            }
+        });
+        
+    });
+    worksheet.addRow({
+        profesor: "Suma Total ",
+        cantEstudiantes: cantTotal
+    });
+    return workbook
+}
+
+const profesoresXempresa_Excel = async (req, res) => {
+    const semestre = req.body.semestre;
+    const anho = parseInt(req.body.anho);
+    const nombreEmpresa = req.body.nombreEmpresa;
+    const cantTotal = req.body.cantTotal;
+
+    try {
+        //CONSULTA GENERAL
+        const datos = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        //FORMATO PROFES
+        const data = await formatoProfes(datos)
+        console.log(data)
+
+        const workbook = await exportarResultadosAExcel_profesor(data, cantTotal)
+        // res is a Stream object
+        res.setHeader(
+            "Content-Type",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        );
+        res.setHeader(
+            "Content-Disposition",
+            "attachment; filename=" + "EstudiantesXEmpresa.xlsx"
+        );
+
+        return workbook.xlsx.write(res).then(function () {
+            res.status(200).end();
+        });
+
+    } catch (error) {
+        console.log(error);
+        req.flash('error', '¡Error al descargar el Excel!');
+        res.redirect("/consultas/pag_consultas");
+    }
+}
+
+
 
 const estudiantesXempresa_Excel = async (req, res) => {
     const semestre = req.body.semestre;
@@ -99,7 +209,7 @@ const estudiantesXempresa_Excel = async (req, res) => {
     const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
     console.log(data)
 
-    const workbook = await exportarResultadosAExcel(data)
+    const workbook = await exportarResultadosAExcel_estudiantes(data)
     // res is a Stream object
     res.setHeader(
         "Content-Type",
@@ -208,7 +318,7 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
 
 
-async function exportarResultadosAExcel(resultados) {
+async function exportarResultadosAExcel_estudiantes(resultados) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Información de Estudiantes');
 
@@ -317,7 +427,7 @@ async function testFunction() {
     try {
         const resultado = await obtenerInformacionEstudiantesPorEmpresa('', '', '');
         console.log(resultado);
-        exportarResultadosAExcel(resultado)
+        exportarResultadosAExcel_estudiantes(resultado)
         return resultado
         // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
         //await exportarResultadosAExcel(resultado);
@@ -330,5 +440,9 @@ async function testFunction() {
 
 
 module.exports = {
-    renderConsultas, estudiantesXempresa, estudiantesXempresa_Excel, profesoresXempresa
+    renderConsultas,
+    estudiantesXempresa,
+    estudiantesXempresa_Excel,
+    profesoresXempresa,
+    profesoresXempresa_Excel
 }
