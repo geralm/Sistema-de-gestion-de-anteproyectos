@@ -14,6 +14,33 @@ const renderConsultas = async (req, res) => {
     res.render('queries/consultas')
 }
 
+const estudiantesXempresa_Excel = async (req, res) => {
+    const semestre = req.query.period;
+    const anho = parseInt(req.query.year);
+    const nombreEmpresa = req.query.nombreEmpresa;
+
+    const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+    console.log(data)
+    console.log("NICEEE")
+
+    const workbook = await exportarResultadosAExcel(data)
+    // res is a Stream object
+    res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=" + "tutorials.xlsx"
+    );
+
+    return workbook.xlsx.write(res).then(function () {
+        res.status(200).end();
+    });
+
+
+}
+
 const estudiantesXempresa = async (req, res) => {
     const semestre = req.query.period;
     const anho = parseInt(req.query.year);
@@ -24,17 +51,15 @@ const estudiantesXempresa = async (req, res) => {
     obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
         .then(async (data) => {
             console.log(data);
-            const bufferAux = await exportarResultadosAExcel(data)
-            const buffer = bufferAux.toString('base64');
-            console.log(buffer)
-            
-            res.render('queries/estudiantexempresa', { data })
+            res.render('queries/estudiantexempresa', { data, semestre, anho, nombreEmpresa })
         })
         .catch((error) => {
             console.log(error)
             req.flash('error', '¡Error al realizar la consulta!');
             res.redirect('queries/consultas')
-        });
+        }
+        );
+
 }
 
 
@@ -100,7 +125,7 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
                 const profesor = await Profesores.findOne({ _id: anteproyecto.profesor });
                 anteproyecto.info_profesor = { name: profesor.name };
             }
-            else{
+            else {
                 anteproyecto.info_profesor = { name: "--" };
             }
         }
@@ -166,11 +191,8 @@ async function exportarResultadosAExcel(resultados) {
     })
 
     // Obtener el buffer del archivo Excel
-    const nombreArchivo = 'informacion_estudiantes.xlsx';
-    await workbook.xlsx.writeFile(nombreArchivo);
-    console.log(`Archivo Excel "${nombreArchivo}" creado con éxito.`);
-    const buffer = await workbook.xlsx.writeBuffer();
-    return buffer
+
+    return workbook
 
 
     /*
@@ -239,5 +261,5 @@ async function testFunction() {
 
 
 module.exports = {
-    renderConsultas, estudiantesXempresa
+    renderConsultas, estudiantesXempresa, estudiantesXempresa_Excel
 }
