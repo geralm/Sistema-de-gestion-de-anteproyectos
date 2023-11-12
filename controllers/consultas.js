@@ -16,17 +16,17 @@ const renderConsultas = async (req, res) => {
 
 const estudiantesXempresa = async (req, res) => {
     const semestre = req.query.period;
-    const anho = req.query.year;
+    const anho = parseInt(req.query.year);
     const nombreEmpresa = req.query.nombreEmpresa;
+
 
     //realizar consulta
     obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
-        .then((data1) => {
-            console.log(data1);
-            console.log("BIEEEN");
+        .then((data) => {
+            console.log(data);
             //const data = ordenarYFormatearDatos(data1);
             //exportarResultadosAExcel(resultado)
-            res.render('queries/estudiantexempresa', { data1 })
+            res.render('queries/estudiantexempresa', { data })
         })
         .catch((error) => {
             req.flash('error', '¡Error al realizar la consulta!');
@@ -89,12 +89,15 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
             const semestreInfo = semestresEncontrados.find(sem => sem._id.toString() === anteproyecto.semestre.toString());
             anteproyecto.info_semestre = semestreInfo;
 
-            const estudiante = await Estudiante.findOne({ _id: anteproyecto.estudiante }, { contrasenia: 0 });
+            const estudiante = await Estudiante.findOne({ _id: anteproyecto.estudiante }, { contrasenia: 0 }).lean();
             anteproyecto.info_estudiante = estudiante;
 
             if (anteproyecto.profesor) {
                 const profesor = await Profesores.findOne({ _id: anteproyecto.profesor });
                 anteproyecto.info_profesor = { name: profesor.name };
+            }
+            else{
+                anteproyecto.info_profesor = { name: "--" };
             }
         }
 
@@ -114,19 +117,18 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
 async function testFunction() {
     try {
-        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', 2023, 'II');
+        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', '', '');
         console.log(resultado);
+        exportarResultadosAExcel(resultado)
+        return resultado
         // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
         //await exportarResultadosAExcel(resultado);
     } catch (error) {
         console.error("Error:", error);
     }
 }
-
 // Llamando a la función para probarla
 testFunction();
-
-
 
 
 async function exportarResultadosAExcel(resultados) {
@@ -135,21 +137,21 @@ async function exportarResultadosAExcel(resultados) {
 
     // Definir las cabeceras de las columnas en el archivo Excel
     worksheet.columns = [
-        { header: 'Nombre de Empresa', key: 'nombreEmpresa' },
-        { header: 'Dirección Empresa', key: 'direccionEmpresa' },
-        { header: 'Número Empresa', key: 'telefonoEmpresa' },
-        { header: 'Nombre Supervisor', key: 'nombreSupervisor' },
-        { header: 'Puesto Supervisor', key: 'puestoSupervisor' },
-        { header: 'Correo Supervisor', key: 'correoSupervisor' },
-        { header: 'Estado', key: 'estado' },
-        { header: 'Tipo', key: 'tipo' },
-        { header: 'Profesor Encargado', key: 'profesor_info' },
-        { header: 'Teletrabajo', key: 'teletrabajo' },
         { header: 'Carnet', key: 'carnet' },
-        { header: 'Nombre', key: 'nombre' },
+        { header: 'Estudiante', key: 'estudiante' },
         { header: 'Correo', key: 'correo' },
         { header: 'Cursos', key: 'cursos' },
-        { header: 'Teléfono', key: 'telefono' },
+        { header: 'Numero', key: 'numero' },
+        { header: 'Empresa', key: 'empresa' },
+        { header: 'Direccion', key: 'direccion' },
+        { header: 'NumeroEmpresa', key: 'numeroEmpresa' },
+        { header: 'Supervisor', key: 'supervisor' },
+        { header: 'PuestoSupervisor', key: 'puestoSupervisor' },
+        { header: 'CorreoSupervisor', key: 'correoSupervisor' },
+        { header: 'TipoProyecto', key: 'tipo' },
+        { header: 'Profesor', key: 'profesor' },
+        { header: 'Teletrabajo', key: 'teletrabajo' },
+        { header: 'Estado', key: 'estado' },
     ];
 
     // Agregar fila de datos
@@ -157,23 +159,28 @@ async function exportarResultadosAExcel(resultados) {
         const cursos = resultado.cursos.join(', ') || 'N/A';
 
         worksheet.addRow({
-            nombreEmpresa: resultado.nombreEmpresa,
-            direccionEmpresa: resultado.direccionEmpresa,
-            telefonoEmpresa: resultado.telefonoEmpresa,
-            nombreSupervisor: resultado.nombreSupervisor,
+            carnet: resultado.info_estudiante.carnet,
+            estudiante: resultado.info_estudiante.nombre,
+            correo: resultado.info_estudiante.correo,
+            cursos: cursos,
+            numero: resultado.info_estudiante.telefono,
+            empresa: resultado.nombreEmpresa,
+            direccion: resultado.direccionEmpresa,
+            numeroEmpresa: resultado.telefonoEmpresa,
+            supervisor: resultado.nombreSupervisor,
             puestoSupervisor: resultado.puestoSupervisor,
             correoSupervisor: resultado.correoSupervisor,
-            estado: resultado.estado,
             tipo: resultado.tipo,
-            profesor_info: resultado.profesor_info,
+            profesor: resultado.info_profesor.name,
             teletrabajo: resultado.teletrabajo,
-            carnet: resultado.estudiante_info.carnet,
-            nombre: resultado.estudiante_info.nombre,
-            correo: resultado.estudiante_info.correo,
-            cursos: cursos,
-            telefono: resultado.estudiante_info.telefono,
+            estado: resultado.estado,
         });
     });
+    const largo = resultados.length;
+    worksheet.addRow({
+        carnet: 'Cantidad Total',
+        estudiante: largo,
+    })
 
     // Guardar el archivo Excel
     const nombreArchivo = 'informacion_estudiantes.xlsx';
@@ -181,6 +188,8 @@ async function exportarResultadosAExcel(resultados) {
 
     console.log(`Archivo Excel "${nombreArchivo}" creado con éxito.`);
 }
+
+
 
 function ordenarYFormatearDatos(datos) {
     // Primero, ordena los datos por semestre y luego por empresa

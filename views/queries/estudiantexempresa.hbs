@@ -18,17 +18,18 @@
             <tbody>
                 {{#each data}}
                 <tr>
-                    <td>{{this.estudiante_info.nombre}}</td>
-                    <td>{{this.estudiante_info.carnet}}</td>
-                    <td>{{this.estudiante_info.telefono}}</td>
-                    <td>{{this.estudiante_info.correo}}</td>
+                    <td>{{this.info_estudiante.nombre}}</td>
+                    <td>{{this.info_estudiante.carnet}}</td>
+                    <td>{{this.info_estudiante.telefono}}</td>
+                    <td>{{this.info_estudiante.correo}}</td>
                     <td>{{this.nombreEmpresa}}</td>
-                    <td>{{this.profesor_info.nombre}}</td>
-                    <td>{{this.semestre}}</td>
+                    <td>{{this.info_profesor.name}}</td>
+                    <td>{{this.info_semestre.period}} - {{this.info_semestre.year}}</td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+        <button type="submit" class="btn btn-primary w-100" formaction="">Descargar Excel</button>
 
 
 
