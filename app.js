@@ -44,7 +44,12 @@ app.engine('hbs', hbs.create({
     defaultLayout:'main',
     layoutsDir:path.join(app.get('views'),'layouts'),
     partialsDir:path.join(app.get('views'),'partials'),    
-    extname:'.hbs'
+    extname:'.hbs',
+    helpers: {
+        json: function(context) {
+            return JSON.stringify(context);
+        }
+    } 
 }).engine);
 
 app.use(session({

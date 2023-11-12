@@ -1,37 +1,89 @@
-<div class="container">
-    <h1>Estudiantes por Empresa</h1> <!-- Título de la página -->
+<!DOCTYPE html>
+<html>
 
-    <div class="row mb-2">
-        <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
-        <table class="table table-hover text-center mb-5 ">
-            <thead>
-                <tr>
-                    <th>Estudiante</th>
-                    <th>Carnet</th>
-                    <th>Telefono</th>
-                    <th>Correo</th>
-                    <th>Empresa</th>
-                    <th>Profesor</th>
-                    <th>Semestre</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each data}}
-                <tr>
-                    <td>{{this.info_estudiante.nombre}}</td>
-                    <td>{{this.info_estudiante.carnet}}</td>
-                    <td>{{this.info_estudiante.telefono}}</td>
-                    <td>{{this.info_estudiante.correo}}</td>
-                    <td>{{this.nombreEmpresa}}</td>
-                    <td>{{this.info_profesor.name}}</td>
-                    <td>{{this.info_semestre.period}} - {{this.info_semestre.year}}</td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-primary w-100" formaction="">Descargar Excel</button>
+<head>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Estudiantes por Empresa</h1> <!-- Título de la página -->
+
+        <div class="row mb-2">
+            <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+            <table class="table table-hover text-center mb-5 ">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Carnet</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th>Empresa</th>
+                        <th>Profesor</th>
+                        <th>Semestre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data}}
+                    <tr>
+                        <td>{{this.info_estudiante.nombre}}</td>
+                        <td>{{this.info_estudiante.carnet}}</td>
+                        <td>{{this.info_estudiante.telefono}}</td>
+                        <td>{{this.info_estudiante.correo}}</td>
+                        <td>{{this.nombreEmpresa}}</td>
+                        <td>{{this.info_profesor.name}}</td>
+                        <td>{{this.info_semestre.period}} - {{this.info_semestre.year}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
+            <button class="btn btn-primary w-100" id="exportButton" name="exportButton">Descargar Excel</button>
 
 
 
+        </div>
     </div>
-</div>
+
+    <script>
+
+        const downloadExcel = () => {
+            console.log("aquiii")
+            // Obtén la cadena base64
+            const buffer = '{{ buffer }}'; // Aquí deberías obtener la cadena base64 de tu backend
+
+            // Decodificar los datos base64
+            const binaryString = atob(buffer);
+
+            // Convertir la cadena binaria a bytes
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+
+            // Crear un Blob y URL para descargar el archivo
+            const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = window.URL.createObjectURL(blob);
+
+            // Crear un enlace para descargar el archivo
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'informacion_estudiantes.xlsx';
+            a.click();
+
+            // Limpiar recursos
+            window.URL.revokeObjectURL(url);
+
+        };
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('exportButton').addEventListener('click', function () {
+                downloadExcel();
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>

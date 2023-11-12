@@ -5,10 +5,11 @@ const { isLoggedIn, isAdmin, validateTeacher } = require('../middleware/middlewa
 const catchAsync = require('../utils/catchAsync');
 
 router.route('/pag_consultas')
-    .get(isLoggedIn, isAdmin,catchAsync(consulta.renderConsultas));
+    .get(isLoggedIn, isAdmin, catchAsync(consulta.renderConsultas));
 
 router.route('/estudianteXempresa')
-    .get(isLoggedIn, isAdmin,catchAsync(consulta.estudiantesXempresa));
-  
+    .get(isLoggedIn, isAdmin, catchAsync(consulta.estudiantesXempresa));
+
+
 
 module.exports = router

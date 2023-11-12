@@ -22,19 +22,23 @@ const estudiantesXempresa = async (req, res) => {
 
     //realizar consulta
     obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
-        .then((data) => {
+        .then(async (data) => {
             console.log(data);
-            //const data = ordenarYFormatearDatos(data1);
-            //exportarResultadosAExcel(resultado)
+            const bufferAux = await exportarResultadosAExcel(data)
+            const buffer = bufferAux.toString('base64');
+            console.log(buffer)
+            
             res.render('queries/estudiantexempresa', { data })
         })
         .catch((error) => {
+            console.log(error)
             req.flash('error', '¡Error al realizar la consulta!');
             res.redirect('queries/consultas')
         });
-
-
 }
+
+
+
 const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year = 0, periodo = '') => {
     try {
         const matchSemestre = {};
@@ -110,27 +114,6 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
 
 
-
-
-
-
-
-async function testFunction() {
-    try {
-        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', '', '');
-        console.log(resultado);
-        exportarResultadosAExcel(resultado)
-        return resultado
-        // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
-        //await exportarResultadosAExcel(resultado);
-    } catch (error) {
-        console.error("Error:", error);
-    }
-}
-// Llamando a la función para probarla
-testFunction();
-
-
 async function exportarResultadosAExcel(resultados) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Información de Estudiantes');
@@ -182,11 +165,20 @@ async function exportarResultadosAExcel(resultados) {
         estudiante: largo,
     })
 
+    // Obtener el buffer del archivo Excel
+    const nombreArchivo = 'informacion_estudiantes.xlsx';
+    await workbook.xlsx.writeFile(nombreArchivo);
+    console.log(`Archivo Excel "${nombreArchivo}" creado con éxito.`);
+    const buffer = await workbook.xlsx.writeBuffer();
+    return buffer
+
+
+    /*
     // Guardar el archivo Excel
     const nombreArchivo = 'informacion_estudiantes.xlsx';
     await workbook.xlsx.writeFile(nombreArchivo);
-
     console.log(`Archivo Excel "${nombreArchivo}" creado con éxito.`);
+    */
 }
 
 
@@ -230,7 +222,20 @@ function ordenarYFormatearDatos(datos) {
 }
 
 // Para usar la función:
-
+async function testFunction() {
+    try {
+        const resultado = await obtenerInformacionEstudiantesPorEmpresa('', '', '');
+        console.log(resultado);
+        exportarResultadosAExcel(resultado)
+        return resultado
+        // Luego, si necesitas exportar a Excel, podrías llamar a la función de exportación
+        //await exportarResultadosAExcel(resultado);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+// Llamando a la función para probarla
+//testFunction();
 
 
 module.exports = {
