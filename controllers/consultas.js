@@ -15,13 +15,11 @@ const renderConsultas = async (req, res) => {
 }
 
 const estudiantesXempresa_Excel = async (req, res) => {
-    const semestre = req.query.period;
-    const anho = parseInt(req.query.year);
-    const nombreEmpresa = req.query.nombreEmpresa;
+    const semestre = req.body.semestre;
+    const anho = parseInt(req.body.anho);
+    const nombreEmpresa = req.body.nombreEmpresa;
 
     const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
-    console.log(data)
-    console.log("NICEEE")
 
     const workbook = await exportarResultadosAExcel(data)
     // res is a Stream object
@@ -31,14 +29,12 @@ const estudiantesXempresa_Excel = async (req, res) => {
     );
     res.setHeader(
         "Content-Disposition",
-        "attachment; filename=" + "tutorials.xlsx"
+        "attachment; filename=" + "EstudiantesXEmpresa.xlsx"
     );
 
     return workbook.xlsx.write(res).then(function () {
         res.status(200).end();
     });
-
-
 }
 
 const estudiantesXempresa = async (req, res) => {
@@ -46,20 +42,14 @@ const estudiantesXempresa = async (req, res) => {
     const anho = parseInt(req.query.year);
     const nombreEmpresa = req.query.nombreEmpresa;
 
-
-    //realizar consulta
-    obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
-        .then(async (data) => {
-            console.log(data);
-            res.render('queries/estudiantexempresa', { data, semestre, anho, nombreEmpresa })
-        })
-        .catch((error) => {
-            console.log(error)
-            req.flash('error', '¡Error al realizar la consulta!');
-            res.redirect('queries/consultas')
-        }
-        );
-
+    try {
+        const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        res.render('queries/estudiantexempresa', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+    } catch (error) {
+        console.log(error);
+        req.flash('error', '¡Error al realizar la consulta!');
+        //res.redirect('queries/consultas');
+    }
 }
 
 

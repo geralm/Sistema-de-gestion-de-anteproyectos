@@ -40,9 +40,13 @@
             </table>
 
             <form method="POST" id="getForm" action="/consultas/estudianteXempresa/downloadExcel">
-                <input type="hidden" id="semestre" name="semestre" value={{semestre}} />
-                <input type="hidden" id="anho" name="anho" value={{anho}} />
-                <input type="hidden" id="nombreEmpresa" name="nombreEmpresa" value={{nombreEmpresa}} />
+                <p>Semestre: {{Semestre}}</p>
+<p>Año: {{Anho}}</p>
+<p>Nombre de la Empresa: {{NombreEmpresa}}</p>
+            
+                <input type="hidden" id="semestre" name="semestre" value="{{Semestre}}" />
+                <input type="hidden" id="anho" name="anho" value="{{Anho}}" />
+                <input type="hidden" id="nombreEmpresa" name="nombreEmpresa" value="{{NombreEmpresa}}" />
 
                 <button type="submit" class="btn btn-primary w-100" >Descargar Excel</button>
             </form>
