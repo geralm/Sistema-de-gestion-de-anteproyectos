@@ -20,45 +20,68 @@ const profesoresXempresa = async (req, res) => {
     const nombreEmpresa = req.query.nombreEmpresa;
 
     try {
-        const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        const datos = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
         //Busqueda profesores
         // Suponiendo que tu data es el arreglo con la estructura proporcionada
 
         // Crear un objeto para almacenar las apariciones de profesores y sus empresas
         const profesores = {};
 
-        // Recorrer los datos para procesar la información
-        data.forEach(item => {
-            // Obtener el nombre del profesor y el nombre de la empresa
+
+        datos.forEach(item => {
             const nombreProfesor = item.info_profesor?.name;
             const nombreEmpresa = item.nombreEmpresa;
 
             if (nombreProfesor) {
-                // Si el profesor ya está en la lista, aumentar su contador
-                if (profesores[nombreProfesor]) {
-                    profesores[nombreProfesor].apariciones++;
-                } else {
-                    // Si el profesor no está en la lista, agregarlo con una aparición
-                    profesores[nombreProfesor] = { apariciones: 1, empresas: [] };
+                if (!profesores[nombreProfesor]) {
+                    profesores[nombreProfesor] = { apariciones: 0, empresas: {} };
                 }
 
-                // Si hay nombre de empresa y no está en la lista de empresas del profesor, agrégalo
-                if (nombreEmpresa && !profesores[nombreProfesor].empresas.includes(nombreEmpresa)) {
-                    profesores[nombreProfesor].empresas.push(nombreEmpresa);
+                if (!profesores[nombreProfesor].empresas[nombreEmpresa]) {
+                    profesores[nombreProfesor].empresas[nombreEmpresa] = 1;
+                } else {
+                    profesores[nombreProfesor].empresas[nombreEmpresa]++;
                 }
+
+                profesores[nombreProfesor].apariciones++;
             }
         });
 
-        // Mostrar los resultados
         console.log("Resumen de profesores:");
         Object.entries(profesores).forEach(([nombreProfesor, info]) => {
             console.log(`Profesor: ${nombreProfesor}`);
-            console.log(`Apariciones: ${info.apariciones}`);
-            console.log("Empresas asociadas:", info.empresas);
+            console.log(`Apariciones totales: ${info.apariciones}`);
+            console.log("Empresas asociadas:");
+            Object.entries(info.empresas).forEach(([empresa, apariciones]) => {
+                console.log(`- ${empresa}: ${apariciones} apariciones`);
+            });
             console.log("------------");
         });
+        const datosOriginales = JSON.stringify(profesores, null, 2);
 
-        res.render('queries/estudiantexempresa', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+        console.log(datosOriginales);
+        const data = [] // Inicializamos un array para guardar la información
+
+        Object.entries(profesores).forEach(([nombreProfesor, info]) => {
+            const empresas = [];
+
+            Object.entries(info.empresas).forEach(([empresa, apariciones]) => {
+                empresas.push({ empresa, apariciones });
+            });
+
+            const profesor = {
+                profesor: nombreProfesor,
+                apariciones: info.apariciones,
+                empresas
+            };
+
+            data.push(profesor);
+        });
+
+        const jsonData = JSON.stringify(data, null, 2);
+        console.log(jsonData)
+
+        res.render('queries/profesoresxempresa', { datos: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
 
     } catch (error) {
         console.log(error);
@@ -172,7 +195,7 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
                 anteproyecto.info_profesor = { name: profesor.name };
             }
             else {
-                anteproyecto.info_profesor = { name: "--" };
+                anteproyecto.info_profesor = { name: "Sin asignar" };
             }
         }
 

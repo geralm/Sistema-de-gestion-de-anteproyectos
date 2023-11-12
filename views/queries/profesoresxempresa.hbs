@@ -15,36 +15,37 @@
     {{/if}}
 
     <div class="container">
-        <h1>Estudiantes por Empresa</h1> <!-- Título de la página -->
+        <h1>Profesores por Empresa</h1> <!-- Título de la página -->
 
         <div class="row mb-2">
             <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
-            <table class="table table-hover text-center mb-5 ">
+            <table class="table table-hover text-center mb-5">
                 <thead>
                     <tr>
-                        <th>Estudiante</th>
-                        <th>Carnet</th>
-                        <th>Telefono</th>
-                        <th>Correo</th>
-                        <th>Empresa</th>
                         <th>Profesor</th>
-                        <th>Semestre</th>
+                        <th>Empresas</th>
+                        <th>Total Estudiantes</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each data}}
+                    {{#each datos as |profesorInfo|}}
                     <tr>
-                        <td>{{this.info_estudiante.nombre}}</td>
-                        <td>{{this.info_estudiante.carnet}}</td>
-                        <td>{{this.info_estudiante.telefono}}</td>
-                        <td>{{this.info_estudiante.correo}}</td>
-                        <td>{{this.nombreEmpresa}}</td>
-                        <td>{{this.info_profesor.name}}</td>
-                        <td>{{this.info_semestre.period}} - {{this.info_semestre.year}}</td>
+                        <td>{{profesorInfo.profesor}}</td>
+                        
+                        <td style="text-align: left; "> 
+                            <ul>
+                                {{#each profesorInfo.empresas as |empresaInfo|}}
+                                <span>{{empresaInfo.empresa}} - Cant Estudiantes: {{empresaInfo.apariciones}} </span><br>
+                                {{/each}}
+                            </ul>
+                        </td>
+                        
+                        <td>{{profesorInfo.apariciones}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
             </table>
+
 
             <form method="POST" id="getForm" action="/consultas/estudianteXempresa/downloadExcel">
                 <input type="hidden" id="semestre" name="semestre" value="{{Semestre}}" />
