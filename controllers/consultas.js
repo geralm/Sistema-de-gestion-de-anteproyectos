@@ -14,12 +14,67 @@ const renderConsultas = async (req, res) => {
     res.render('queries/consultas')
 }
 
+const profesoresXempresa = async (req, res) => {
+    const semestre = req.query.period;
+    const anho = parseInt(req.query.year);
+    const nombreEmpresa = req.query.nombreEmpresa;
+
+    try {
+        const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        //Busqueda profesores
+        // Suponiendo que tu data es el arreglo con la estructura proporcionada
+
+        // Crear un objeto para almacenar las apariciones de profesores y sus empresas
+        const profesores = {};
+
+        // Recorrer los datos para procesar la información
+        data.forEach(item => {
+            // Obtener el nombre del profesor y el nombre de la empresa
+            const nombreProfesor = item.info_profesor?.name;
+            const nombreEmpresa = item.nombreEmpresa;
+
+            if (nombreProfesor) {
+                // Si el profesor ya está en la lista, aumentar su contador
+                if (profesores[nombreProfesor]) {
+                    profesores[nombreProfesor].apariciones++;
+                } else {
+                    // Si el profesor no está en la lista, agregarlo con una aparición
+                    profesores[nombreProfesor] = { apariciones: 1, empresas: [] };
+                }
+
+                // Si hay nombre de empresa y no está en la lista de empresas del profesor, agrégalo
+                if (nombreEmpresa && !profesores[nombreProfesor].empresas.includes(nombreEmpresa)) {
+                    profesores[nombreProfesor].empresas.push(nombreEmpresa);
+                }
+            }
+        });
+
+        // Mostrar los resultados
+        console.log("Resumen de profesores:");
+        Object.entries(profesores).forEach(([nombreProfesor, info]) => {
+            console.log(`Profesor: ${nombreProfesor}`);
+            console.log(`Apariciones: ${info.apariciones}`);
+            console.log("Empresas asociadas:", info.empresas);
+            console.log("------------");
+        });
+
+        res.render('queries/estudiantexempresa', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+
+    } catch (error) {
+        console.log(error);
+        req.flash('error', '¡Error al realizar la consulta!');
+        res.redirect("/consultas/pag_consultas");
+    }
+
+}
+
 const estudiantesXempresa_Excel = async (req, res) => {
     const semestre = req.body.semestre;
     const anho = parseInt(req.body.anho);
     const nombreEmpresa = req.body.nombreEmpresa;
 
     const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+    console.log(data)
 
     const workbook = await exportarResultadosAExcel(data)
     // res is a Stream object
@@ -45,7 +100,7 @@ const estudiantesXempresa = async (req, res) => {
     try {
         const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
         res.render('queries/estudiantexempresa', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
-        
+
     } catch (error) {
         console.log(error);
         req.flash('error', '¡Error al realizar la consulta!');
@@ -252,5 +307,5 @@ async function testFunction() {
 
 
 module.exports = {
-    renderConsultas, estudiantesXempresa, estudiantesXempresa_Excel
+    renderConsultas, estudiantesXempresa, estudiantesXempresa_Excel, profesoresXempresa
 }

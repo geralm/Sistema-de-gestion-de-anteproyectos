@@ -13,6 +13,9 @@ router.route('/estudianteXempresa')
 router.route('/estudianteXempresa/downloadExcel')
     .post(isLoggedIn, isAdmin, catchAsync(consulta.estudiantesXempresa_Excel));
 
+router.route('/profesoresXempresa')
+    .get(isLoggedIn, isAdmin, catchAsync(consulta.profesoresXempresa));
+
 
 
 module.exports = router
