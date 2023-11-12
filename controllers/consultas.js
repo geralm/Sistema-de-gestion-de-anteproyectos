@@ -45,10 +45,11 @@ const estudiantesXempresa = async (req, res) => {
     try {
         const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
         res.render('queries/estudiantexempresa', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+        
     } catch (error) {
         console.log(error);
         req.flash('error', '¡Error al realizar la consulta!');
-        //res.redirect('queries/consultas');
+        res.redirect("/consultas/pag_consultas");
     }
 }
 

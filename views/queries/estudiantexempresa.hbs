@@ -6,6 +6,13 @@
 </head>
 
 <body>
+    {{#if messages.error}}
+    <div class="alert alert-danger">
+        {{#each messages.error}}
+            {{this}}
+        {{/each}}
+    </div>
+{{/if}}
 
     <div class="container">
         <h1>Estudiantes por Empresa</h1> <!-- Título de la página -->
