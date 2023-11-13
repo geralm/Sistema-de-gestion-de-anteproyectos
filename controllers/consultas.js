@@ -12,7 +12,7 @@ require('dotenv').config();
 
 const renderConsultas = async (req, res) => {
     const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
-    res.render('queries/consultas', {semestreActivo})
+    res.render('queries/consultas', { semestreActivo })
 }
 
 const formatoProfes = async (datos) => {
@@ -72,7 +72,7 @@ const formatoProfes = async (datos) => {
     return data
 }
 
-async function sumarApariciones  (datos)  {
+async function sumarApariciones(datos) {
     let sumaApariciones = 0;
 
     datos.forEach((item) => {
@@ -93,7 +93,7 @@ const profesoresXempresa = async (req, res) => {
         //FORMATO PROFES
         const data = await formatoProfes(datos)
         const aparicionesTotales = await sumarApariciones(data);
-        console.log("aparicionesTotales "+aparicionesTotales)
+        console.log("aparicionesTotales " + aparicionesTotales)
         res.render('queries/profesoresxempresa', { datos: data, AparicionesTotales: aparicionesTotales, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
 
     } catch (error) {
@@ -121,8 +121,106 @@ const consultaGeneral = async (req, res) => {
         req.flash('error', '¡Error al realizar la consulta!');
         res.redirect("/consultas/pag_consultas");
     }
-
 }
+
+async function exportarResultadosAExcel_general(resultados) {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Información General');
+
+    // Definir las cabeceras de las columnas en el archivo Excel
+    worksheet.columns = [
+        { header: 'Semestre', key: 'semestre' },
+
+        { header: 'Estudiante', key: 'estudiante' },
+        { header: 'Carnet', key: 'carnet' },
+        { header: 'Correo', key: 'correo' },
+        { header: 'Telefono', key: 'telefono' },
+
+        { header: 'Cursos', key: 'cursos' },
+
+        { header: 'Titulo', key: 'titulo' },
+        { header: 'Fecha Inicio', key: 'fechaInicio' },
+        { header: 'Fecha Fin', key: 'fechaFinal' },
+        { header: 'Tipo', key: 'tipo' },
+        { header: 'Teletrabajo', key: 'teletrabajo' },
+
+        { header: 'Empresa', key: 'nombreEmpresa' },
+        { header: 'Dirección', key: 'direccionEmpresa' },
+        { header: 'Telefono Empresa', key: 'telefonoEmpresa' },
+
+        { header: 'Supervisor', key: 'nombreSupervisor' },
+        { header: 'Puesto', key: 'puestoSupervisor' },
+        { header: 'Correo Supervisor', key: 'correoSupervisor' },
+
+        { header: 'Profesor', key: 'profesor'}
+    ];
+
+    // Agregar fila de datos
+    resultados.forEach((resultado) => {
+        const cursos = resultado.cursos.join(', ') || 'N/A';
+        const semestreName = resultado.info_semestre.period + "-" + resultado.info_semestre.year
+
+        worksheet.addRow({
+            semestre: semestreName,
+
+            estudiante: resultado.info_estudiante.nombre,
+            carnet: resultado.info_estudiante.carnet,
+            correo: resultado.info_estudiante.correo,
+            telefono: resultado.info_estudiante.telefono,
+
+            cursos: cursos,
+
+            titulo: resultado.titulo,
+            fechaInicio: resultado.fechaInicio,
+            fechaFinal: resultado.fechaFinal,
+            tipo: resultado.tipo,
+            teletrabajo: resultado.teletrabajo,
+
+            nombreEmpresa: resultado.nombreEmpresa,
+            direccionEmpresa: resultado.direccionEmpresa,
+            telefonoEmpresa: resultado.telefonoEmpresa,
+
+            nombreSupervisor: resultado.nombreSupervisor,
+            puestoSupervisor: resultado.puestoSupervisor,
+            correoSupervisor: resultado.correoSupervisor,
+
+            profesor: resultado.info_profesor.name,
+        });
+    });
+    const largo = resultados.length;
+    worksheet.addRow({
+        semestre: 'Cantidad Total',
+        estudiante: largo,
+    })
+
+    return workbook
+}
+
+const consultaGeneral_Excel = async (req, res) => {
+    const semestre = req.body.semestre;
+    const anho = parseInt(req.body.anho);
+    const nombreEmpresa = req.body.nombreEmpresa;
+
+    const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+    //ORDENAR AQUI
+    console.log(data)
+
+    const workbook = await exportarResultadosAExcel_general(data)
+    // res is a Stream object
+    res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=" + "ConsultaGeneral.xlsx"
+    );
+
+    return workbook.xlsx.write(res).then(function () {
+        res.status(200).end();
+    });
+}
+
 
 async function exportarResultadosAExcel_profesor(resultados, cantTotal) {
     const workbook = new ExcelJS.Workbook();
@@ -164,7 +262,7 @@ async function exportarResultadosAExcel_profesor(resultados, cantTotal) {
             });
         }
         worksheet.addRow({
-            profesor: "Total de "+resultado.profesor,
+            profesor: "Total de " + resultado.profesor,
             cantEstudiantes: resultado.apariciones
         }).eachCell({ includeEmpty: true }, (cell, colNumber) => {
             if (colNumber <= 3) { // Aplica solo a las primeras tres columnas
@@ -175,7 +273,7 @@ async function exportarResultadosAExcel_profesor(resultados, cantTotal) {
                 };
             }
         });
-        
+
     });
     worksheet.addRow({
         profesor: "Suma Total ",
@@ -389,11 +487,7 @@ async function exportarResultadosAExcel_estudiantes(resultados) {
         estudiante: largo,
     })
 
-    // Obtener el buffer del archivo Excel
-
     return workbook
-
-
     /*
     // Guardar el archivo Excel
     const nombreArchivo = 'informacion_estudiantes.xlsx';
@@ -404,100 +498,63 @@ async function exportarResultadosAExcel_estudiantes(resultados) {
 async function ordenarPorEmpresaYSemestre(datos) {
     // Agrupar los datos por semestre
     const datosPorSemestre = datos.reduce((acumulador, dato) => {
-      const semestreID = dato.semestre.toString(); // Convertir a string para comparar
-      if (!acumulador[semestreID]) {
-        acumulador[semestreID] = [];
-      }
-      acumulador[semestreID].push(dato);
-      return acumulador;
+        const semestreID = dato.semestre.toString(); // Convertir a string para comparar
+        if (!acumulador[semestreID]) {
+            acumulador[semestreID] = [];
+        }
+        acumulador[semestreID].push(dato);
+        return acumulador;
     }, {});
-  
+
     // Ordenar y agrupar por empresa dentro de cada semestre
     for (const semestreID in datosPorSemestre) {
-      if (Object.prototype.hasOwnProperty.call(datosPorSemestre, semestreID)) {
-        const datosSemestre = datosPorSemestre[semestreID];
-        const datosOrdenados = {};
-  
-        // Agrupar por empresa
-        datosSemestre.forEach((dato) => {
-          const empresa = dato.nombreEmpresa;
-          if (!datosOrdenados[empresa]) {
-            datosOrdenados[empresa] = [];
-          }
-          datosOrdenados[empresa].push(dato);
-        });
-  
-        // Ordenar dentro de cada empresa
-        for (const empresa in datosOrdenados) {
-          if (Object.prototype.hasOwnProperty.call(datosOrdenados, empresa)) {
-            datosOrdenados[empresa].sort((a, b) => {
-              return a.fechaInicio - b.fechaInicio;
+        if (Object.prototype.hasOwnProperty.call(datosPorSemestre, semestreID)) {
+            const datosSemestre = datosPorSemestre[semestreID];
+            const datosOrdenados = {};
+
+            // Agrupar por empresa
+            datosSemestre.forEach((dato) => {
+                const empresa = dato.nombreEmpresa;
+                if (!datosOrdenados[empresa]) {
+                    datosOrdenados[empresa] = [];
+                }
+                datosOrdenados[empresa].push(dato);
             });
-          }
+
+            // Ordenar dentro de cada empresa
+            for (const empresa in datosOrdenados) {
+                if (Object.prototype.hasOwnProperty.call(datosOrdenados, empresa)) {
+                    datosOrdenados[empresa].sort((a, b) => {
+                        return a.fechaInicio - b.fechaInicio;
+                    });
+                }
+            }
+
+            // Reconstruir los datos del semestre
+            const datosOrdenadosSemestre = [];
+            for (const empresa in datosOrdenados) {
+                if (Object.prototype.hasOwnProperty.call(datosOrdenados, empresa)) {
+                    datosOrdenadosSemestre.push(...datosOrdenados[empresa]);
+                }
+            }
+
+            datosPorSemestre[semestreID] = datosOrdenadosSemestre;
         }
-  
-        // Reconstruir los datos del semestre
-        const datosOrdenadosSemestre = [];
-        for (const empresa in datosOrdenados) {
-          if (Object.prototype.hasOwnProperty.call(datosOrdenados, empresa)) {
-            datosOrdenadosSemestre.push(...datosOrdenados[empresa]);
-          }
-        }
-  
-        datosPorSemestre[semestreID] = datosOrdenadosSemestre;
-      }
     }
-  
+
     // Reconstruir los datos ordenados
     const datosOrdenados = [];
     for (const semestreID in datosPorSemestre) {
-      if (Object.prototype.hasOwnProperty.call(datosPorSemestre, semestreID)) {
-        datosOrdenados.push(...datosPorSemestre[semestreID]);
-      }
+        if (Object.prototype.hasOwnProperty.call(datosPorSemestre, semestreID)) {
+            datosOrdenados.push(...datosPorSemestre[semestreID]);
+        }
     }
-  
+
     return datosOrdenados;
-  }
-  
-
-
-function ordenarYFormatearDatos(datos) {
-    // Primero, ordena los datos por semestre y luego por empresa
-    datos.sort((a, b) => {
-        if (a.semestre < b.semestre) return -1;
-        if (a.semestre > b.semestre) return 1;
-        if (a.nombreEmpresa < b.nombreEmpresa) return -1;
-        if (a.nombreEmpresa > b.nombreEmpresa) return 1;
-        return 0;
-    });
-
-    // Luego, crea un nuevo array con el formato de llaves deseado
-    const datosFormateados = datos.map((dato) => ({
-        _id: dato._id,
-        titulo: dato.titulo,
-        nombreEmpresa: dato.nombreEmpresa,
-        direccionEmpresa: dato.direccionEmpresa,
-        nombreSupervisor: dato.nombreSupervisor,
-        puestoSupervisor: dato.puestoSupervisor,
-        correoSupervisor: dato.correoSupervisor,
-        telefonoEmpresa: dato.telefonoEmpresa,
-        estado: dato.estado,
-        semestre: dato.semestre,
-        tipo: dato.tipo,
-        teletrabajo: dato.teletrabajo,
-        estudiante_info: {
-            _id: dato.estudiante_info._id,
-            nombre: dato.estudiante_info.nombre,
-            carnet: dato.estudiante_info.carnet,
-            telefono: dato.estudiante_info.telefono,
-            correo: dato.estudiante_info.correo,
-        },
-        profesor_info: dato.profesor_info,
-        cursos: dato.cursos,
-    }));
-
-    return datosFormateados;
 }
+
+
+
 
 // Para usar la función:
 async function testFunction() {
@@ -522,5 +579,6 @@ module.exports = {
     estudiantesXempresa_Excel,
     profesoresXempresa,
     profesoresXempresa_Excel,
-    consultaGeneral
+    consultaGeneral,
+    consultaGeneral_Excel
 }
