@@ -11,7 +11,8 @@ const fs = require('fs');
 require('dotenv').config();
 
 const renderConsultas = async (req, res) => {
-    res.render('queries/consultas')
+    const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
+    res.render('queries/consultas', {semestreActivo})
 }
 
 const formatoProfes = async (datos) => {
@@ -75,8 +76,6 @@ async function sumarApariciones  (datos)  {
     let sumaApariciones = 0;
 
     datos.forEach((item) => {
-        console.log("entra")
-        console.log(item)
         sumaApariciones += item.apariciones;
     });
 
@@ -199,8 +198,6 @@ const profesoresXempresa_Excel = async (req, res) => {
     }
 }
 
-
-
 const estudiantesXempresa_Excel = async (req, res) => {
     const semestre = req.body.semestre;
     const anho = parseInt(req.body.anho);
@@ -231,7 +228,9 @@ const estudiantesXempresa = async (req, res) => {
     const nombreEmpresa = req.query.nombreEmpresa;
 
     try {
-        const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        const dataPrevia = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        const data = await ordenarPorEmpresaYSemestre(dataPrevia)
+        console.log(data)
         res.render('queries/estudiantexempresa', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
 
     } catch (error) {
@@ -381,7 +380,64 @@ async function exportarResultadosAExcel_estudiantes(resultados) {
     console.log(`Archivo Excel "${nombreArchivo}" creado con éxito.`);
     */
 }
-
+async function ordenarPorEmpresaYSemestre(datos) {
+    // Agrupar los datos por semestre
+    const datosPorSemestre = datos.reduce((acumulador, dato) => {
+      const semestreID = dato.semestre.toString(); // Convertir a string para comparar
+      if (!acumulador[semestreID]) {
+        acumulador[semestreID] = [];
+      }
+      acumulador[semestreID].push(dato);
+      return acumulador;
+    }, {});
+  
+    // Ordenar y agrupar por empresa dentro de cada semestre
+    for (const semestreID in datosPorSemestre) {
+      if (Object.prototype.hasOwnProperty.call(datosPorSemestre, semestreID)) {
+        const datosSemestre = datosPorSemestre[semestreID];
+        const datosOrdenados = {};
+  
+        // Agrupar por empresa
+        datosSemestre.forEach((dato) => {
+          const empresa = dato.nombreEmpresa;
+          if (!datosOrdenados[empresa]) {
+            datosOrdenados[empresa] = [];
+          }
+          datosOrdenados[empresa].push(dato);
+        });
+  
+        // Ordenar dentro de cada empresa
+        for (const empresa in datosOrdenados) {
+          if (Object.prototype.hasOwnProperty.call(datosOrdenados, empresa)) {
+            datosOrdenados[empresa].sort((a, b) => {
+              return a.fechaInicio - b.fechaInicio;
+            });
+          }
+        }
+  
+        // Reconstruir los datos del semestre
+        const datosOrdenadosSemestre = [];
+        for (const empresa in datosOrdenados) {
+          if (Object.prototype.hasOwnProperty.call(datosOrdenados, empresa)) {
+            datosOrdenadosSemestre.push(...datosOrdenados[empresa]);
+          }
+        }
+  
+        datosPorSemestre[semestreID] = datosOrdenadosSemestre;
+      }
+    }
+  
+    // Reconstruir los datos ordenados
+    const datosOrdenados = [];
+    for (const semestreID in datosPorSemestre) {
+      if (Object.prototype.hasOwnProperty.call(datosPorSemestre, semestreID)) {
+        datosOrdenados.push(...datosPorSemestre[semestreID]);
+      }
+    }
+  
+    return datosOrdenados;
+  }
+  
 
 
 function ordenarYFormatearDatos(datos) {

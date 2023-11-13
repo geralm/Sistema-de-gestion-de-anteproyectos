@@ -8,19 +8,30 @@
 
     <div class="container">
         <h1>Consultas</h1> <!-- Título de la página -->
+
+        {{#ifEquals semestre null}}
+        <input class="form-control" type="text" value="¡No hay semestres activos! Comuníquese con la coordinadora"
+            aria-label="Disabled input example" disabled readonly>
+        {{else}}
+        <h5>Semestre Activo: {{semestreActivo.period}} - {{semestreActivo.year}} </h5>
         <br>
+        <!-- Agrega un campo oculto para almacenar el ID del semestre -->
+        <input type="hidden" name="semestreActuvo_periodo" value="{{semestreActivo.period}}">
+        <input type="hidden" name="semestreActuvo_year" value="{{semestreActivo.year}}">
 
         <form method="GET" id="getForm">
-
+            <h5>Filtros: </h5>
             <h6>Año:</h6>
             <select id="year" name="year">
+                <option value="{{semestreActivo.year}}">Año Activo: {{semestreActivo.year}}</option>
                 <option value="">Sin Filtro por año</option>
             </select>
 
             <br>
             <h6>Semestre:</h6>
 
-            <select id="period" name="period" disabled>
+            <select id="period" name="period">
+                <option value="{{semestreActivo.period}}">Periodo Activo: {{semestreActivo.period}} </option>
                 <option value="">Sin Filtro por semestre </option>
                 <option value="I">I</option>
                 <option value="II">II</option>
@@ -46,6 +57,7 @@
                 </div>
             </div>
         </form>
+        {{/ifEquals}}
 
     </div>
 
@@ -57,7 +69,7 @@
             yearInput.addEventListener('change', () => {
                 if (yearInput.value === "") {
                     periodInput.disabled = true;
-                    periodInput.selectedIndex = 0; // Resetea el valor del período si se elimina el año
+                    periodInput.selectedIndex = 1; // Resetea el valor del período si se elimina el año
                 } else {
                     periodInput.disabled = false;
                 }
