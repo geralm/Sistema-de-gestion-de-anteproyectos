@@ -1,35 +1,94 @@
-<div class="container">
-    <h1>Consultas</h1> <!-- Título de la página -->
+<!DOCTYPE html>
+<html>
 
-    <form method="GET" id="getForm">
+<head>
+</head>
 
+<body>
 
-        <h5>Semestre:</h5>
-        <select id="semestre" name="semestre">
-            <option value="">Histórico</option> <!-- Select con la opción "Histórico" -->
-            <option value="1">1</option>
-        </select>
-        <br><br>
+    <div class="container">
+        <h1>Consultas</h1> <!-- Título de la página -->
 
-        <h5>Empresa:</h5>
-        <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa">
-        <br><br>
-        
-        <div class="row">
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-primary w-100" formaction="/consultas/estudianteXempresa">Estudiantes por Empresa</button>
+        {{#ifEquals semestre null}}
+        <input class="form-control" type="text" value="¡No hay semestres activos! Comuníquese con la coordinadora"
+            aria-label="Disabled input example" disabled readonly>
+        {{else}}
+        <h5>Semestre Activo: {{semestreActivo.period}} - {{semestreActivo.year}} </h5>
+        <br>
+        <!-- Agrega un campo oculto para almacenar el ID del semestre -->
+        <input type="hidden" name="semestreActuvo_periodo" value="{{semestreActivo.period}}">
+        <input type="hidden" name="semestreActuvo_year" value="{{semestreActivo.year}}">
+
+        <form method="GET" id="getForm">
+            <h5>Filtros: </h5>
+            <h6>Año:</h6>
+            <select id="year" name="year">
+                <option value="{{semestreActivo.year}}">Año Activo: {{semestreActivo.year}}</option>
+                <option value="">Sin Filtro por año</option>
+            </select>
+
+            <br>
+            <h6>Semestre:</h6>
+
+            <select id="period" name="period">
+                <option value="{{semestreActivo.period}}">Periodo Activo: {{semestreActivo.period}} </option>
+                <option value="">Sin Filtro por semestre </option>
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <!-- Agrega aquí los períodos que tengas -->
+            </select>
+
+            <br><br>
+            <h6>Empresa:</h6>
+            <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa">
+            <br><br>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100"
+                        formaction="/consultas/estudianteXempresa">Estudiantes por Empresa</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100"
+                        formaction="/consultas/profesoresXempresa">Profesores por Empresa</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100" formaction="">Consulta General</button>
+                </div>
             </div>
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-primary w-100" formaction="">Profesores por Empresa</button>
-            </div>
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-primary w-100" formaction="">Consulta General</button>
-            </div>
-        </div>
-    </form>
+        </form>
+        {{/ifEquals}}
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const yearInput = document.getElementById('year');
+            const periodInput = document.getElementById('period');
+
+            yearInput.addEventListener('change', () => {
+                if (yearInput.value === "") {
+                    periodInput.disabled = true;
+                    periodInput.selectedIndex = 1; // Resetea el valor del período si se elimina el año
+                } else {
+                    periodInput.disabled = false;
+                }
+            });
+
+            const yearSelect = document.getElementById('year');
+            const currentYear = 2023;
+
+            for (let i = currentYear; i <= currentYear + 10; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.text = i;
+                yearSelect.appendChild(option);
+            }
+        });
+    </script>
 
 
 
+</body>
 
-
-</div>
+</html>
