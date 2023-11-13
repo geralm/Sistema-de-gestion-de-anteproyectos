@@ -10,6 +10,10 @@ router.route('/proyectos')
     .get(isLoggedIn, isAdmin,catchAsync(admin.renderProyectos));
 router.route('/proyectos/:id/asignarProfesor')
     .get(isLoggedIn, isAdmin, catchAsync(admin.renderAsignarProfesor));
+router.route('/proyectos/:id/calificarProyecto')
+    .get(isLoggedIn, isAdmin, catchAsync(admin.renderCalificarProyecto));
+router.route('/proyectos/calificarProyecto')
+    .post(isLoggedIn,isAdmin, admin.calificarProyecto)
 router.route('/proyectos/asignarProfesor')
     .post(isLoggedIn, isAdmin, catchAsync(admin.asignarProfesor));
 router.route('/proyectos/find')
@@ -26,6 +30,7 @@ router.route('/anteproyectos/:id/revisar')
     .get(isLoggedIn, isAdmin, admin.revisar);
 router.route('/anteproyectos/enviarRevisado')
     .post(isLoggedIn, isAdmin, admin.actualizarRevision);
+
     
 // router.route('anteproyectos/send-email')
 //     .post(isLoggedIn,isAdmin,admin.sendMail)

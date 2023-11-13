@@ -91,7 +91,77 @@ const ProyectSchema = new Schema({
     teletrabajo: {
         type: Boolean,
         default: false
-    }
+    },
+    empresa1: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    informe1: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    empresa2: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    informe2: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    empresa3: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    informe3: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    presentacion: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    coordinacion: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
+    final: {
+        type: Number,
+        required: true,
+        maxlength: 5,
+        default: 0,
+        unique: false
+    },
+    actas: {
+        type: Number,
+        required: true,
+        maxlength: 3,
+        default: 0,
+        unique: false
+    },
 
 })
 

@@ -110,6 +110,15 @@
                         <form action="/admin/proyectos/{{this._id}}/asignarProfesor" method="get">
                             <button type="submit" class="btn btn-primary w-100">Asignar</button>
                         </form>
+                        {{#ifEquals this.profesor.name null}}
+                            <form>
+                                <button type="submit" class="btn btn-primary w-100" disabled>Requiere profesor para poder calificar</button>
+                            </form>
+                        {{else}}
+                            <form action="/admin/proyectos/{{this._id}}/calificarProyecto" method="get">
+                                <button type="submit" class="btn btn-primary w-100">Calificar</button>
+                            </form>
+                        {{/ifEquals}}
                     </td>
                 </tr>
                 {{/each}}
