@@ -72,6 +72,28 @@ const formatoProfes = async (datos) => {
     return data
 }
 
+const formatoEstudiantes = async (datos) => {
+    const empresas = {};
+
+    datos.forEach(item => {
+        const nombreEmpresa = item.nombreEmpresa;
+
+        if (!empresas[nombreEmpresa]) {
+            empresas[nombreEmpresa] = 1;
+        } else {
+            empresas[nombreEmpresa]++;
+        }
+    });
+
+    const resultado = [];
+
+    Object.entries(empresas).forEach(([empresa, cantidadEstudiantes]) => {
+        resultado.push({ empresa: empresa, cantEstudiantes: cantidadEstudiantes });
+    });
+
+    return resultado;
+};
+
 async function sumarApariciones(datos) {
     let sumaApariciones = 0;
 
@@ -123,7 +145,7 @@ const consultaGeneral = async (req, res) => {
     }
 }
 
-async function exportarResultadosAExcel_general(resultados) {
+async function exportarResultadosAExcel_general(resultados ) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Información General');
 
@@ -204,6 +226,7 @@ const consultaGeneral_Excel = async (req, res) => {
     const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
     //ORDENAR AQUI
     console.log(data)
+    
 
     const workbook = await exportarResultadosAExcel_general(data)
     // res is a Stream object
@@ -222,7 +245,7 @@ const consultaGeneral_Excel = async (req, res) => {
 }
 
 
-async function exportarResultadosAExcel_profesor(resultados, cantTotal) {
+async function exportarResultadosAExcel_profesor(resultados, cantTotal, semestreConsultado) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Información de Profesores');
 
@@ -279,6 +302,10 @@ async function exportarResultadosAExcel_profesor(resultados, cantTotal) {
         profesor: "Suma Total ",
         cantEstudiantes: cantTotal
     });
+    worksheet.addRow({
+        profesor: "Semestre consultado ",
+        cantEstudiantes: semestreConsultado
+    });
     return workbook
 }
 
@@ -287,6 +314,10 @@ const profesoresXempresa_Excel = async (req, res) => {
     const anho = parseInt(req.body.anho);
     const nombreEmpresa = req.body.nombreEmpresa;
     const cantTotal = req.body.cantTotal;
+    let  semestreConsultado = semestre + "-" + anho
+    if (isNaN(anho)){
+        semestreConsultado = semestre + "-" 
+    }
 
     try {
         //CONSULTA GENERAL
@@ -295,7 +326,7 @@ const profesoresXempresa_Excel = async (req, res) => {
         const data = await formatoProfes(datos)
         console.log(data)
 
-        const workbook = await exportarResultadosAExcel_profesor(data, cantTotal)
+        const workbook = await exportarResultadosAExcel_profesor(data, cantTotal,semestreConsultado)
         // res is a Stream object
         res.setHeader(
             "Content-Type",
@@ -322,10 +353,18 @@ const estudiantesXempresa_Excel = async (req, res) => {
     const anho = parseInt(req.body.anho);
     const nombreEmpresa = req.body.nombreEmpresa;
 
+    let  semestreConsultado = semestre + "-" + anho
+    if (isNaN(anho)){
+        semestreConsultado = semestre + "-" 
+    }
+   
     const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
     console.log(data)
 
-    const workbook = await exportarResultadosAExcel_estudiantes(data)
+    const informacionExtra = await formatoEstudiantes(data)
+    console.log(informacionExtra)
+
+    const workbook = await exportarResultadosAExcel_estudiantes(data,informacionExtra, semestreConsultado)
     // res is a Stream object
     res.setHeader(
         "Content-Type",
@@ -436,9 +475,26 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
 
 
 
-async function exportarResultadosAExcel_estudiantes(resultados) {
+async function exportarResultadosAExcel_estudiantes(resultados, informacionExtra, semestreConsultado) {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Información de Estudiantes');
+
+    const worksheetPrincipal = workbook.addWorksheet('Estudiantes x Empresa');
+    worksheetPrincipal.columns = [
+        { header: 'Empresa', key: 'empresa' },
+        { header: 'Cantidad Estudiantes', key: 'cantidad' },
+    ]
+    informacionExtra.forEach((info) => {
+        worksheetPrincipal.addRow({
+            empresa: info.empresa,
+            cantidad: info.cantEstudiantes,
+        })
+    })
+    worksheetPrincipal.addRow({
+        empresa: "Semestre consultado ",
+        cantidad: semestreConsultado
+    });
+
+    const worksheet = workbook.addWorksheet('Información General');
 
     // Definir las cabeceras de las columnas en el archivo Excel
     worksheet.columns = [
@@ -489,6 +545,8 @@ async function exportarResultadosAExcel_estudiantes(resultados) {
         semestre: 'Cantidad Total',
         carnet: largo,
     })
+
+    
 
     return workbook
     /*
