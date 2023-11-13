@@ -34,3 +34,7 @@ tbody .Revisión{
 .Finalizado{
     color: #0326c0;
 }
+.table-container {
+    width: 100%; /* Define el ancho deseado para el contenedor */
+    overflow-x: auto; /* Agrega la barra de desplazamiento horizontal */
+}

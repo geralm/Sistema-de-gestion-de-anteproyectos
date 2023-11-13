@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    {{#if messages.error}}
+    <div class="alert alert-danger">
+        {{#each messages.error}}
+        {{this}}
+        {{/each}}
+    </div>
+    {{/if}}
+
+    <div class="container">
+        <h1>Consulta General de Anteproyectos:</h1> <!-- Título de la página -->
+
+        <br>
+        {{#if Semestre}}
+        <h5>Semestre: {{Semestre}}</h5>
+        {{else}}
+        <h5> Semestre: ---</h5>
+        {{/if}}
+
+        <!-- Ahno -->
+        {{#if Anho}}
+        <h5>Año: {{Anho}}</h5>
+        {{else}}
+        <h5> Año: ---</h5>
+        {{/if}}
+
+        {{#if NombreEmpresa}}
+        <h5>Empresa: {{NombreEmpresa}}</h5>
+        {{else}}
+        <h5> Empresa: ---</h5>
+        {{/if}}
+
+        <div class="table-container">
+            <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+            <table class="table table-hover text-center mb-5 ">
+                <thead>
+                    <tr>
+                        <th>Semestre</th>
+
+                        <th>Estudiante</th>
+                        <th>Carnet</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+
+                        <th>Cursos</th>
+
+                        <th>Titulo</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Tipo</th>
+                        <th>Teletrabajo</th>
+
+                        <th>Empresa</th>
+                        <th>Dirección</th>
+                        <th>Telefono Empresa</th>
+
+                        <th>Supervisor</th>
+                        <th>Puesto</th>
+                        <th>Correo Supervisor</th>
+
+                        <th>Profesor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each data}}
+                    <tr>
+                        <td>{{this.info_semestre.period}} - {{this.info_semestre.year}}</td>
+
+                        <td>{{this.info_estudiante.nombre}}</td>
+                        <td>{{this.info_estudiante.carnet}}</td>
+                        <td>{{this.info_estudiante.correo}}</td>
+                        <td>{{this.info_estudiante.telefono}}</td>
+
+                        <td style="text-align: left; ">
+                            <ul>
+                                {{#each this.cursos as |curso|}}
+                                <span>{{curso}}
+                                </span><br>
+                                {{/each}}
+                            </ul>
+                        </td>
+
+                        <td>{{this.titulo}}</td>
+                        <td>{{this.fechaInicio}}</td>
+                        <td>{{this.fechaFinal}}</td>
+                        <td>{{this.tipo}}</td>
+                        <td>{{this.teletrabajo}}</td>
+
+                        <td>{{this.nombreEmpresa}}</td>
+                        <td>{{this.direccionEmpresa}}</td>
+                        <td>{{this.telefonoEmpresa}}</td>
+
+                        <td>{{this.nombreSupervisor}}</td>
+                        <td>{{this.puestoSupervisor}}</td>
+                        <td>{{this.correoSupervisor}}</td>
+
+                        <td>{{this.info_profesor.name}}</td>
+
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
+            <form method="POST" id="getForm" action="/consultas/estudianteXempresa/downloadExcel">
+                <input type="hidden" id="semestre" name="semestre" value="{{Semestre}}" />
+                <input type="hidden" id="anho" name="anho" value="{{Anho}}" />
+                <input type="hidden" id="nombreEmpresa" name="nombreEmpresa" value="{{NombreEmpresa}}" />
+
+                <button type="submit" class="btn btn-primary w-100">Descargar Excel</button>
+            </form>
+
+
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+
+</body>
+
+</html>

@@ -103,6 +103,27 @@ const profesoresXempresa = async (req, res) => {
     }
 
 }
+
+//CONSULTA GENERAL-----------------------------------------------------
+const consultaGeneral = async (req, res) => {
+    const semestre = req.query.period;
+    const anho = parseInt(req.query.year);
+    const nombreEmpresa = req.query.nombreEmpresa;
+
+    try {
+        const dataPrevia = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        const data = await ordenarPorEmpresaYSemestre(dataPrevia)
+        console.log(data)
+        res.render('queries/consulta_general', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+
+    } catch (error) {
+        console.log(error);
+        req.flash('error', '¡Error al realizar la consulta!');
+        res.redirect("/consultas/pag_consultas");
+    }
+
+}
+
 async function exportarResultadosAExcel_profesor(resultados, cantTotal) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Información de Profesores');
@@ -184,7 +205,7 @@ const profesoresXempresa_Excel = async (req, res) => {
         );
         res.setHeader(
             "Content-Disposition",
-            "attachment; filename=" + "EstudiantesXEmpresa.xlsx"
+            "attachment; filename=" + "ProfesoresXEmpresa.xlsx"
         );
 
         return workbook.xlsx.write(res).then(function () {
@@ -500,5 +521,6 @@ module.exports = {
     estudiantesXempresa,
     estudiantesXempresa_Excel,
     profesoresXempresa,
-    profesoresXempresa_Excel
+    profesoresXempresa_Excel,
+    consultaGeneral
 }
