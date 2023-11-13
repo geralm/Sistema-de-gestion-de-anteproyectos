@@ -42,8 +42,17 @@ const renderAsignarProfesor = async (req, res) => {
 const renderOne = async (req, res) => {
     const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
     const anteproyectos = await Anteproyecto.find({ estudiante: id_estudiantes[0]._id }).populate('estudiante').lean();
-    console.log(anteproyectos)
     res.render('admin/showAnteproyectos', { anteproyectos })
+}
+
+const renderOneProyecto = async (req, res) => {
+  const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
+  const proyectos = await Anteproyecto
+      .find({estado:'Aprobado'})
+      .find({ estudiante: id_estudiantes[0]._id })
+      .populate('estudiante')
+      .lean();
+  res.render('admin/showProyectos', { proyectos });
 }
 
 const showPdf = async (req, res) => {
@@ -123,5 +132,5 @@ const actualizarRevision = async (req, res) => {
 
 module.exports = {
     renderAnteproyectos, renderOne, showPdf, renderProyectos, renderAsignarProfesor,
-    asignarProfesor, actualizarRevision, revisar
+    asignarProfesor, actualizarRevision, revisar,renderOneProyecto
 }

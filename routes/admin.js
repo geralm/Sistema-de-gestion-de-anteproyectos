@@ -4,7 +4,6 @@ const admin =require('../controllers/admin')
 const { isLoggedIn, isAdmin, validateTeacher } = require('../middleware/middlewares')
 const catchAsync = require('../utils/catchAsync');
 
-// router.route('/').get(events.renderAdmin)
 router.route('/anteproyectos')
     .get(isLoggedIn, isAdmin,catchAsync(admin.renderAnteproyectos));
 router.route('/proyectos')
@@ -13,6 +12,8 @@ router.route('/proyectos/:id/asignarProfesor')
     .get(isLoggedIn, isAdmin, catchAsync(admin.renderAsignarProfesor));
 router.route('/proyectos/asignarProfesor')
     .post(isLoggedIn, isAdmin, catchAsync(admin.asignarProfesor));
+router.route('/proyectos/find')
+    .post(isLoggedIn, isAdmin, admin.renderOneProyecto);
 router.route('/administrarProfesores')
     .get(isLoggedIn, isAdmin, admin.renderAsignarProfesor);
 router.route('/anteproyectos/find')
