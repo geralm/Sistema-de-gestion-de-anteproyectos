@@ -347,8 +347,8 @@ const estudiantesXempresa = async (req, res) => {
     const nombreEmpresa = req.query.nombreEmpresa;
 
     try {
-        const dataPrevia = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
-        const data = await ordenarPorEmpresaYSemestre(dataPrevia)
+        const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+        //const data = await ordenarPorEmpresaYSemestre(dataPrevia)
         console.log(data)
         res.render('queries/estudiantexempresa', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
 
@@ -375,7 +375,7 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
         }
 
         if (nombreEmpresa) {
-            matchStage.nombreEmpresa = nombreEmpresa;
+            matchStage.nombreEmpresa = { $regex: new RegExp(nombreEmpresa, 'i') };
         }
 
         const semestresEncontrados = await Semestre.aggregate([
@@ -426,8 +426,8 @@ const obtenerInformacionEstudiantesPorEmpresa = async (nombreEmpresa = '', year 
                 anteproyecto.info_profesor = { name: "Sin asignar" };
             }
         }
-
-        return anteproyectos;
+        const data = await ordenarPorEmpresaYSemestre(anteproyectos)
+        return data;
     } catch (error) {
         console.log("Error en la consulta:", error);
         throw error;
@@ -442,6 +442,7 @@ async function exportarResultadosAExcel_estudiantes(resultados) {
 
     // Definir las cabeceras de las columnas en el archivo Excel
     worksheet.columns = [
+        { header: 'Semestre', key: 'semestre' },
         { header: 'Carnet', key: 'carnet' },
         { header: 'Estudiante', key: 'estudiante' },
         { header: 'Correo', key: 'correo' },
@@ -462,8 +463,10 @@ async function exportarResultadosAExcel_estudiantes(resultados) {
     // Agregar fila de datos
     resultados.forEach((resultado) => {
         const cursos = resultado.cursos.join(', ') || 'N/A';
+        const semestreName = resultado.info_semestre.period + "-" + resultado.info_semestre.year
 
         worksheet.addRow({
+            semestre: semestreName,
             carnet: resultado.info_estudiante.carnet,
             estudiante: resultado.info_estudiante.nombre,
             correo: resultado.info_estudiante.correo,
@@ -483,8 +486,8 @@ async function exportarResultadosAExcel_estudiantes(resultados) {
     });
     const largo = resultados.length;
     worksheet.addRow({
-        carnet: 'Cantidad Total',
-        estudiante: largo,
+        semestre: 'Cantidad Total',
+        carnet: largo,
     })
 
     return workbook
