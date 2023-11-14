@@ -1,6 +1,7 @@
 const Anteproyecto = require('../models/proyecto')
 const Profesores = require('../models/teachers')
 const Estudiante = require('../models/user')
+const Semestre = require('../models/semestre')
 const { Types } = require('mongoose');
 const User = require('../models/user');
 const fs = require('fs');
@@ -8,21 +9,24 @@ const mail = require('../service/mail')
 
 
 const renderAnteproyectos = async (req, res) => {
-  const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
-  res.render('admin/showAnteproyectos', { anteproyectos })
+  const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
+  const anteproyectos = await Anteproyecto.find({semestre: semestreActivo._id}).populate('estudiante').lean();
+  res.render('admin/showAnteproyectos', { anteproyectos, semestreActivo })
 }
 
 const renderRechazados = async (req, res) => {
-  const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
-  res.render('admin/showRechazados', { anteproyectos })
+  const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
+  const anteproyectos = await Anteproyecto.find({semestre: semestreActivo._id}).populate('estudiante').lean();
+  res.render('admin/showRechazados', { anteproyectos, semestreActivo })
 }
 
 const renderProyectos = async (req, res) => {
-  const proyectos = await Anteproyecto.find({ estado: 'Aprobado' })
+  const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
+  const proyectos = await Anteproyecto.find({ estado: 'Aprobado',  semestre: semestreActivo._id })
     .populate('estudiante')
     .populate('profesor')
     .lean();
-  res.render('admin/showProyectos', { proyectos });
+  res.render('admin/showProyectos', { proyectos, semestreActivo });
 }
 
 const asignarProfesor = async (req, res) => {
@@ -75,11 +79,12 @@ const calificarProyecto = async (req, res) => {
 }
 
 const renderOne = async (req, res) => {
+  const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
   const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
   console.log(id_estudiantes)
   if (id_estudiantes.length !== 0) {
-    const anteproyectos = await Anteproyecto.find({ estudiante: id_estudiantes[0]._id }).populate('estudiante').lean();
-    res.render('admin/showAnteproyectos', { anteproyectos })
+    const anteproyectos = await Anteproyecto.find({ estudiante: id_estudiantes[0]._id, semestre: semestreActivo._id }).populate('estudiante').lean();
+    res.render('admin/showAnteproyectos', { anteproyectos, semestreActivo })
     // Resto del código con la consulta ya validada
   } else {
     // Manejar la situación en la que id_estudiantes[0]._id es undefined
@@ -91,35 +96,40 @@ const renderOne = async (req, res) => {
 }
 
 const renderOneProyecto = async (req, res) => {
+  const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
   const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
   if (id_estudiantes.length !== 0) {
     const proyectos = await Anteproyecto
       .find({ estado: 'Aprobado' })
       .find({ estudiante: id_estudiantes[0]._id })
+      .find({semestre: semestreActivo._id})
       .populate('estudiante')
       .lean();
-    res.render('admin/showProyectos', { proyectos });
+    res.render('admin/showProyectos', { proyectos, semestreActivo });
   }
   else {
     const proyectos = []
-    res.render('admin/showProyectos', { proyectos });
+    res.render('admin/showProyectos', { proyectos, semestreActivo });
   }
 
 }
 
 const renderOneRechazado = async (req, res) => {
+  const semestreActivo = await Semestre.findOne({ isActual: true }).lean();
   const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
   if (id_estudiantes.length !== 0) {
     console.log("entra")
     const anteproyectos = await Anteproyecto
       .find({ estudiante: id_estudiantes[0]._id })
+      .find({ estado: 'Rechazado' })
+      .find({semestre: semestreActivo._id})
       .populate('estudiante')
       .lean();
-    res.render('admin/showRechazados', { anteproyectos });
+    res.render('admin/showRechazados', { anteproyectos, semestreActivo });
   }
   else {
     const anteproyectos = []
-    res.render('admin/showRechazados', { anteproyectos });
+    res.render('admin/showRechazados', { anteproyectos, semestreActivo });
   }
 
 }
