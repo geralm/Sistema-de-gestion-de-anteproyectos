@@ -70,6 +70,7 @@ select option {
 }
 
 .highlight {
-    background-color: lightblue; /* Color de fondo resaltado */
-    padding: 5px; /* Agregar algo de espacio alrededor del elemento */
+    background-color: rgba(4, 107, 242, 0.9);
+    padding: 5px;
+    color: white; /* Hace que el texto sea blanco */
 }
