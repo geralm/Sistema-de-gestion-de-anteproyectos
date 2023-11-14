@@ -123,8 +123,43 @@ const profesoresXempresa = async (req, res) => {
         req.flash('error', '¡Error al realizar la consulta!');
         res.redirect("/consultas/pag_consultas");
     }
-
 }
+
+const estudiantesXnota = async (req, res) => {
+    const semestre = req.query.period;
+    const anho = parseInt(req.query.year);
+    const nombreEmpresa = req.query.nombreEmpresa;
+    const filtroNotas = req.query.filtroNotas;
+
+    try {
+        //CONSULTA GENERAL
+        const datos = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre);
+        const data = await filtrarNotas(datos, filtroNotas);
+        console.log("========================")
+        console.log(data)
+
+        //SELECIONAR SEGUN FILTRO
+        res.render('queries/estudiantesxnota', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+
+    } catch (error) {
+        console.log(error);
+        req.flash('error', '¡Error al realizar la consulta!');
+        res.redirect("/consultas/pag_consultas");
+    }
+}
+
+async function filtrarNotas(datos, filtro) {
+    return datos.filter(elemento => {
+        if (filtro === "Aprobados") {
+            return elemento.actas ? elemento.actas >= 70 : false;
+        } else if (filtro === "Reprobados") {
+            return typeof elemento.actas !== 'undefined' ? elemento.actas < 70 : false;
+        } else {
+            return true; // Si el filtro es vacío, se devuelve el elemento sin filtrar
+        }
+    });
+}
+
 
 //CONSULTA GENERAL-----------------------------------------------------
 const consultaGeneral = async (req, res) => {
@@ -641,5 +676,6 @@ module.exports = {
     profesoresXempresa,
     profesoresXempresa_Excel,
     consultaGeneral,
-    consultaGeneral_Excel
+    consultaGeneral_Excel,
+    estudiantesXnota,
 }

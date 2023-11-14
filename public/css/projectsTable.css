@@ -35,6 +35,13 @@ tbody .Revisión{
     color: #0326c0;
 }
 .table-container {
-    width: 100%; /* Define el ancho deseado para el contenedor */
-    overflow-x: auto; /* Agrega la barra de desplazamiento horizontal */
+    overflow-x: auto; /* Agrega desplazamiento horizontal */
+    max-width: 100%; /* Limita el ancho máximo para que no se agrande la pantalla */
+    margin-left: 10px; /* Margen izquierdo */
+    margin-right: 10px; /* Margen derecho */
+}
+
+.table {
+    width: 100%; /* Ocupa el ancho del contenedor */
+    /* Estilos adicionales de la tabla */
 }
