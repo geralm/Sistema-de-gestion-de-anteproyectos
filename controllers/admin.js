@@ -88,7 +88,8 @@ const renderOne = async (req, res) => {
   }
   else {
     if (id_estudiantes.length !== 0) {
-      const anteproyectos = await Anteproyecto.find({ estudiante: id_estudiantes[0]._id, semestre: semestreActivo._id }).populate('estudiante').lean();
+      const estudianteIds = id_estudiantes.map(estudiante => estudiante._id);
+      const anteproyectos = await Anteproyecto.find({ estudiante: { $in: estudianteIds }, semestre: semestreActivo._id }).populate('estudiante').lean();
       res.render('admin/showAnteproyectos', { anteproyectos, semestreActivo })
       // Resto del código con la consulta ya validada
     } else {
@@ -115,9 +116,10 @@ const renderOneProyecto = async (req, res) => {
   else {
     const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
     if (id_estudiantes.length !== 0) {
+      const estudianteIds = id_estudiantes.map(estudiante => estudiante._id);
       const proyectos = await Anteproyecto
         .find({ estado: 'Aprobado' })
-        .find({ estudiante: id_estudiantes[0]._id })
+        .find({ estudiante: { $in: estudianteIds }})
         .find({ semestre: semestreActivo._id })
         .populate('estudiante')
         .lean();
@@ -144,8 +146,9 @@ const renderOneRechazado = async (req, res) => {
       res.render('admin/showRechazados', { anteproyectos, semestreActivo });
   }else{
     if (id_estudiantes.length !== 0) {
+      const estudianteIds = id_estudiantes.map(estudiante => estudiante._id);
       const anteproyectos = await Anteproyecto
-        .find({ estudiante: id_estudiantes[0]._id })
+        .find({ estudiante: { $in: estudianteIds }})
         .find({ estado: 'Rechazado' })
         .find({ semestre: semestreActivo._id })
         .populate('estudiante')
@@ -156,9 +159,7 @@ const renderOneRechazado = async (req, res) => {
       const anteproyectos = []
       res.render('admin/showRechazados', { anteproyectos, semestreActivo });
     }
-  
   }
-  
 }
 
 
