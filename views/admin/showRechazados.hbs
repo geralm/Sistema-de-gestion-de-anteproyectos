@@ -7,7 +7,7 @@
     </div>
 
     <div class="row mb-2">
-        <form action="/admin/anteproyectos/find" method="POST">
+        <form action="/admin/rechazados/find" method="POST">
             <div class="row">
                 <label class="form-label" for="exampleInputEmail1">Buscar estudiante:</label>
             </div>
@@ -50,6 +50,7 @@
             <tbody class="table-group-divider valign-middle">
                 {{#if anteproyectos}}
                 {{#each anteproyectos}}
+        
                 {{#ifEquals this.estado "Rechazado"}}
                 <tr>
                     <td>
