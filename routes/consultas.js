@@ -22,8 +22,11 @@ router.route('/profesorXempresa/downloadExcel')
 router.route('/consultaGeneral')
     .get(isLoggedIn, isAdmin, catchAsync(consulta.consultaGeneral));
 
- router.route('/estudiantesXnotas')
+router.route('/estudiantesXnotas')
     .get(isLoggedIn, isAdmin, catchAsync(consulta.estudiantesXnota));
+
+router.route('/estudiantesXnotas/downloadExcel')
+    .post(isLoggedIn, isAdmin, catchAsync(consulta.notas_Excel));
 
 router.route('/consultaGeneral/downloadExcel')
     .post(isLoggedIn, isAdmin, catchAsync(consulta.consultaGeneral_Excel));

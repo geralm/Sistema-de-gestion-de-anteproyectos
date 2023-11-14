@@ -95,10 +95,11 @@
             <br>
             <br>
 
-            <form method="POST" id="getForm" action="/consultas/estudianteXempresa/downloadExcel">
+            <form method="POST" id="getForm" action="/consultas/estudiantesXnotas/downloadExcel">
                 <input type="hidden" id="semestre" name="semestre" value="{{Semestre}}" />
                 <input type="hidden" id="anho" name="anho" value="{{Anho}}" />
                 <input type="hidden" id="nombreEmpresa" name="nombreEmpresa" value="{{NombreEmpresa}}" />
+                <input type="hidden" id="filtroNotas" name="filtroNotas" value="{{filtroNotas}}" />
 
                 <button type="submit" class="btn btn-primary w-100">Descargar Excel</button>
             </form>

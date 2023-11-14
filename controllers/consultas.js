@@ -135,11 +135,9 @@ const estudiantesXnota = async (req, res) => {
         //CONSULTA GENERAL
         const datos = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre);
         const data = await filtrarNotas(datos, filtroNotas);
-        console.log("========================")
-        console.log(data)
 
         //SELECIONAR SEGUN FILTRO
-        res.render('queries/estudiantesxnota', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa })
+        res.render('queries/estudiantesxnota', { data: data, Semestre: semestre, Anho: anho, NombreEmpresa: nombreEmpresa, filtroNotas:filtroNotas })
 
     } catch (error) {
         console.log(error);
@@ -160,6 +158,90 @@ async function filtrarNotas(datos, filtro) {
     });
 }
 
+async function exportarResultadosAExcel_notas(resultados) {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Notas');
+
+    // Definir las cabeceras de las columnas en el archivo Excel
+    worksheet.columns = [
+        { header: 'Semestre', key: 'semestre' },
+        { header: 'Carnet', key: 'carnet' },
+        { header: 'Estudiante', key: 'estudiante' },
+        { header: 'Correo', key: 'correo' },
+        { header: 'Numero', key: 'numero' },
+        { header: 'Empresa', key: 'empresa' },
+
+        { header: 'empresa1', key: 'empresa1' },
+        { header: 'informe1', key: 'informe1' },
+        { header: 'empresa2', key: 'empresa2' },
+        { header: 'informe2', key: 'informe2' },
+        { header: 'empresa3', key: 'empresa3' },
+        { header: 'informe3', key: 'informe3' },
+        { header: 'presentacion', key: 'presentacion' },
+        { header: 'coordinacion', key: 'coordinacion' },
+        { header: 'final', key: 'final' },
+        { header: 'actas', key: 'actas' },
+    ];
+
+    // Agregar fila de datos
+    resultados.forEach((resultado) => {
+        const semestreName = resultado.info_semestre.period + "-" + resultado.info_semestre.year
+
+        worksheet.addRow({
+            semestre: semestreName,
+            carnet: resultado.info_estudiante.carnet,
+            estudiante: resultado.info_estudiante.nombre,
+            correo: resultado.info_estudiante.correo,
+            numero: resultado.info_estudiante.telefono,
+            empresa: resultado.nombreEmpresa,
+
+            empresa1: resultado.empresa1,
+            informe1: resultado.informe1,
+            empresa2: resultado.empresa2,
+            informe2: resultado.informe2,
+            empresa3: resultado.empresa3,
+            informe3: resultado.informe3,
+            presentacion: resultado.presentacion,
+            coordinacion: resultado.coordinacion,
+            final: resultado.final,
+            actas: resultado.actas,
+
+        });
+    });
+    const largo = resultados.length;
+    worksheet.addRow({
+        semestre: 'Cantidad Total',
+        carnet: largo,
+    })
+
+    return workbook
+}
+
+const notas_Excel = async (req, res) => {
+    const semestre = req.body.semestre;
+    const anho = parseInt(req.body.anho);
+    const nombreEmpresa = req.body.nombreEmpresa;
+    const filtroNotas = req.query.filtroNotas;
+
+    const datos = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
+    const data = await filtrarNotas(datos, filtroNotas);
+
+
+    const workbook = await exportarResultadosAExcel_notas(data)
+    // res is a Stream object
+    res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=" + "Notas.xlsx"
+    );
+
+    return workbook.xlsx.write(res).then(function () {
+        res.status(200).end();
+    });
+}
 
 //CONSULTA GENERAL-----------------------------------------------------
 const consultaGeneral = async (req, res) => {
@@ -180,7 +262,7 @@ const consultaGeneral = async (req, res) => {
     }
 }
 
-async function exportarResultadosAExcel_general(resultados ) {
+async function exportarResultadosAExcel_general(resultados) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Información General');
 
@@ -209,7 +291,7 @@ async function exportarResultadosAExcel_general(resultados ) {
         { header: 'Puesto', key: 'puestoSupervisor' },
         { header: 'Correo Supervisor', key: 'correoSupervisor' },
 
-        { header: 'Profesor', key: 'profesor'}
+        { header: 'Profesor', key: 'profesor' }
     ];
 
     // Agregar fila de datos
@@ -261,7 +343,7 @@ const consultaGeneral_Excel = async (req, res) => {
     const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
     //ORDENAR AQUI
     console.log(data)
-    
+
 
     const workbook = await exportarResultadosAExcel_general(data)
     // res is a Stream object
@@ -349,9 +431,9 @@ const profesoresXempresa_Excel = async (req, res) => {
     const anho = parseInt(req.body.anho);
     const nombreEmpresa = req.body.nombreEmpresa;
     const cantTotal = req.body.cantTotal;
-    let  semestreConsultado = semestre + "-" + anho
-    if (isNaN(anho)){
-        semestreConsultado = semestre + "-" 
+    let semestreConsultado = semestre + "-" + anho
+    if (isNaN(anho)) {
+        semestreConsultado = semestre + "-"
     }
 
     try {
@@ -361,7 +443,7 @@ const profesoresXempresa_Excel = async (req, res) => {
         const data = await formatoProfes(datos)
         console.log(data)
 
-        const workbook = await exportarResultadosAExcel_profesor(data, cantTotal,semestreConsultado)
+        const workbook = await exportarResultadosAExcel_profesor(data, cantTotal, semestreConsultado)
         // res is a Stream object
         res.setHeader(
             "Content-Type",
@@ -388,18 +470,18 @@ const estudiantesXempresa_Excel = async (req, res) => {
     const anho = parseInt(req.body.anho);
     const nombreEmpresa = req.body.nombreEmpresa;
 
-    let  semestreConsultado = semestre + "-" + anho
-    if (isNaN(anho)){
-        semestreConsultado = semestre + "-" 
+    let semestreConsultado = semestre + "-" + anho
+    if (isNaN(anho)) {
+        semestreConsultado = semestre + "-"
     }
-   
+
     const data = await obtenerInformacionEstudiantesPorEmpresa(nombreEmpresa, anho, semestre)
     console.log(data)
 
     const informacionExtra = await formatoEstudiantes(data)
     console.log(informacionExtra)
 
-    const workbook = await exportarResultadosAExcel_estudiantes(data,informacionExtra, semestreConsultado)
+    const workbook = await exportarResultadosAExcel_estudiantes(data, informacionExtra, semestreConsultado)
     // res is a Stream object
     res.setHeader(
         "Content-Type",
@@ -581,7 +663,7 @@ async function exportarResultadosAExcel_estudiantes(resultados, informacionExtra
         carnet: largo,
     })
 
-    
+
 
     return workbook
     /*
@@ -678,4 +760,5 @@ module.exports = {
     consultaGeneral,
     consultaGeneral_Excel,
     estudiantesXnota,
+    notas_Excel
 }
