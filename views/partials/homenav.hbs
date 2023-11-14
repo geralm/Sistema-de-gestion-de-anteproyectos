@@ -54,6 +54,9 @@
                 <ul class="navbar-nav ml-auto"> <!-- Utiliza 'ml-auto' para alinear los elementos a la derecha -->
                     {{#iflogged user}}
                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/account">Cuenta</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/logout">Logout</a>
                     </li>
                     {{else}}

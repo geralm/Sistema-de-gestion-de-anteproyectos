@@ -20,4 +20,8 @@ router.get('/forgot-password', user.renderForgotPassword);
 router.post('/forgot-password',registeredCarnet, user.sendRestorationCode);
 router.get('/restore-password', user.renderRestorePassword);
 router.post('/restore-password',registeredCarnet, user.restorePassword);
+
+//MI CUENTA
+router.get('/account', isLoggedIn, user.renderAccount);
+
 module.exports = router
