@@ -10,9 +10,9 @@
                 <ul class="navbar-nav"> <!-- Elementos que estarán en la izquierda -->
                     <li class="nav-item inicio-link">
                         {{#iflogged user}}
-                            <a class="nav-link active" aria-current="page" href="/user">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="/user">Inicio</a>
                         {{else}}
-                            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                         {{/iflogged}}
 
                     </li>
@@ -29,19 +29,27 @@
                         </ul>
                     </li>
                     {{#ifEquals user.esAdmin true}}
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/admin/anteproyectos">Anteproyectos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/admin/proyectos">Proyectos aprobados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/consultas/pag_consultas">Consultas</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/admin/anteproyectos">Anteproyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/admin/proyectos">Proyectos aprobados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/admin/rechazados">Proyectos Rechazados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/consultas/pag_consultas">Consultas</a>
+                    </li>
                     {{/ifEquals}}
+
+                    {{#ifEquals user.esAdmin false}}
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/student/upload">Subir anteproyecto</a>
                     </li>
+                    {{/ifEquals}}
+
+
                 </ul>
                 <ul class="navbar-nav ml-auto"> <!-- Utiliza 'ml-auto' para alinear los elementos a la derecha -->
                     {{#iflogged user}}
@@ -50,7 +58,8 @@
                     </li>
                     {{else}}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-sm btn-outline-primary" aria-current="page" href="/signin">Ingresar</a>
+                        <a class="nav-link btn btn-sm btn-outline-primary" aria-current="page"
+                            href="/signin">Ingresar</a>
                     </li>
                     {{/iflogged}}
                 </ul>

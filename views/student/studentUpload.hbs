@@ -398,8 +398,12 @@
                                 </div>
                             </div>
                             <div class="row">
-
+                                {{#ifEquals semestre null}}
+                                <button type="submit" class="btn btn-primary btn-lg mb-4" disabled>Enviar</button>
+                                {{else}}
                                 <button type="submit" class="btn btn-primary btn-lg mb-4">Enviar</button>
+                                {{/ifEquals}}
+                                
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,198 @@
+<div class="container ">
+
+
+
+    <div class="row mb-2">
+        <h1>Anteproyectos Rechazados</h1>
+    </div>
+
+    <div class="row mb-2">
+        <form action="/admin/anteproyectos/find" method="POST">
+            <div class="row">
+                <label class="form-label" for="exampleInputEmail1">Buscar estudiante:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" id="nombreEstudiante" name="nombreEstudiante">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary w-100">Buscar</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="row mb-2">
+        <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+        <table class="table table-hover text-center mb-5 ">
+            <thead>
+                <tr>
+                    <th scope="col">Estudiante
+                        <img src="/images/avatar.png" class="img-fluid" alt="Responsive image">
+
+                    </th>
+                    <th scope="col">Empresa
+                        <img src="/images/empresa.png" class="img-fluid" alt="Responsive image">
+                    </th>
+                    <th scope="col">Información del proyecto
+                        <img src="/images/google-docs.png" class="img-fluid" alt="Responsive image">
+
+                    </th>
+                    <th scope="col">Estado del proyecto
+                        <img src="/images/estado.png" class="img-fluid" alt="Responsive image">
+
+                    </th>
+                    <th scope="col">Revisión
+                        <img src="/images/revisar.png" class="img-fluid" alt="Responsive image">
+                    </th>
+                </tr>
+            <tbody class="table-group-divider valign-middle">
+                {{#if anteproyectos}}
+                {{#each anteproyectos}}
+                {{#ifEquals this.estado "Rechazado"}}
+                <tr>
+                    <td>
+                        <p>{{this.estudiante.nombre}} <br>
+                            <a class="btn" data-bs-toggle="collapse" data-bs-target=".multi-collapse{{this._id}}"
+                                role="button" aria-expanded="false"
+                                aria-controls="multiCollapseExample1{{this._id}} multiCollapseExample2{{this._id}}">
+                                Ver más ...
+                            </a>
+                        <div class="collapse multi-collapse{{this._id}}" id="multiCollapseExample1{{this._id}}">
+
+                            <p><small>Carnet: {{this.estudiante.carnet}}</small></p>
+                            <p><small>Email: {{this.estudiante.correo}}</small></p>
+                            <p><small>Phone: {{this.estudiante.telefono}}</small></p>
+                            {{#if this.cursos}}
+                            <p><small>Cursos que llevará: </small></p>
+                            {{#each this.cursos}}
+                            <p></small>{{this}}</small></p>
+                            {{/each}}
+                            {{else}}
+                            <p><small><strong>No llevará cursos este periodo</strong></small></p>
+                            {{/if}}
+
+
+                        </div>
+                        </p>
+                    </td>
+                    <td>{{this.nombreEmpresa}}</td>
+                    <td>
+                        <p> {{this.titulo}} <br>
+                            <a class="btn" data-bs-toggle="collapse" data-bs-target=".multi-collapse{{this._id}}"
+                                role="button" aria-expanded="false"
+                                aria-controls="multiCollapseExample1{{this._id}} multiCollapseExample2{{this._id}}">
+                                Ver más ...
+                            </a>
+                            {{!-- data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false"
+                            aria-controls="multiCollapseExample1 multiCollapseExample2"> --}}
+                        </p>
+                        <div class="collapse multi-collapse{{this._id}}" id="multiCollapseExample1{{this._id}}">
+                            <div class="card card-body">
+                                {{#ifEquals this.isConfidencial true}}
+                                <p>Confidencial: Si</p>
+                                {{else}}
+                                <p>Confidencial: No</p>
+                                {{/ifEquals}}
+                                <p>Fecha de inicio: {{this.fechaInicio}}</p>
+                                <p>Fecha final: {{this.fechaFinal}}</p>
+                                
+
+                                <form action="/admin/anteproyectos/{{this._id}}/download" method="get">
+                                    <button type="submit" class="btn btn-primary w-100">Descargar documento</button>
+                                </form>
+                            </div>
+                        </div>
+                        {{!-- {{this.informacionProyecto}} --}}
+                    </td>
+                    <td class="{{this.estado}}">{{this.estado}}</td>
+                    <td>
+                        <form action="/admin/anteproyectos/{{this._id}}/revisar" method="GET">
+                            <button type="submit" class="btn btn-primary w-100">Reevaluar</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/ifEquals}}
+                {{/each}}
+                {{else}}
+                <h3>No hay anteproyectos que mostrar para este semestre</h3>
+                {{/if}}
+            </tbody>
+            </thead>
+
+        </table>
+
+    </div>
+    {{!--
+    <div class="row mb-2">
+        <div class="col">
+            <h3>Estudiante</h3>
+            <img src="/images/avatar.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col">
+            <h3>Empresa</h3>
+            <img src="/images/empresa.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col">
+            <h3>Estado anteproyecto</h3>
+            <img src="/images/estado.png" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col">
+            <h3>Revisiones</h3>
+            <img src="/images/revisar.png" class="img-fluid" alt="Responsive image">
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        {{#if anteproyectos}}
+        {{#each anteproyectos}}
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="info">
+                            {{nombreEstudiante}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="info">
+                            {{nombreEmpresa}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="info">
+                            {{estado}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary w-100">Revisar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+
+
+    <div class="row mb-5"></div>
+    <div class="row mb-5"></div> --}}
+
+</div>

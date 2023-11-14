@@ -5,10 +5,16 @@ const { Types } = require('mongoose');
 const User = require('../models/user');
 const fs = require('fs');
 const mail = require('../service/mail')
+
+
 const renderAnteproyectos = async (req, res) => {
   const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
   res.render('admin/showAnteproyectos', { anteproyectos })
+}
 
+const renderRechazados = async (req, res) => {
+  const anteproyectos = await Anteproyecto.find({}).populate('estudiante').lean();
+  res.render('admin/showRechazados', { anteproyectos })
 }
 
 const renderProyectos = async (req, res) => {
@@ -69,19 +75,36 @@ const calificarProyecto = async (req, res) => {
 }
 
 const renderOne = async (req, res) => {
-    const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
+  const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
+  console.log(id_estudiantes)
+  if (id_estudiantes.length !== 0) {
     const anteproyectos = await Anteproyecto.find({ estudiante: id_estudiantes[0]._id }).populate('estudiante').lean();
     res.render('admin/showAnteproyectos', { anteproyectos })
+    // Resto del código con la consulta ya validada
+  } else {
+    // Manejar la situación en la que id_estudiantes[0]._id es undefined
+    const anteproyectos = [];
+    res.render('admin/showAnteproyectos', { anteproyectos })
+  }
+
+
 }
 
 const renderOneProyecto = async (req, res) => {
   const id_estudiantes = await User.find({ nombre: { $regex: req.body.nombreEstudiante, $options: 'i' } }).lean()
-  const proyectos = await Anteproyecto
-      .find({estado:'Aprobado'})
+  if (id_estudiantes.length !== 0) {
+    const proyectos = await Anteproyecto
+      .find({ estado: 'Aprobado' })
       .find({ estudiante: id_estudiantes[0]._id })
       .populate('estudiante')
       .lean();
-  res.render('admin/showProyectos', { proyectos });
+    res.render('admin/showProyectos', { proyectos });
+  }
+  else {
+    const proyectos = []
+    res.render('admin/showProyectos', { proyectos });
+  }
+
 }
 
 const showPdf = async (req, res) => {
@@ -151,7 +174,7 @@ const actualizarRevision = async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: 'Internal server error' });
     }
-  }else{
+  } else {
     //modificar estado en db
     //acordarnos que los aprobados no salgan en lista de anteproyectos
     console.log(req.body.id_proyecto)
@@ -179,6 +202,7 @@ const actualizarRevision = async (req, res) => {
 
 
 module.exports = {
-    renderAnteproyectos, renderOne, showPdf, renderProyectos, renderAsignarProfesor,
-    asignarProfesor, actualizarRevision, revisar,renderOneProyecto,renderCalificarProyecto, calificarProyecto
+  renderAnteproyectos, renderOne, showPdf, renderProyectos, renderAsignarProfesor,
+  asignarProfesor, actualizarRevision, revisar, renderOneProyecto, renderCalificarProyecto, calificarProyecto,
+  renderRechazados
 }
