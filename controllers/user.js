@@ -102,6 +102,17 @@ module.exports.restorePassword = async (req, res) => {
     }
 }
 
+//MI CUENTA
+module.exports.renderAccount = async (req, res) => {
+
+    try {
+        res.render('users/miCuenta')
+
+    } catch (error) {
+        req.flash('error', error.message);
+        res.redirect('/');
+    }
+}
 
 
 

@@ -5,6 +5,7 @@
     <div class="row mb-2">
         <h1>Revisión de Anteproyectos</h1>
     </div>
+    {{#if semestreActivo}}
 
     <div class="row mb-2">
         <form action="/admin/anteproyectos/find" method="POST">
@@ -25,6 +26,7 @@
 
     <div class="row mb-2">
         <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+        
         <table class="table table-hover text-center mb-5 ">
             <thead>
                 <tr>
@@ -194,5 +196,8 @@
 
     <div class="row mb-5"></div>
     <div class="row mb-5"></div> --}}
+    {{else}}
+    <h3>No hay un semestre Activo</h3>
+    {{/if}}
 
 </div>

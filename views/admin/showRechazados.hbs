@@ -3,12 +3,12 @@
 
 
     <div class="row mb-2">
-        <h1>Listado de Proyectos</h1>
+        <h1>Anteproyectos Rechazados</h1>
     </div>
-
     {{#if semestreActivo}}
+    
     <div class="row mb-2">
-        <form action="/admin/proyectos/find" method="POST">
+        <form action="/admin/rechazados/find" method="POST">
             <div class="row">
                 <label class="form-label" for="exampleInputEmail1">Buscar estudiante:</label>
             </div>
@@ -25,7 +25,6 @@
     </div>
 
     <div class="row mb-2">
-        
         <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
         
         <table class="table table-hover text-center mb-5 ">
@@ -42,13 +41,20 @@
                         <img src="/images/google-docs.png" class="img-fluid" alt="Responsive image">
 
                     </th>
-                    <th scope="col">Asignar Profesor
+                    <th scope="col">Estado del proyecto
+                        <img src="/images/estado.png" class="img-fluid" alt="Responsive image">
+
+                    </th>
+                    <th scope="col">Revisión
                         <img src="/images/revisar.png" class="img-fluid" alt="Responsive image">
                     </th>
                 </tr>
+            </thead>
             <tbody class="table-group-divider valign-middle">
-                {{#if proyectos}}
-                {{#each proyectos}}
+                {{#if anteproyectos}}
+                {{#each anteproyectos}}
+
+                {{#ifEquals this.estado "Rechazado"}}
                 <tr>
                     <td>
                         <p>{{this.estudiante.nombre}} <br>
@@ -95,11 +101,6 @@
                                 {{/ifEquals}}
                                 <p>Fecha de inicio: {{this.fechaInicio}}</p>
                                 <p>Fecha final: {{this.fechaFinal}}</p>
-                                {{#ifEquals this.profesor.name null}}
-                                <p>No se le ha asignado profesor</p>
-                                {{else}}
-                                <p>Profesor asignado: {{this.profesor.name}}</p>
-                                {{/ifEquals}}
 
 
                                 <form action="/admin/anteproyectos/{{this._id}}/download" method="get">
@@ -109,32 +110,27 @@
                         </div>
                         {{!-- {{this.informacionProyecto}} --}}
                     </td>
+                    <td class="{{this.estado}}">{{this.estado}}</td>
                     <td>
-                        <form action="/admin/proyectos/{{this._id}}/asignarProfesor" method="get">
-                            <button type="submit" class="btn btn-primary w-100">Asignar</button>
+                        <form action="/admin/anteproyectos/{{this._id}}/revisar" method="GET">
+                            <button type="submit" class="btn btn-primary w-100">Reevaluar</button>
                         </form>
-                        {{#ifEquals this.profesor.name null}}
-                        <form>
-                            <button type="submit" class="btn btn-primary w-100" disabled>Requiere profesor para poder
-                                calificar</button>
-                        </form>
-                        {{else}}
-                        <form action="/admin/proyectos/{{this._id}}/calificarProyecto" method="get">
-                            <button type="submit" class="btn btn-primary w-100">Calificar</button>
-                        </form>
-                        {{/ifEquals}}
                     </td>
                 </tr>
+                {{/ifEquals}}
                 {{/each}}
                 {{else}}
-                <h3>No hay proyectos que mostrar para este semestre</h3>
+                <h3>No hay anteproyectos que mostrar para este semestre</h3>
                 {{/if}}
             </tbody>
-            </thead>
+            
 
         </table>
 
     </div>
+    {{else}}
+    <h3>No hay un semestre Activo</h3>
+    {{/if}}
     {{!--
     <div class="row mb-2">
         <div class="col">
@@ -205,7 +201,5 @@
 
     <div class="row mb-5"></div>
     <div class="row mb-5"></div> --}}
-    {{else}}
-    <h3>No hay un semestre Activo</h3>
-    {{/if}}
+
 </div>

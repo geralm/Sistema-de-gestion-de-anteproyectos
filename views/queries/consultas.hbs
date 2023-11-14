@@ -35,7 +35,6 @@
                 <option value="">Sin Filtro por semestre </option>
                 <option value="I">I</option>
                 <option value="II">II</option>
-                <!-- Agrega aquí los períodos que tengas -->
             </select>
 
             <br><br>
@@ -53,9 +52,28 @@
                         formaction="/consultas/profesoresXempresa">Profesores por Empresa</button>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary w-100" formaction="">Consulta General</button>
+                    <button type="submit" class="btn btn-primary w-100" formaction="/consultas/consultaGeneral">Consulta
+                        General</button>
                 </div>
             </div>
+
+            <br><br>
+            <h6>Filtrar por notas:</h6>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <select id="filtroNotas" name="filtroNotas">
+                        <option value="">Todos </option>
+                        <option value="Aprobados">Aprobados</option>
+                        <option value="Reprobados">Reprobados</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100" formaction="/consultas/estudiantesXnotas">Estudiantes por Notas</button>
+                </div>
+            </div>
+
+
         </form>
         {{/ifEquals}}
 

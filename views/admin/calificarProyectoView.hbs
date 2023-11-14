@@ -1,0 +1,210 @@
+<div class="container ">
+
+
+
+    <div class="row mb-2">
+        <h1>Calificar proyecto</h1>
+    </div>
+    {{#if proyecto}}
+
+    <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+    <table class="table table-hover text-center mb-5 ">
+        <thead>
+            <tr>
+                <th scope="col">Estudiante
+                    <img src="/images/avatar.png" class="img-fluid" alt="Responsive image">
+
+                </th>
+                <th scope="col">Empresa
+                    <img src="/images/empresa.png" class="img-fluid" alt="Responsive image">
+                </th>
+                <th scope="col">Información del proyecto
+                    <img src="/images/google-docs.png" class="img-fluid" alt="Responsive image">
+
+                </th>
+            </tr>
+        <tbody class="table-group-divider valign-middle">
+
+            <tr>
+                <td>
+                    <p>{{estudiante.nombre}} <br>
+
+
+
+                    <p><small>Carnet: {{estudiante.carnet}}</small></p>
+                    <p><small>Email: {{estudiante.correo}}</small></p>
+                    <p><small>Phone: {{estudiante.telefono}}</small></p>
+                    {{#if proyecto.cursos}}
+                    <p><small>Cursos que llevará: </small></p>
+                    {{#each proyecto.cursos}}
+                    <p></small>{{this}}</small></p>
+                    {{/each}}
+                    {{else}}
+                    <p><small><strong>No llevará cursos este periodo</strong></small></p>
+                    {{/if}}
+
+
+
+                    </p>
+                </td>
+                <td>{{proyecto.nombreEmpresa}}</td>
+                <td>
+                    <p> {{proyecto.titulo}} <br>
+                        {{!-- data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false"
+                        aria-controls="multiCollapseExample1 multiCollapseExample2"> --}}
+                    </p>
+
+                    <div class="card card-body">
+                        {{#ifEquals proyecto.isConfidencial true}}
+                        <p>Confidencial: Si</p>
+                        {{else}}
+                        <p>Confidencial: No</p>
+                        {{/ifEquals}}
+                        <p>Fecha de inicio: {{proyecto.fechaInicio}}</p>
+                        <p>Fecha final: {{proyecto.fechaFinal}}</p>
+                        {{#ifEquals profesorAsignado.name null}}
+                        <p>No se le ha asignado profesor</p>
+                        {{else}}
+                        <p>Profesor asignado: {{profesorAsignado.name}}</p>
+                        {{/ifEquals}}
+                    </div>
+
+                    {{!-- {{proyecto.informacionProyecto}} --}}
+                </td>
+            </tr>
+
+        </tbody>
+        </thead>
+
+
+
+    </table>
+
+    <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+    <form action="/admin/proyectos/calificarProyecto" method="POST">
+        <table class="table table-hover text-center mb-5 ">
+            <thead>
+                <tr>
+                    <th scope="col">Rubro
+
+                    </th>
+                    <th scope="col">Nota
+                    </th>
+                </tr>
+            <tbody class="table-group-divider valign-middle">
+                <tr>
+                    <td>
+                        Empresa 1:
+                    </td>
+                    <td>
+                        <input type="number" value="{{#if proyecto.empresa1}}{{proyecto.empresa1}}{{else}}0{{/if}}"
+                            name="proyecto[empresa1]" max="100" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Informe 1:
+                    </td>
+                    <td>
+                        <input type="number" value="{{#if proyecto.informe1}}{{proyecto.informe1}}{{else}}0{{/if}}"
+                            name="proyecto[informe1]" max="100" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Empresa 2:
+                    </td>
+                    <td>
+                        <input type="number" value="{{#if proyecto.empresa2}}{{proyecto.empresa2}}{{else}}0{{/if}}"
+                            name="proyecto[empresa2]" max="100" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Informe 2:
+                    </td>
+                    <td>
+                        <input type="number" value="{{#if proyecto.informe2}}{{proyecto.informe2}}{{else}}0{{/if}}"
+                            name="proyecto[informe2]" max="100" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Empresa 3:
+                    </td>
+                    <td>
+                        <input type="number" value="{{#if proyecto.empresa3}}{{proyecto.empresa3}}{{else}}0{{/if}}"
+                            name="proyecto[empresa3]" max="100" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Informe 3:
+                    </td>
+                    <td>
+                        <input type="number" value="{{#if proyecto.informe3}}{{proyecto.informe3}}{{else}}0{{/if}}"
+                            name="proyecto[informe3]" max="100" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Presentación:
+                    </td>
+                    <td>
+                        <input type="number"
+                            value="{{#if proyecto.presentacion}}{{proyecto.presentacion}}{{else}}0{{/if}}"
+                            name="proyecto[presentacion]" max="100" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Coordinación:
+                    </td>
+                    <td>
+                        <input type="number"
+                            value="{{#if proyecto.coordinacion}}{{proyecto.coordinacion}}{{else}}0{{/if}}"
+                            name="proyecto[coordinacion]" max="100" min="0" step="any">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Final:
+                    </td>
+                    <td>
+                        <h5>{{#if proyecto.final}}{{proyecto.final}}{{else}}0{{/if}}</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Actas:
+                    </td>
+                    <td>
+                        <h5>{{#if proyecto.actas}}{{proyecto.actas}}{{else}}0{{/if}}</h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-block">Actualizar notas</button>
+                    </td>
+                </tr>
+                <input value="{{proyecto._id}}" name="idProyecto" hidden>
+
+
+            </tbody>
+            </thead>
+
+
+
+        </table>
+    </form>
+
+    {{else}}
+    <h3>No hay anteproyectos que mostrar para este semestre</h3>
+    {{/if}}
+
+
+
+
+</div>
