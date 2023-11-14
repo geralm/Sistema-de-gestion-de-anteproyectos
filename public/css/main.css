@@ -68,3 +68,8 @@ select option {
     background-color: white; /* Fondo blanco */
     color: rgba(0, 6, 38, 1); /* Texto oscuro */
 }
+
+.highlight {
+    background-color: lightblue; /* Color de fondo resaltado */
+    padding: 5px; /* Agregar algo de espacio alrededor del elemento */
+}

@@ -151,6 +151,25 @@ const actualizarRevision = async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: 'Internal server error' });
     }
+  }else{
+    //modificar estado en db
+    //acordarnos que los aprobados no salgan en lista de anteproyectos
+    console.log(req.body.id_proyecto)
+    try {
+      const updatedDocument = await Anteproyecto.findOneAndUpdate(
+        { _id: req.body.id_proyecto }, // Filter for the document you want to update
+        { estado: "Rechazado" }, // The field and value to update
+        { new: true } // Return the updated document
+      );
+
+      if (updatedDocument) {
+        console.log("updated doc... yay")
+      } else {
+        res.status(404).json({ error: 'Document not found' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
   mail.sendMail(req.body.correoEstudiante, "test", "test")
   res.redirect('/user');
