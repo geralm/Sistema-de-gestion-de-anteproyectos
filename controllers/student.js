@@ -1,5 +1,5 @@
 
-const Proyecto = require('../models/proyecto');
+const Anteproyecto = require('../models/proyecto');
 let pdfUploaded = false
 const User = require('../models/user');
 const semester = require('../models/semestre');
@@ -13,22 +13,36 @@ const renderStudentUpload =  async(req,res)=>{
 
 const subirProyecto = async (req,res)=>{
 
-    /*
-    usar esto solo para el rendering de los anteproyectos tipo
-    proyecto.estudiante.nombreEstudiante
+    const proyecto = await Anteproyecto.find({ estudiante: req.user._id }).populate('estudiante').lean();
+    //Si anteproyecto ya exite, lo sobreescribimos
+    if(proyecto){
+        //Si es un anteproyecto aprobado, ya no puede sobreescribirse
+        if(proyecto[0].estado == "Aprobado"){
+            res.redirect('/user')
+            return
+        }
+        const newProyecto  = req.body.proyecto;
+        const fileBuffer = req.file.buffer;
+        newProyecto.estado = "Revision"
+        newProyecto.documento = fileBuffer
 
-    nombreEstudiante = req.user.nombre
-    mailEstudiante = req.user.correo
-    telefonoEstudiante = req.user.telefono
-    */
-    const newProyecto  = req.body.proyecto;
-    const fileBuffer = req.file.buffer;
-    newProyecto.estado = "Revision"
-    newProyecto.documento = fileBuffer
-    newProyecto.estudiante = req.user._id
-    const proyecto = new Proyecto(newProyecto)
-    await proyecto.save()
-    console.log(proyecto)
+        const update = newProyecto;
+        let updated = await Anteproyecto.findByIdAndUpdate(proyecto[0]._id , update)
+        // `updated` is the document _before_ `update` was applied
+    }
+    //Si anteproyecto no existe, subimos uno nuevo
+    else{
+        const newProyecto  = req.body.proyecto;
+        const fileBuffer = req.file.buffer;
+        newProyecto.estado = "Revision"
+        newProyecto.documento = fileBuffer
+        newProyecto.estudiante = req.user._id
+        const proyecto = new Proyecto(newProyecto)
+        await proyecto.save()
+    }
+    //const newProyecto  = req.body.proyecto;
+    //console.log(newProyecto)
+    
     res.redirect('/user')
   
 }
