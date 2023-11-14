@@ -24,4 +24,5 @@ router.post('/restore-password',registeredCarnet, user.restorePassword);
 //MI CUENTA
 router.get('/account', isLoggedIn, user.renderAccount);
 
+
 module.exports = router
