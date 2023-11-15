@@ -119,7 +119,7 @@ const renderOneProyecto = async (req, res) => {
       const estudianteIds = id_estudiantes.map(estudiante => estudiante._id);
       const proyectos = await Anteproyecto
         .find({ estado: 'Aprobado' })
-        .find({ estudiante: { $in: estudianteIds }})
+        .find({ estudiante: { $in: estudianteIds } })
         .find({ semestre: semestreActivo._id })
         .populate('estudiante')
         .lean();
@@ -139,16 +139,16 @@ const renderOneRechazado = async (req, res) => {
   const nombreEstudiante = req.body.nombreEstudiante
   if (!nombreEstudiante) {
     const anteproyectos = await Anteproyecto
-        .find({ estado: 'Rechazado' })
-        .find({ semestre: semestreActivo._id })
-        .populate('estudiante')
-        .lean();
-      res.render('admin/showRechazados', { anteproyectos, semestreActivo });
-  }else{
+      .find({ estado: 'Rechazado' })
+      .find({ semestre: semestreActivo._id })
+      .populate('estudiante')
+      .lean();
+    res.render('admin/showRechazados', { anteproyectos, semestreActivo });
+  } else {
     if (id_estudiantes.length !== 0) {
       const estudianteIds = id_estudiantes.map(estudiante => estudiante._id);
       const anteproyectos = await Anteproyecto
-        .find({ estudiante: { $in: estudianteIds }})
+        .find({ estudiante: { $in: estudianteIds } })
         .find({ estado: 'Rechazado' })
         .find({ semestre: semestreActivo._id })
         .populate('estudiante')
@@ -201,13 +201,41 @@ function estadoRevision(body) {
   }
 }
 
+//FORMAR OBSERVACIONES
+async function formarObservaciones(infoProyecto) {
+  let parrafo = '';
+
+  // Función auxiliar para formatear el estado y observaciones de cada sección
+  function formatearSeccion(nombreSeccion, seccion) {
+    const estado = seccion.estado || '-';
+    const observaciones = seccion.observaciones || '-';
+    return `El estado de ${nombreSeccion} del proyecto es: ${estado}, con las siguientes observaciones: ${observaciones}`;
+  }
+
+  // Recorrer el objeto y construir el párrafo
+  Object.keys(infoProyecto).forEach((key) => {
+    if (key.includes('.estado')) {
+      const nombreSeccion = key.replace('.estado', '');
+      const seccion = {
+        estado: infoProyecto[key],
+        observaciones: infoProyecto[`${nombreSeccion}.observaciones`]
+      };
+      parrafo += formatearSeccion(nombreSeccion, seccion) + '\n';
+    }
+  });
+
+  return parrafo.trim(); // Eliminar espacios en blanco al final
+
+}
+
 //Funciones 
 //1) manda el mail
 //2) actualiza estado de anteproyecto en DB (de ser aprobado)
 const actualizarRevision = async (req, res) => {
-
+  const observaciones = await formarObservaciones(req.body)
+  console.log(observaciones)
   //console.log("\nInfo recibida:")
-  //console.log(req.body)
+  console.log(req.body)
   estadoProyecto = estadoRevision(req.body)
 
   //si fue aprobado
@@ -223,6 +251,21 @@ const actualizarRevision = async (req, res) => {
       );
 
       if (updatedDocument) {
+        const userId = updatedDocument.estudiante;
+
+        // Paso 2: Actualizar las observaciones del usuario
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: userId },
+          { observaciones: observaciones + "\n Estado: Aprobado" }, // Actualiza con el valor deseado
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log('Observaciones del usuario actualizadas con éxito');
+        } else {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
         console.log("updated doc... yay")
       } else {
         res.status(404).json({ error: 'Document not found' });
@@ -242,6 +285,21 @@ const actualizarRevision = async (req, res) => {
       );
 
       if (updatedDocument) {
+        const userId = updatedDocument.estudiante;
+
+        // Paso 2: Actualizar las observaciones del usuario
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: userId },
+          { observaciones: observaciones + "\n Estado: Rechazado" }, // Actualiza con el valor deseado
+          { new: true }
+        );
+
+        if (updatedUser) {
+          console.log('Observaciones del usuario actualizadas con éxito');
+        } else {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
         console.log("updated doc... yay")
       } else {
         res.status(404).json({ error: 'Document not found' });

@@ -41,8 +41,13 @@ const newUserSchema = new Schema({
         required: true,
         default: false,
         unique: false,
+    },
+    observaciones: {
+        type: String,
+        required: true,
+        unique: true,
+        default: "Sin Observaciones"
     }
-
 });
 
 
