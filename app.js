@@ -127,5 +127,11 @@ handlebars.registerHelper('ifflash', function(arg1, options) {
     }
 })
 
+// Registro de una función auxiliar en Handlebars
+handlebars.registerHelper('formatObservations', function (text) {
+  if (!text) return text;
+  return new handlebars.SafeString(text.replace(/\n/g, '<br>'));
+});
+
 
 

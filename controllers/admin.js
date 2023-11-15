@@ -309,7 +309,7 @@ const actualizarRevision = async (req, res) => {
     }
   }
   mail.sendMail(req.body.correoEstudiante, "test", "test")
-  res.redirect('/user');
+  return res.redirect('/user');
 }
 
 
