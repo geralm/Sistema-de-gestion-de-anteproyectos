@@ -4,7 +4,7 @@ const events = require('../models/events');
 const semester = require('../models/semestre');
 const { mapManyEvents, toDateString } = require('../utils/events');
 const mail = require('../service/mail');
-const passwordRestoration  = require('../utils/passwordRestoration');
+const passwordRestoration = require('../utils/passwordRestoration');
 module.exports.renderLogin = (req, res) => {
     res.render('users/login');
 }
@@ -19,10 +19,10 @@ module.exports.renderUserHome = async (req, res) => {
     if (req.user.esAdmin === true) {
         //Get count anteproyectos in revision state
         const projectsCount = (await project.find({ estado: 'Revision' })).length;
-        return res.render('admin/adminHome', { projectsCount, semestre, eventos: mapManyEvents(eventos, toDateString)});
+        return res.render('admin/adminHome', { projectsCount, semestre, eventos: mapManyEvents(eventos, toDateString) });
     }
-    const anteproyecto  = await project.findOne({ estudiante: req.user._id }).lean();
-    res.render('student/studentHome', { anteproyecto ,eventos: mapManyEvents(eventos, toDateString) ,user: req.user });
+    const anteproyecto = await project.findOne({ estudiante: req.user._id }).lean();
+    res.render('student/studentHome', { anteproyecto, eventos: mapManyEvents(eventos, toDateString), user: req.user });
 }
 module.exports.login = (req, res) => {
     req.flash('success', '¡Bienvenido de nuevo!');
@@ -68,7 +68,7 @@ module.exports.renderForgotPassword = (req, res) => {
 }
 module.exports.sendRestorationCode = async (req, res) => {
     const carnet = req.body.user.carnet;
-    const user = await User.findOne({carnet: carnet});
+    const user = await User.findOne({ carnet: carnet });
     const email = user.correo;
     // Crear un nuevo documento TempCode en la base de datos
     try {
@@ -87,22 +87,31 @@ module.exports.renderRestorePassword = async (req, res) => {
 }
 
 module.exports.restorePassword = async (req, res) => {
-    const carnet =  req.body.user.carnet;
-    const user = await User.findOne({carnet: carnet});
-    const email = user.correo;  
+    const carnet = req.body.user.carnet;
+    const user = await User.findOne({ carnet: carnet });
+    const email = user.correo;
     const isCodeValid = await passwordRestoration.isValidCode(email, req.body.user.code);
-    if(isCodeValid){
+    if (isCodeValid) {
         user.contrasenia = await user.encryptPassword(req.body.user.contrasenia);
         await user.save();
         req.flash('success', 'La contraseña se ha restaurado exitosamente');
         return res.redirect('/signin');
-    }else{
+    } else {
         req.flash('error', 'El código es inválido o ha expirado');
-        return res.redirect('/restore-password');        
+        return res.redirect('/restore-password');
     }
 }
 
+//MI CUENTA
+module.exports.renderAccount = async (req, res) => {
+    try {
+        res.render('users/miCuenta')
 
+    } catch (error) {
+        req.flash('error', error.message);
+        res.redirect('/');
+    }
+}
 
 
 

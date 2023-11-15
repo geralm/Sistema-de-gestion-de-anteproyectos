@@ -6,6 +6,7 @@
         <h1>Listado de Proyectos</h1>
     </div>
 
+    {{#if semestreActivo}}
     <div class="row mb-2">
         <form action="/admin/proyectos/find" method="POST">
             <div class="row">
@@ -24,7 +25,9 @@
     </div>
 
     <div class="row mb-2">
+        
         <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+        
         <table class="table table-hover text-center mb-5 ">
             <thead>
                 <tr>
@@ -97,7 +100,7 @@
                                 {{else}}
                                 <p>Profesor asignado: {{this.profesor.name}}</p>
                                 {{/ifEquals}}
-                                
+
 
                                 <form action="/admin/anteproyectos/{{this._id}}/download" method="get">
                                     <button type="submit" class="btn btn-primary w-100">Descargar documento</button>
@@ -111,13 +114,14 @@
                             <button type="submit" class="btn btn-primary w-100">Asignar</button>
                         </form>
                         {{#ifEquals this.profesor.name null}}
-                            <form>
-                                <button type="submit" class="btn btn-primary w-100" disabled>Requiere profesor para poder calificar</button>
-                            </form>
+                        <form>
+                            <button type="submit" class="btn btn-primary w-100" disabled>Requiere profesor para poder
+                                calificar</button>
+                        </form>
                         {{else}}
-                            <form action="/admin/proyectos/{{this._id}}/calificarProyecto" method="get">
-                                <button type="submit" class="btn btn-primary w-100">Calificar</button>
-                            </form>
+                        <form action="/admin/proyectos/{{this._id}}/calificarProyecto" method="get">
+                            <button type="submit" class="btn btn-primary w-100">Calificar</button>
+                        </form>
                         {{/ifEquals}}
                     </td>
                 </tr>
@@ -201,5 +205,7 @@
 
     <div class="row mb-5"></div>
     <div class="row mb-5"></div> --}}
-
+    {{else}}
+    <h3>No hay un semestre Activo</h3>
+    {{/if}}
 </div>

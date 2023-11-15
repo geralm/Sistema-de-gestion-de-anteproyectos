@@ -5,9 +5,10 @@
     <div class="row mb-2">
         <h1>Anteproyectos Rechazados</h1>
     </div>
-
+    {{#if semestreActivo}}
+    
     <div class="row mb-2">
-        <form action="/admin/anteproyectos/find" method="POST">
+        <form action="/admin/rechazados/find" method="POST">
             <div class="row">
                 <label class="form-label" for="exampleInputEmail1">Buscar estudiante:</label>
             </div>
@@ -25,6 +26,7 @@
 
     <div class="row mb-2">
         <link rel="stylesheet" type="text/css" href="/css/projectsTable.css">
+        
         <table class="table table-hover text-center mb-5 ">
             <thead>
                 <tr>
@@ -47,9 +49,11 @@
                         <img src="/images/revisar.png" class="img-fluid" alt="Responsive image">
                     </th>
                 </tr>
+            </thead>
             <tbody class="table-group-divider valign-middle">
                 {{#if anteproyectos}}
                 {{#each anteproyectos}}
+
                 {{#ifEquals this.estado "Rechazado"}}
                 <tr>
                     <td>
@@ -97,7 +101,7 @@
                                 {{/ifEquals}}
                                 <p>Fecha de inicio: {{this.fechaInicio}}</p>
                                 <p>Fecha final: {{this.fechaFinal}}</p>
-                                
+
 
                                 <form action="/admin/anteproyectos/{{this._id}}/download" method="get">
                                     <button type="submit" class="btn btn-primary w-100">Descargar documento</button>
@@ -119,11 +123,14 @@
                 <h3>No hay anteproyectos que mostrar para este semestre</h3>
                 {{/if}}
             </tbody>
-            </thead>
+            
 
         </table>
 
     </div>
+    {{else}}
+    <h3>No hay un semestre Activo</h3>
+    {{/if}}
     {{!--
     <div class="row mb-2">
         <div class="col">

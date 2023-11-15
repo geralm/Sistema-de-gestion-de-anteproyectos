@@ -20,6 +20,8 @@ router.route('/proyectos/asignarProfesor')
     .post(isLoggedIn, isAdmin, catchAsync(admin.asignarProfesor));
 router.route('/proyectos/find')
     .post(isLoggedIn, isAdmin, admin.renderOneProyecto);
+router.route('/rechazados/find')
+    .post(isLoggedIn, isAdmin, admin.renderOneRechazado);
 router.route('/administrarProfesores')
     .get(isLoggedIn, isAdmin, admin.renderAsignarProfesor);
 router.route('/anteproyectos/find')
