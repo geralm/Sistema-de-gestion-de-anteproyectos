@@ -308,7 +308,7 @@ const actualizarRevision = async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   }
-  mail.sendMail(req.body.correoEstudiante, "test", "test")
+  mail.sendMail(req.body.correoEstudiante, "Revision de AnteProyecto", "Hola! Su anteproyecto de Practica Profesional fue revisado, tiene las siguientes observaciones: \n\n"+observaciones + "\n\nPara mas detalles ver el sistema.")
   return res.redirect('/user');
 }
 
