@@ -719,29 +719,29 @@
     </div>
 
     </div>
-   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Agrega un manejo de cambio a todos los elementos de radio con la clase "form-check-input"
-        $('.form-check-input').change(function () {
-            var selectedValue = $(this).val(); // Obtiene el valor de la opción seleccionada
-            var button = $(this).closest('.dropdown').find('.dropdown-toggle'); // Obtiene el botón asociado
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Agrega un manejo de cambio a todos los elementos de radio con la clase "form-check-input"
+            $('.form-check-input').change(function () {
+                var selectedValue = $(this).val(); // Obtiene el valor de la opción seleccionada
+                var button = $(this).closest('.dropdown').find('.dropdown-toggle'); // Obtiene el botón asociado
 
-            // Actualiza el texto del botón con el valor seleccionado
-            button.text(selectedValue);
+                // Actualiza el texto del botón con el valor seleccionado
+                button.text(selectedValue);
 
-            // Agrega o quita clases según el valor seleccionado
-            if (selectedValue === 'incompleto') {
-                button.removeClass('btn-success').addClass('btn-danger');
-            } else if (selectedValue === 'aceptado') {
-                button.removeClass('btn-danger').addClass('btn-success');
-            } else {
-                // Puedes agregar otras condiciones según sea necesario
-                button.removeClass('btn-danger btn-success');
-            }
+                // Agrega o quita clases según el valor seleccionado
+                if (selectedValue === 'incompleto') {
+                    button.removeClass('btn-success').addClass('btn-danger');
+                } else if (selectedValue === 'aceptado') {
+                    button.removeClass('btn-danger').addClass('btn-success');
+                } else {
+                    // Puedes agregar otras condiciones según sea necesario
+                    button.removeClass('btn-danger btn-success');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 
 
