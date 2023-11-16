@@ -18,6 +18,7 @@ const subirProyecto = async (req,res)=>{
     if(proyecto){
         //Si es un anteproyecto aprobado, ya no puede sobreescribirse
         if(proyecto[0].estado == "Aprobado"){
+            req.flash('error', '¡Usted ya tiene un anteproyecto aprobado!');
             res.redirect('/user')
             return
         }
