@@ -27,7 +27,7 @@ const subirProyecto = async (req,res)=>{
         newProyecto.documento = fileBuffer
         //newProyecto.estudiante.observaciones = 'Sin Observaciones'
         const update = newProyecto;
-        await User.findByIdAndUpdate(proyecto[0].estudiante._id , {observaciones:'Sin Observaciones'})
+        //await User.findByIdAndUpdate(proyecto[0].estudiante._id , {observaciones:'Sin Observaciones'})
         //let updated = await Anteproyecto.findByIdAndUpdate(proyecto[0]._id , update)
         await Anteproyecto.findByIdAndUpdate(proyecto[0]._id , update)
         // `updated` is the document _before_ `update` was applied
