@@ -27,7 +27,7 @@ const semesterRouter = require('./routes/semestre');
 const { toDateString } = require('./utils/events');
 const profesoresRouter = require('./routes/profesores');
 //Database
-const dbUrl = process.env.DB_URL;//|| `mongodb://127.0.0.1:27017/${process.env.DB_NAME}`
+const dbUrl = process.env.DB_URL;// || `mongodb://127.0.0.1:27017/${process.env.DB_NAME}`
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
