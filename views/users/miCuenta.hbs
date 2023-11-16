@@ -1,7 +1,7 @@
 <h2>Mi Cuenta</h2>
 <br>
 
-<form action="" method="get">
+<form action="/account/update" method="post">
 
     <div class="card shadow">
         <div class="card-header">
@@ -12,35 +12,38 @@
             <div class="mb-3 row">
                 <div class="col-sm-6">
                     <label for="nombre" class=" col-form-label">Nombre</label>
-                    <input id="nombre" class="form-control" type="text" value="{{user.nombre}}"
-                        aria-label="Disabled input example">
+                    <input id="nombre" name="nombre" class="form-control" type="text" value="{{user.nombre}}"
+                        aria-label="Disabled input example" disabled>
                 </div>
                 <div class="col-sm-6">
                     <label for="carnet" class=" col-form-label">Carnet</label>
-                    <input id="carnet" class="form-control" type="text" value="{{user.carnet}}"
-                        aria-label="Disabled input example">
+                    <input id="carnet" name="carnet" class="form-control" type="text" value="{{user.carnet}} " disabled>
                 </div>
             </div>
 
             <div class="mb-3 row">
                 <div class="col-sm-6">
                     <label for="telefono" class=" col-form-label">Telefono</label>
-                    <input id="telefono" class="form-control" type="text" value="{{user.telefono}}"
-                        aria-label="Disabled input example">
+                    <input id="telefono" name="telefono" class="form-control" type="text" value="{{user.telefono}}"
+                        aria-label="Disabled input example "disabled>
                 </div>
                 <div class="col-sm-6">
                     <label for="correo" class=" col-form-label">Correo</label>
-                    <input id="correo" class="form-control" type="text" value="{{user.correo}}"
-                        aria-label="Disabled input example">
+                    <input id="correo" name="correo" class="form-control" type="text" value="{{user.correo}}"
+                        aria-label="Disabled input example" disabled>
                 </div>
             </div>
 
         </div>
        
-        <button type="submit" class="btn btn-primary w-50 mx-auto mt-3">Guadar Cambios</button>
+
         <span class="text-center">
         <br>
         <p>¿Cambiar Contraseña?<a href="/forgot-password"> Reestablecer</a></p>
+        <br>
+        <br>
+        <p>Por razones de seguridad, no se realizan cambios en la Información del Estudiante</a></p>
+        <p>En caso de error con la información de su cuenta, comunicarse con la Coordinación</a></p>
     </span>
     </div>
 
