@@ -57,7 +57,7 @@ const ProyectSchema = new Schema({
         type: String,
         required: true,
         enum: ['Revision', 'Aprobado', 'Rechazado', 'Finalizado'],
-        default: 'Revisión'
+        default: 'Revision'
     },
     fechaInicio: {
         type: Date,
