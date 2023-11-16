@@ -18,10 +18,9 @@ module.exports.renderUserHome = async (req, res) => {
         .limit(3).lean();
     if (req.user.esAdmin === true) {
         //Get count anteproyectos in revision state
+        let projectsCount = 0
         if(semestre){
-            const projectsCount = (await project.find({ estado: 'Revision' }).find({ semestre: semestre._id })).length;
-        }else{
-            const projectsCount = (await project.find({ estado: 'Revision' })).length;
+            projectsCount = (await project.find({ estado: 'Revision' }).find({ semestre: semestre._id })).length;
         }
         return res.render('admin/adminHome', { projectsCount, semestre, eventos: mapManyEvents(eventos, toDateString) });
     }
