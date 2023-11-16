@@ -25,9 +25,11 @@ const subirProyecto = async (req,res)=>{
         const fileBuffer = req.file.buffer;
         newProyecto.estado = "Revision"
         newProyecto.documento = fileBuffer
-
+        //newProyecto.estudiante.observaciones = 'Sin Observaciones'
         const update = newProyecto;
-        let updated = await Anteproyecto.findByIdAndUpdate(proyecto[0]._id , update)
+        await User.findByIdAndUpdate(proyecto[0].estudiante._id , {observaciones:'Sin Observaciones'})
+        //let updated = await Anteproyecto.findByIdAndUpdate(proyecto[0]._id , update)
+        await Anteproyecto.findByIdAndUpdate(proyecto[0]._id , update)
         // `updated` is the document _before_ `update` was applied
     }
     //Si anteproyecto no existe, subimos uno nuevo
