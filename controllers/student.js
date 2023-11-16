@@ -14,8 +14,9 @@ const renderStudentUpload =  async(req,res)=>{
 const subirProyecto = async (req,res)=>{
 
     const proyecto = await Anteproyecto.find({ estudiante: req.user._id }).populate('estudiante').lean();
+    console.log(proyecto)
     //Si anteproyecto ya exite, lo sobreescribimos
-    if(proyecto){
+    if(proyecto && proyecto.length != 0){
         //Si es un anteproyecto aprobado, ya no puede sobreescribirse
         if(proyecto[0].estado == "Aprobado"){
             req.flash('error', '¡Usted ya tiene un anteproyecto aprobado!');
@@ -40,7 +41,7 @@ const subirProyecto = async (req,res)=>{
         newProyecto.estado = "Revision"
         newProyecto.documento = fileBuffer
         newProyecto.estudiante = req.user._id
-        const proyecto = new Proyecto(newProyecto)
+        const proyecto = new Anteproyecto(newProyecto)
         await proyecto.save()
     }
     //const newProyecto  = req.body.proyecto;
