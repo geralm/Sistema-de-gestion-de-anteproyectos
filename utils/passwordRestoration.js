@@ -1,5 +1,5 @@
 const mail = require('../service/mail');
-const TempCode = require('../models/TempCode');
+const TempCode = require('../models/tempcode');
 
 const getRandomCode = () => {
     const min = 100000; // Mínimo valor de un número de 6 dígitos
